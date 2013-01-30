@@ -338,82 +338,14 @@ var requirejs, require, define;
 }());
 ;this["JST"] = this["JST"] || {};
 
-this["JST"]["app/templates/citation.html"] = function(obj){
-var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
-with(obj||{}){
-__p+='<i class="zitem-'+
-( attr.archive.toLowerCase() )+
-' zitem-30"></i>\n<div class="player-citation-bubble clearfix">\n  <div class="player-citation-content">\n    <h3>'+
-( attr.title )+
-'</h3>\n    <div class="content">\n      <span class="citation-subhead">DESCRIPTION:</span> '+
-( attr.description )+
-'\n    </div>\n    <div class="creator"><span class="citation-subhead">\n      CREATED BY:</span> '+
-( attr.media_creator_realname )+
-'\n    </div>\n\n  ';
- if( !_.isNull( attr.media_geo_longitude ) ) { 
-;__p+='\n    <div class="location-created">\n      <span class="citation-subhead">LOCATION:</span> '+
-( attr.media_geo_longitude )+
-', '+
-( attr.media_geo_latitude )+
-'\n    </div>\n  ';
- } 
-;__p+='\n    <div class="trackback">\n      <a href="'+
-( attr.attribution_uri )+
-'" target="blank">view original</a>\n    </div>\n  </div>\n  <div class="player-citation-thumb"><img src="'+
-( attr.thumbnail_url )+
-'" height="100px" width="100px"/></div>\n</div>';
-}
-return __p;
-};
-
-this["JST"]["app/templates/controls.html"] = function(obj){
-var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
-with(obj||{}){
-__p+='<a href="#" class="arrow arrow-left prev disabled"></a>\n<a href="#" class="arrow arrow-right next disabled"></a>';
-}
-return __p;
-};
-
 this["JST"]["app/templates/loader.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<div class="ZEEGA-loader-inner">\n    <h1>'+
+__p+='<a href="#" class="mobile-play"></a>\n\n<div class="ZEEGA-loader-inner">\n    <h1>'+
 ( title )+
 '</h1>\n    <h2>by '+
 ( authors )+
-'</h2>\n    <div class="ZEEGA-loading-bar-wrapper">\n        <div class="ZEEGA-loading-bar"></div>\n    </div>\n    <ul class="ZEEGA-loading-layers"></ul>\n</div>\n<span class="ZEEGA-loader-bg"></span>';
-}
-return __p;
-};
-
-this["JST"]["app/templates/menu-bar-bottom.html"] = function(obj){
-var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
-with(obj||{}){
-__p+='<ul class="ZEEGA-standalone-controls">\n    <li><a id="project-play-pause" href="#" ><i class="icon-pause icon-white"></i></a></li>\n</ul>\n<ul class="ZEEGA-citations-primary"></ul>';
-}
-return __p;
-};
-
-this["JST"]["app/templates/menu-bar-top.html"] = function(obj){
-var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
-with(obj||{}){
-__p+='<ul class="ZEEGA-menu-bar menu-bar-left">\n    <li>\n        <a href="http://www.zeega.com/" class="ZEEGA-standalone-logo" target="blank" style="padding:7px;"></a>\n    </li>\n    <li class="menu-bar-title"><span class="project-title">'+
-( title )+
-'</span><span class="sequence-description"></span><span class="sequence-author"> by <a href="http://alpha.zeega.org/user/'+
-( user_id )+
-'" target="blank" data-bypass="true">'+
-( authors )+
-'</a></span></li>\n</ul>\n<ul class="ZEEGA-menu-bar menu-bar-right">\n    <li><a id="project-share" href="#">share</a></li>\n    <li class="slide-menu">\n        <a href="https://twitter.com/intent/tweet?original_referer=http://alpha.zeega.org/'+
-( item_id )+
-'&text=Zeega%20Project%3A%20'+
-( title )+
-' &url=http://alpha.zeega.org/'+
-( item_id )+
-'" target="blank"><i class="zsocial-twitter"></i></a>\n        <a href="http://www.facebook.com/sharer.php?u=http://alpha.zeega.org/'+
-( item_id )+
-'" target="blank"><i class="zsocial-facebook"></i></a>\n        <a href="http://www.tumblr.com/share" target="blank"><i class="zsocial-tumblr"></i></a>\n        <a href="mailto:friend@example.com?subject=Check out this Zeega!&body=http://alpha.zeega.org/'+
-( item_id )+
-'"><i class="zsocial-email"></i></a>\n    </li>\n    <!--<li><a id="project-credits" href="#"><i class="icon-align-justify icon-white"></i></a></li>-->\n    <li><a id="project-fullscreen-toggle" href="#"><i class="icon-resize-full icon-white"></i></a></li>\n</ul>\n';
+'</h2>\n</div>\n<span class="ZEEGA-loader-bg"></span>';
 }
 return __p;
 };;
@@ -437,7 +369,11 @@ return __p;
 this["JST"]["app/templates/plugins/audio.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='';
+__p+='<audio id="audio-el-'+
+(id )+
+'" src="'+
+( attr.uri )+
+'" autoplay></audio>';
 }
 return __p;
 };
@@ -463,11 +399,7 @@ return __p;
 this["JST"]["app/templates/plugins/link.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<a href=\'#\' class=\'ZEEGA-link-inner\'>\n  ';
- if( mode == 'editor' && !_.isNull( attr.to_frame ) ) { 
-;__p+='\n    <i class="icon-share go-to-sequence"></i>\n  ';
- } 
-;__p+='\n</a>';
+__p+='<a href=\'#\' class=\'ZEEGA-link-inner\'></a>';
 }
 return __p;
 };
@@ -23996,61 +23928,251 @@ function( Backbone, jquery ) {
 
 });
 
-/*
-    data.js
-
-    model that contains _only_ data to be synced with the server
-
-*/
-
-zeega.define('modules/player/data',[
+zeega.define('zeega_parser/modules/sequence.model',[
     "zeega"
 ],
+
 function( Zeega ) {
 
-    var Data = {};
-
-    Data.Model = Zeega.Backbone.Model.extend({
-
-        url: null,
+    return Zeega.Backbone.Model.extend({
 
         defaults: {
-            authors: null,
-            cover_image: null,
-            date_created: null,
-            date_published: null,
-            date_updated: null,
+            advance_to: null,
+            attr: {},
             description: null,
-            enabled: true,
-            estimated_time: null,
             frames: [],
-            id : 3662,
-            item_id : null,
-            layers: [],
-            location : null,
-            published : false,
-            sequences: [],
-            tags: null,
-            title: null,
-            // url: null,
-            user_id: null
-            // window_fit: false,
-            // window_ratio: 4/3
-        },
-
-        validate: function( attributes ) {
-            this.clear({ silent: true });
-
-            this.put(
-                _.pick( attributes, _.keys( this.defaults ) )
-            );
+            id: null,
+            persistent_layers: [],
+            title: ""
         }
+
     });
 
-    return Data;
+});
+// frame.js
+zeega.define('zeega_parser/modules/frame.model',[
+    "zeega"
+],
+
+function( Zeega ) {
+
+    return Zeega.Backbone.Model.extend({
+
+        ready: false,
+        // waiting, loading, ready, destroyed
+        state: "waiting",
+        hasPlayed: false,
+        elapsed: 0,
+
+        // frame render as soon as it's loaded. used primarily for the initial frame
+        renderOnReady: null,
+
+        defaults: {
+            _order: 0,
+            attr: { advance: 0 },
+            // ids of frames and their common layers for loading
+            common_layers: {},
+            _connections: "none",
+            controllable: true,
+            id: null,
+            // id of frame before current
+            _last: null,
+            // ids of layers contained on frame
+            layers: [],
+            // ids of frames this frame can lead to
+            linksTo: [],
+            // ids of frames this frame can be accessed from
+            linksFrom: [],
+
+            preload_frames: [],
+            // id of the next frame
+            _next: null,
+            // id of frame to be navigated to the left
+            _prev: null,
+            thumbnail_url: null
+        },
+
+        // for convenience
+        getNext: function() {
+            return this.get("_next");
+        },
+
+        getPrev: function() {
+            return this.get("_prev");
+        },
+
+        // sets the sequence adjacencies as a string
+        setConnections: function() {
+            var prev = this.get("_prev"),
+                next = this.get("_next");
+
+            this.set( "connections",
+                this.get('attr').advance ? "none" :
+                prev & next ? "lr" :
+                prev ? "l" :
+                next ? "r" : "none"
+            );
+        },
+
+        preload: function() {
+            var isFrameReady = this.isFrameReady();
+            
+            if ( !this.ready && isFrameReady ) {
+                this.onFrameReady();
+            } else if ( !this.ready && !isFrameReady ) {
+                this.layers.each(function( layer ) {
+                    if ( layer.state === "waiting" || layer.state === "loading" ) {
+                        layer.on( "layer_ready", this.onLayerReady, this );
+                        layer.render();
+                    }
+                }, this );
+            }
+        },
+
+        // render from frame.
+        render: function( oldID ) {
+            var commonLayers;
+            // if frame is completely loaded, then just render it
+            // else try preloading the layers
+            if ( this.ready ) {
+                // only render non-common layers. allows for persistent layers
+                commonLayers = this.get("common_layers")[ oldID ] || [];
+                // if the frame is "ready", then just render the layers
+                this.layers.each(function( layer ) {
+                    if ( !_.include(commonLayers, layer.id) ) {
+                        layer.render();
+                    }
+                });
+
+                // update status
+                this.status.set( "current_frame",this.id );
+                // set frame timer
+                advance = this.get("attr").advance;
+
+                if ( advance ) {
+                    this.startTimer( advance );
+                }
+
+                if ( !this.get("_next") && this.get("linksTo").length === 0 ) {
+                    this.status.emit("deadend_frame", _.extend({}, this.toJSON() ) );
+                }
+
+            } else {
+                this.renderOnReady = oldID;
+            }
+            /* determines the z-index of the layer in relation to other layers on the frame */
+            _.each( this.get("layers"), function( layerID, i ) {
+                this.layers.get( layerID ).updateZIndex( i );
+            }, this );
+        },
+
+        onLayerReady: function( layer ) {
+            if ( this.isFrameReady() && !this.ready ) {
+                this.onFrameReady();
+            }
+        },
+
+        onFrameReady: function() {
+            var data = {
+                frame: this.toJSON(),
+                layers: this.layers.toJSON()
+            };
+
+            this.ready = true;
+            this.state = "ready";
+            this.status.emit( "frame_ready", data );
+            if ( !_.isNull( this.renderOnReady ) ) {
+
+                this.status.emit( "can_play", data );
+                this.render( this.renderOnReady );
+                this.renderOnReady = null;
+            }
+        },
+
+        isFrameReady: function() {
+            var states, value;
+
+            states = _.pluck( this.layers.models, "state");
+            value = _.find( states, function( state ) {
+                return state != "ready";
+            });
+
+            return value === undefined;
+        },
+
+        pause: function() {
+
+            // cancel the timer
+            // record the current elapsed time on the frame
+            // the elapsed time will be subtracted from the total advance time when the timer is restarted in play()
+            if( this.timer ) {
+                clearTimeout( this.timer );
+                this.elapsed += ( new Date().getTime() - this.status.playTimestamp );
+            }
+
+            this.layers.each(function( layer ) {
+                layer.pause();
+            });
+        },
+
+        play: function() {
+            var advance;
+
+            this.layers.each(function( layer ) {
+                layer.play();
+            });
+
+            // set frame timer
+            advance = this.get("attr").advance;
+            if ( advance ) {
+                this.startTimer( advance - this.elapsed );
+            }
+        },
+
+        startTimer: function( ms ) {
+            if ( this.timer ) {
+                clearTimeout( this.timer );
+            }
+            this.timer = setTimeout(function() {
+                this.relay.set({
+                    current_frame: this.get("_next")
+                });
+            }.bind(this), ms );
+        },
+
+        exit: function( newID ) {
+            var commonLayers = this.get("common_layers")[ newID ] || [];
+
+            this.elapsed = 0;
+            if( this.timer ) {
+                clearTimeout( this.timer );
+            }
+            this.layers.each(function( layer ) {
+                if ( !_.include(commonLayers, layer.id) ) {
+                    layer.exit();
+                }
+            });
+        },
+
+        unrender: function( newID ) {
+            // not sure I need this
+        },
+
+        // manages the removal of all child layers
+        destroy: function() {
+            // do not attempt to destroy if the layer is waiting or destroyed
+            if ( this.state !== "waiting" && this.state !== "destroyed" ) {
+                this.layers.each(function( layer ) {
+                    layer.destroy();
+                });
+                this.state = "destroyed";
+            }
+        }
+
+    });
 });
 
-zeega.define('zeega_dir/plugins/layers/_layer/_layer',[
+zeega.define('zeega_parser/plugins/layers/_layer/_layer',[
     "zeega"
 ],
 
@@ -24130,7 +24252,7 @@ function( Zeega ) {
 
         beforePlayerRender: function() {},
         beforeRender: function() {
-            var target = Zeega.$( this.model.get("_target") ).find(".ZEEGA-player-window");
+            var target = this.model.status.target.find(".ZEEGA-player-window");
 
             this.className = this._className + " " + this.className;
             this.beforePlayerRender();
@@ -24143,8 +24265,8 @@ function( Zeega ) {
         },
 
         afterRender: function() {
-            this.verifyReady();
             this.onRender();
+            this.verifyReady();
         },
 
         onRender: function() {},
@@ -24152,8 +24274,7 @@ function( Zeega ) {
         applyStyles: function() {
             this.$el.css({
                 height: this.getAttr("height") + "%", // photos need a height!
-                width: this.getAttr("width") + "%",
-                opacity: this.getAttr("opacity") || 1
+                width: this.getAttr("width") + "%"
             });
         },
 
@@ -24233,7 +24354,7 @@ function( Zeega ) {
 
         */
         updateZIndex: function( z ) {
-            this.$el.css("z-index", z);
+            this.$el.css("z-index", this.model.get("type") == "Link" ? z + 100 : z );
         },
 
         editor_onLayerEnter: function() {},
@@ -24251,8 +24372,13 @@ function( Zeega ) {
         moveOnStage: function() {
             this.$el.css({
                 top: this.getAttr("top") + "%",
-                left: this.getAttr("left") + "%"
+                left: this.getAttr("left") + "%",
+                opacity: this.getAttr("dissolve") ? 0 : this.getAttr("opacity") || 1
             });
+            if ( this.getAttr("dissolve") ) {
+                this.$el.animate({ "opacity": this.getAttr("opacity") }, 500 );
+            }
+
         },
 
         play: function() {
@@ -24312,9 +24438,9 @@ function( Zeega ) {
 
 zeega.define("plugins/jquery.imagesloaded.min", function(){});
 
-zeega.define('zeega_dir/plugins/layers/image/image',[
+zeega.define('zeega_parser/plugins/layers/image/image',[
     "zeega",
-    "zeega_dir/plugins/layers/_layer/_layer",
+    "zeega_parser/plugins/layers/_layer/_layer",
     //plugins
     "plugins/jquery.imagesloaded.min"
 ],
@@ -24328,14 +24454,14 @@ function( Zeega, _Layer ){
         layerType: "Image",
 
         attr: {
-            "title": "Image Layer",
-            "url": "none",
-            "left": 0,
-            "top": 0,
-            "height": 100,
-            "width": 100,
-            "opacity": 1,
-            "aspect": 1.33
+            title: "Image Layer",
+            url: "none",
+            left: 0,
+            top: 0,
+            height: 100,
+            width: 100,
+            opacity: 1,
+            aspect: 1.33
         },
 
         controls: [
@@ -24387,9 +24513,9 @@ function( Zeega, _Layer ){
     return Layer;
 });
 
-zeega.define('zeega_dir/plugins/layers/link/link',[
+zeega.define('zeega_parser/plugins/layers/link/link',[
     "zeega",
-    "zeega_dir/plugins/layers/_layer/_layer"
+    "zeega_parser/plugins/layers/_layer/_layer"
 ],
 
 function( Zeega, _Layer ) {
@@ -24401,10 +24527,11 @@ function( Zeega, _Layer ) {
         layerType: "Link",
 
         attr: {
-            title: "Poop Layer",
-            from_sequence: null,
+            title: "Link Layer",
+            //to_sequence: null,
             to_frame: null,
-            from_frame: null,
+            //from_frame: null,
+            //from_sequence: null,
             left: 25,
             top: 25,
             height: 50,
@@ -24466,9 +24593,9 @@ function( Zeega, _Layer ) {
 
     return Layer;
 });
-zeega.define('zeega_dir/plugins/layers/slideshow/slideshow-metadata',[
+zeega.define('zeega_parser/plugins/layers/slideshow/slideshow-metadata',[
     "zeega",
-    "zeega_dir/plugins/layers/_layer/_layer"
+    "zeega_parser/plugins/layers/_layer/_layer"
 ],
 
 function( Zeega, _Layer ) {
@@ -24499,10 +24626,10 @@ function( Zeega, _Layer ) {
   return Metadata;
 });
 
-zeega.define('zeega_dir/plugins/layers/slideshow/thumbnail-slider',[
+zeega.define('zeega_parser/plugins/layers/slideshow/thumbnail-slider',[
     "zeega",
-    "zeega_dir/plugins/layers/_layer/_layer",
-    "zeega_dir/plugins/layers/slideshow/slideshow-metadata"
+    "zeega_parser/plugins/layers/_layer/_layer",
+    "zeega_parser/plugins/layers/slideshow/slideshow-metadata"
 
 ],
 
@@ -26196,10 +26323,10 @@ zeega.define("plugins/cycle", function(){});
 
 */
 
-zeega.define('zeega_dir/plugins/layers/slideshow/slideshow',[
+zeega.define('zeega_parser/plugins/layers/slideshow/slideshow',[
     "zeega",
-    "zeega_dir/plugins/layers/_layer/_layer",
-    "zeega_dir/plugins/layers/slideshow/thumbnail-slider",
+    "zeega_parser/plugins/layers/_layer/_layer",
+    "zeega_parser/plugins/layers/slideshow/thumbnail-slider",
     "plugins/cycle"
 ],
 
@@ -27033,7 +27160,7 @@ window.Modernizr = (function( window, document, undefined ) {
 zeega.define("libs/modernizr", function(){});
 
 /*
- * popcorn.js version fe02796
+ * popcorn.js version 99dc749
  * http://popcornjs.org
  *
  * Copyright 2011, Mozilla Foundation
@@ -27134,7 +27261,7 @@ zeega.define("libs/modernizr", function(){});
   };
 
   //  Popcorn API version, automatically inserted via build system.
-  Popcorn.version = "fe02796";
+  Popcorn.version = "99dc749";
 
   //  Boolean flag allowing a client to determine if Popcorn can be supported
   Popcorn.isSupported = true;
@@ -38294,7 +38421,9 @@ Popcorn.player( "flashvideo", {
 
           media.dispatchEvent( "playing" );
           timeupdate();
-          media.youtubeObject.playVideo();
+          if ( media.youtubeObject.playVideo ) {
+            media.youtubeObject.playVideo();
+          }
         };
 
         media.pause = function()
@@ -38508,7 +38637,7 @@ Popcorn.player( "flashvideo", {
 
 zeega.define("vendor/popcorn/popcorn-complete", function(){});
 
-zeega.define('zeega_dir/plugins/media-player/media-player',[
+zeega.define('zeega_parser/plugins/media-player/media-player',[
     "zeega",
     "libs/modernizr",
     "vendor/popcorn/popcorn-complete"
@@ -39102,7 +39231,7 @@ function(Zeega) {
         },
         updateElapsed: function() {
             var elapsed = this.popcorn.currentTime();
-            console.log('update', elapsed);
+
             this.$(".media-time-elapsed").html( convertTime( elapsed ) );
             this.$(".media-scrubber").slider("value", elapsed);
         },
@@ -39351,10 +39480,10 @@ function(Zeega) {
 
 });
 
-zeega.define('zeega_dir/plugins/layers/video/video',[
+zeega.define('zeega_parser/plugins/layers/video/video',[
   "zeega",
-  "zeega_dir/plugins/layers/_layer/_layer",
-  "zeega_dir/plugins/media-player/media-player"
+  "zeega_parser/plugins/layers/_layer/_layer",
+  "zeega_parser/plugins/media-player/media-player"
 ],
 
 function( Zeega, _Layer, MediaPlayer ) {
@@ -39366,22 +39495,22 @@ function( Zeega, _Layer, MediaPlayer ) {
         layerType: "Video",
 
         attr: {
-            "title": "Video Layer",
-            "url": "none",
-            "left": 0,
-            "top": 0,
-            "height": 100,
-            "width": 100,
-            "volume": 0.5,
-            "cue_in": 0,
-            "cue_out": null,
-            "fade_in": 0,
-            "fade_out": 0,
-            "dissolve": false,
-            "loop": false,
-            "opacity": 1,
-            "dimension": 1.5,
-            "citation": true
+            title: "Video Layer",
+            url: "none",
+            left: 0,
+            top: 0,
+            height: 100,
+            width: 100,
+            volume: 0.5,
+            cue_in: 0,
+            cue_out: null,
+            fade_in: 0,
+            fade_out: 0,
+            dissolve: false,
+            loop: false,
+            opacity: 1,
+            dimension: 1.5,
+            citation: true
         }
     });
 
@@ -39418,6 +39547,7 @@ function( Zeega, _Layer, MediaPlayer ) {
         verifyReady: function() {
             if ( this.mediaPlayer_loaded !== true ) {
                 var _this = this;
+
                 this.mediaPlayer = new MediaPlayer.Views.Player({
                     model: this.model,
                     control_mode: "none",
@@ -39426,7 +39556,7 @@ function( Zeega, _Layer, MediaPlayer ) {
                 this.$el.append( this.mediaPlayer.el );
                 this.mediaPlayer.render();
                 this.mediaPlayer.placePlayer();
-                this.mediaPlayer.popcorn.listen("timeupdate", function() {
+                this.mediaPlayer.popcorn.on("timeupdate", function() {
                   _this.onTimeUpdate();
                 });
                 this.model.on("media_ended", function() {
@@ -39517,10 +39647,10 @@ function( Zeega, _Layer, MediaPlayer ) {
     return Layer;
 });
 
-zeega.define('zeega_dir/plugins/layers/audio/audio',[
+zeega.define('zeega_parser/plugins/layers/audio/audio',[
     "zeega",
-    "zeega_dir/plugins/layers/_layer/_layer",
-    "zeega_dir/plugins/layers/video/video"
+    "zeega_parser/plugins/layers/_layer/_layer",
+    "zeega_parser/plugins/layers/video/video"
 ],
 
 function( Zeega, _Layer, VideoLayer ){
@@ -39532,32 +39662,62 @@ function( Zeega, _Layer, VideoLayer ){
         layerType: "Audio",
 
         attr: {
-            "title": "Audio Layer",
-            "url": "none",
-            "left": 0,
-            "top": 0,
-            "height": 0,
-            "width": 0,
-            "volume": 0.5,
-            "cue_in": 0,
-            "cue_out": null,
-            "fade_in": 0,
-            "fade_out": 0,
-            "opacity": 0,
-            "citation": true
+            title: "Audio Layer",
+            url: "none",
+            left: 0,
+            top: 0,
+            height: 0,
+            width: 0,
+            volume: 0.5,
+            cue_in: 0,
+            cue_out: null,
+            fade_in: 0,
+            fade_out: 0,
+            opacity: 0,
+            citation: true
         }
     });
 
-    Layer.Audio.Visual = VideoLayer.Video.Visual.extend({
-        template: "plugins/audio"
+    Layer.Audio.Visual = _Layer.Visual.extend({
+        template: "plugins/audio",
+
+        audio: null,
+        ended: false,
+        playbackCount: 0,
+
+        serialize: function() {
+            return this.model.toJSON();
+        },
+
+        onPlay: function() {
+            this.ended = false;
+            this.audio.play();
+        },
+
+        onPause: function() {
+            this.audio.pause();
+        },
+
+        onExit: function() {
+            this.audio.pause();
+        },
+
+        verifyReady: function() {
+            this.audio = document.getElementById("audio-el-" + this.model.id );
+            this.$('audio').on("canplay", function() {
+                this.audio.pause();
+                this.model.trigger( "visual_ready", this.model.id );
+            }.bind( this ));
+        }
+
     });
 
     return Layer;
 });
 
-zeega.define('zeega_dir/plugins/layers/rectangle/rectangle',[
+zeega.define('zeega_parser/plugins/layers/rectangle/rectangle',[
     "zeega",
-    "zeega_dir/plugins/layers/_layer/_layer"
+    "zeega_parser/plugins/layers/_layer/_layer"
 ],
 function( Zeega, _Layer ) {
 
@@ -39569,16 +39729,16 @@ function( Zeega, _Layer ) {
         layerType: "Rectangle",
 
         attr: {
-            "citation": false,
-            "default_controls": false,
-            "height": 50,
-            "left": 25,
-            "linkable": false,
-            "opacity": 1,
-            "opacity_hover": 1,
-            "title": "Rectangle Layer",
-            "top": 25,
-            "width": 50
+            citation: false,
+            default_controls: false,
+            height: 50,
+            left: 0,
+            linkable: false,
+            opacity: 1,
+            opacity_hover: 1,
+            title: "Rectangle Layer",
+            top: 0,
+            width: 50
         }
     });
 
@@ -39607,9 +39767,9 @@ function( Zeega, _Layer ) {
   return Layer;
 });
 
-zeega.define('zeega_dir/plugins/layers/text/text',[
+zeega.define('zeega_parser/plugins/layers/text/text',[
     "zeega",
-    "zeega_dir/plugins/layers/_layer/_layer"
+    "zeega_parser/plugins/layers/_layer/_layer"
 ],
 function( Zeega, _Layer ) {
 
@@ -39621,13 +39781,13 @@ function( Zeega, _Layer ) {
         layerType: "Text",
 
         attr: {
-            "citation": false,
-            "default_controls": true,
-            "left": 30,
-            "opacity": 1,
-            "title": "Text Layer",
-            "top": 40,
-            "width": 25
+            citation: false,
+            default_controls: true,
+            left: 30,
+            opacity: 1,
+            title: "Text Layer",
+            top: 40,
+            width: 25
         }
     });
 
@@ -39652,10 +39812,10 @@ function( Zeega, _Layer ) {
   return Layer;
 });
 
-zeega.define('zeega_dir/plugins/layers/popup/popup',[
+zeega.define('zeega_parser/plugins/layers/popup/popup',[
     "zeega",
-    "zeega_dir/plugins/layers/_layer/_layer",
-    "zeega_dir/plugins/media-player/media-player"
+    "zeega_parser/plugins/layers/_layer/_layer",
+    "zeega_parser/plugins/media-player/media-player"
 
 ],
 function( Zeega, _Layer, MediaPlayer ) {
@@ -39768,9 +39928,9 @@ function( Zeega, _Layer, MediaPlayer ) {
   return Layer;
 });
 
-zeega.define('zeega_dir/plugins/layers/geo/geo',[
+zeega.define('zeega_parser/plugins/layers/geo/geo',[
     "zeega",
-    "zeega_dir/plugins/layers/_layer/_layer",
+    "zeega_parser/plugins/layers/_layer/_layer",
     //plugins
     "plugins/jquery.imagesloaded.min"
 ],
@@ -39800,7 +39960,7 @@ function( Zeega, _Layer ){
             streetZoom: 1,
             heading: -235,
             pitch: 17.79,
-            mapType: 'satellite'
+            mapType: "satellite"
         },
 
         controls: []
@@ -39905,16 +40065,16 @@ this should be auto generated probably!!
 
 */
 
-zeega.define('zeega_dir/plugins/layers/_all',[
-    "zeega_dir/plugins/layers/image/image",
-    "zeega_dir/plugins/layers/link/link",
-    "zeega_dir/plugins/layers/slideshow/slideshow",
-    "zeega_dir/plugins/layers/video/video",
-    "zeega_dir/plugins/layers/audio/audio",
-    "zeega_dir/plugins/layers/rectangle/rectangle",
-    "zeega_dir/plugins/layers/text/text",
-    "zeega_dir/plugins/layers/popup/popup",
-    "zeega_dir/plugins/layers/geo/geo"
+zeega.define('zeega_parser/plugins/layers/_all',[
+    "zeega_parser/plugins/layers/image/image",
+    "zeega_parser/plugins/layers/link/link",
+    "zeega_parser/plugins/layers/slideshow/slideshow",
+    "zeega_parser/plugins/layers/video/video",
+    "zeega_parser/plugins/layers/audio/audio",
+    "zeega_parser/plugins/layers/rectangle/rectangle",
+    "zeega_parser/plugins/layers/text/text",
+    "zeega_parser/plugins/layers/popup/popup",
+    "zeega_parser/plugins/layers/geo/geo"
 ],
 function(
     image,
@@ -39943,38 +40103,42 @@ function(
     );
 });
 
-zeega.define('zeega_dir/player/layer',[
+// layer.js
+zeega.define('zeega_parser/modules/layer.model',[
     "zeega",
-    "zeega_dir/plugins/layers/_all"
+    "zeega_parser/plugins/layers/_all"
 ],
 
-function( Zeega, Plugin ) {
+function( Zeega, LayerPlugin ) {
 
-    var Layer = Zeega.module();
-
-    var LayerModel = Zeega.Backbone.Model.extend({
-
+    return Zeega.Backbone.Model.extend({
         ready: false,
         state: "waiting", // waiting, loading, ready, destroyed, error
 
+        order: [],
+
         defaults: {
-            mode: "player"
+            attr: {},
+            id: null,
+            project_id: null,
+            type: null
         },
 
         initialize: function() {
-            var plugin = Plugin[ this.get("type") ];
+            var layerClass = LayerPlugin[ this.get("type") ];
 
             // init link layer type inside here
-            if ( plugin ) {
+            if ( layerClass ) {
                 var newAttr;
 
-                this.layerClass = new plugin();
+                this.layerClass = new layerClass();
 
                 newAttr = _.defaults( this.toJSON().attr, this.layerClass.attr );
+
                 this.set({ attr: newAttr });
 
                 // create and store the layerClass
-                this.visualElement = new plugin.Visual({
+                this.visualElement = new layerClass.Visual({
                     model: this,
                     attributes: function() {
                         return _.extend( {}, _.result( this, "domAttributes" ), {
@@ -40012,6 +40176,7 @@ function( Zeega, Plugin ) {
         onVisualReady: function() {
             this.ready = true;
             this.state = "ready";
+            this.status.emit("layer_ready", this.toJSON() );
             this.trigger("layer_ready", this.toJSON());
         },
 
@@ -40052,408 +40217,375 @@ function( Zeega, Plugin ) {
                 this.state = "destroyed";
             }
         }
+
     });
 
-    Layer.Collection = Zeega.Backbone.Collection.extend({
-        model: LayerModel
-    });
-
-    return Layer;
 });
 
-zeega.define('zeega_dir/player/frame',[
+// layer.js
+zeega.define('zeega_parser/modules/layer.collection',[
     "zeega",
-    "zeega_dir/player/layer"
+    "zeega_parser/modules/layer.model"
 ],
 
-function( Zeega, Layer ) {
+function( Zeega, LayerModel ) {
 
-    var Frame = Zeega.module();
+    return Zeega.Backbone.Collection.extend({
+        model: LayerModel,
 
-    var FrameModel = Zeega.Backbone.Model.extend({
+        frame: null,
 
-        ready: false,
-        // waiting, loading, ready, destroyed
-        state: "waiting",
-        hasPlayed: false,
-        elapsed: 0,
+        comparator: function( layer ) {
+            if ( this.frame ) {
+                return layer.order[ this.frame.id ];
+            }
+        }
+    });
+    
+});
 
-        // frame render as soon as it's loaded. used primarily for the initial frame
-        renderOnReady: null,
+// frame.js
+zeega.define('zeega_parser/modules/frame.collection',[
+    "zeega",
+    "zeega_parser/modules/frame.model",
+    "zeega_parser/modules/layer.collection"
+],
+
+function( Zeega, FrameModel, LayerCollection ) {
+
+    return Zeega.Backbone.Collection.extend({
+        model: FrameModel,
+
+        initLayers: function( layerCollection ) {
+            this.each(function( frame ) {
+                var frameLayers = layerCollection.filter(function( layer ) {
+                    var invalidLink, index;
+
+                    invalidLink = layer.get("type") == "Link" && layer.get("attr").to_frame == frame.id;
+                    index = _.indexOf( frame.get("layers"), layer.id );
+
+                    if ( invalidLink ) {
+                        // remove invalid link ids from frames. this kind of sucks
+                        // have filipe rm these from the data??
+                        frame.put("layers", _.without( frame.get("layers"), layer.id ) );
+                        return false;
+                    } else if ( index > -1 ) {
+                        //console.log( layer, frame, index )
+                        layer.order[ frame.id ] = index;
+                        return true;
+                    }
+                    return false;
+                });
+
+                frame.layers = new LayerCollection( frameLayers );
+                frame.layers.frame = frame;
+                frame.layers.sort({ silent: true });
+                // update the layer collection attribute
+                frame.layers.each(function( layer ) {
+                    layer.collection = frame.layers;
+                });
+            });
+        },
+
+        comparator: function( frame ) {
+            return frame.get("_order");
+        }
+    });
+
+});
+
+zeega.define('zeega_parser/modules/sequence.collection',[
+    "zeega",
+    "zeega_parser/modules/sequence.model",
+    "zeega_parser/modules/frame.collection",
+    "zeega_parser/modules/layer.collection"
+],
+
+function( Zeega, SequenceModel, FrameCollection, LayerCollection ) {
+
+    return Zeega.Backbone.Collection.extend({
+        model: SequenceModel,
+
+        initFrames: function( options ) {
+            var layerCollection = new LayerCollection( options.layers );
+
+            this.each(function( sequence ) {
+                var seqFrames;
+
+                seqFrames = options.frames.filter(function( frame ) {
+                    var index = _.indexOf( sequence.get("frames"), frame.id );
+
+                    if ( index > -1 ) {
+                        frame._order = index;
+                        return true;
+                    }
+                    return false;
+                });
+
+                sequence.frames = new FrameCollection( seqFrames );
+                sequence.frames.sequence = sequence;
+                sequence.frames.initLayers( layerCollection );
+            });
+            // at this point, all frames should be loaded with layers and layer classes
+        }
+    });
+
+});
+// frame.js
+zeega.define('zeega_parser/modules/project.model',[
+    "zeega",
+    "zeega_parser/modules/sequence.collection"
+],
+
+function( Zeega, SequenceCollection ) {
+
+    return Zeega.Backbone.Model.extend({
 
         defaults: {
-            attr: { advance: 0 },
-            // ids of frames and their common layers for loading
-            common_layers: {},
-            // ids of layers contained on frame
+            authors: null,
+            cover_image: null,
+            date_created: null,
+            date_published: null,
+            date_updated: null,
+            description: null,
+            enabled: true,
+            estimated_time: null,
+            frames: [],
+            id: null,
+            item_id: null,
             layers: [],
-            // ids of frames this frame can lead to
-            link_to: [],
-            // ids of frames this frame can be accessed from
-            link_from: [],
-
-            preload_frames: [],
-            // id of the next frame
-            _next: null,
-            // id of the previous frame
-            _prev: null
+            location: null,
+            published: true,
+            sequences: [],
+            tags: "",
+            title: "Untitled",
+            user_id: null
         },
 
-        // for convenience
-        getNext: function() {
-            return this.get("_next");
+        defaultOptions: {
+            preloadRadius: 2,
+            attach: {}
         },
 
-        getPrev: function() {
-            return this.get("_prev");
+        initialize: function( data, options ) {
+            this.options = _.defaults( options, this.defaultOptions );
+            this.parser = options.parser;
+            this.parseSequences();
         },
 
-        // sets the sequence adjacencies as a string
-        setConnections: function() {
-            var prev = this.get("_prev"),
-                next = this.get("_next");
+        parseSequences: function() {
+            this.sequences = new SequenceCollection( this.get("sequences") );
+            this.sequences.initFrames({ frames: this.get("frames"), layers: this.get("layers") });
 
-            this.set( "connections",
-                this.get('attr').advance ? "none" :
+            this._generateFrameSequenceKey();
+            this._setInnerSequenceConnections();
+            this._setSequenceToSequenceConnections();
+            this._setLinkConnections();
+            this._setFramePreloadArrays();
+            this._setFrameCommonLayers();
+            this._attach();
+        },
+
+        _generateFrameSequenceKey: function() {
+            this.frameKey = {};
+            this.sequences.each(function( sequence ) {
+                sequence.frames.each(function( frame ) {
+                    this.frameKey[ frame.id ] = sequence.id;
+                }, this );
+            }, this );
+        },
+
+        _setInnerSequenceConnections: function() {
+            this.sequences.each(function( sequence, i ) {
+                var frames = sequence.frames;
+
+                if ( frames.length > 1 ) {
+                    var animationStart = null;
+
+                    frames.each(function( frame, j ) {
+                        var lastStart = animationStart;
+
+                        // return to the start of an animation sequence
+                        animationStart = frame.get("attr").advance && animationStart === null ? frame.id :
+                            frame.get("attr").advance && animationStart !== null ? animationStart : null;
+
+                        frame.put({
+                            _next: frames.at( j + 1 ) ? frames.at( j + 1 ).id : null,
+                            _last: frames.at( j - 1 ) ? frames.at( j - 1 ).id : null,
+                            _prev: animationStart && lastStart === null && frames.at( j - 1 ) ? frames.at( j - 1 ).id :
+                                animationStart ? animationStart :
+                                animationStart === null && lastStart !== null ? lastStart :
+                                frames.at( j - 1 ) ? frames.at( j - 1 ).id : null
+                        });
+                    });
+                }
+            });
+        },
+
+        _setSequenceToSequenceConnections: function() {
+            this.sequences.each(function( sequence, i ) {
+                var a,b,
+                    advanceTo = sequence.get("advance_to"),
+                    followingSequence = this.sequences.get( advanceTo );
+
+                if ( advanceTo && followingSequence ) {
+                    a = sequence.frames.last();
+                    b = followingSequence.frames.at( 0 );
+
+                    a.put({ _next: b.id });
+                    b.put({ _prev: a.id });
+                } else if( !advanceTo && sequence.frames.last().get('attr').advance ) {
+                    a = sequence.frames.last();
+                    b = sequence.frames.first();
+                    a.put({ _next: b.id });
+                    b.put({ _prev: a.id });
+                }
+            }, this );
+        },
+
+        _setLinkConnections: function() {
+            this.sequences.each(function( sequence ) {
+                sequence.frames.each(function( frame ) {
+                    var linksTo = [];
+
+                    frame.layers.each(function( layer ) {
+                        if ( layer.get("type") == "Link" && layer.get("attr").to_frame != frame.id ) {
+                            var targetFrameID, targetFrame, linksFrom;
+
+                            targetFrameID = parseInt( layer.get("attr").to_frame, 10 );
+                            targetFrame = this.getFrame( targetFrameID );
+                            linksFrom = [].concat( targetFrame.get("linksFrom") );
+
+                            linksTo.push( targetFrameID );
+                            linksFrom.push( frame.id );
+
+                            targetFrame.put("linksFrom", linksFrom );
+                        }
+                    }, this );
+
+                    frame.put( "linksTo", linksTo );
+                }, this );
+            }, this );
+        },
+
+        _setFramePreloadArrays: function() {
+            this.sequences.each(function( sequence ) {
+                var nextSequence = sequence.get("advance_to") || false;
+
+                sequence.frames.each(function( frame ) {
+                    var nextFrame = frame.get("_next"),
+                        prevFrame = frame.get("_prev"),
+                        preloadTargets = [ frame.id, nextFrame, prevFrame ];
+
+                    for ( var i = 0; i < this.options.preloadRadius - 1; i++ ) {
+                        nextFrame = nextFrame ? this.getFrame( nextFrame ).get("_next") : null;
+                        prevFrame = prevFrame ? this.getFrame( prevFrame ).get("_prev") : null;
+
+                        if ( !nextFrame && !prevFrame ) {
+                            break;
+                        }
+                        preloadTargets.push( nextFrame, prevFrame );
+                    }
+
+                    if( nextSequence ) {
+                        preloadTargets.push( this.sequences.get( nextSequence ).get("frames")[0] );
+                    }
+
+                    preloadTargets = preloadTargets.filter( Boolean );
+
+                    this._setConnections( frame );
+
+                    frame.put( "preload_frames",
+                        _.union(
+                            preloadTargets, frame.get("linksTo"), frame.get("linksFrom")
+                        )
+                    );
+
+                }, this );
+            }, this );
+
+        },
+
+        _setConnections: function( frame ) {
+            var prev, next;
+
+            prev = frame.get("_prev"),
+            next = frame.get("_next");
+
+            frame.put( "_connections",
+                frame.get('attr').advance ? "none" :
                 prev & next ? "lr" :
                 prev ? "l" :
                 next ? "r" : "none"
             );
         },
 
-        preload: function() {
-            if ( !this.ready ) {
-                this.layers.each(function( layer ) {
-                    if ( layer.state === "waiting" || layer.state === "loading" ) {
-                        layer.on( "layer_ready", this.onLayerReady, this );
-                        layer.render();
-                    }
-                }, this );
-            }
-        },
-
-        // render from frame.
-        render: function( oldID ) {
-            var commonLayers;
-            // if frame is completely loaded, then just render it
-            // else try preloading the layers
-            if ( this.ready ) {
-                // only render non-common layers. allows for persistent layers
-                commonLayers = this.get("common_layers")[ oldID ] || [];
-                // if the frame is "ready", then just render the layers
-                this.layers.each(function( layer ) {
-                    if ( !_.include(commonLayers, layer.id) ) {
-                        layer.render();
-                    }
-                });
-
-                // update status
-                this.status.set( "current_frame",this.id );
-                // set frame timer
-                advance = this.get("attr").advance;
-                if ( advance ) {
-                    this.startTimer( advance );
-                }
-
-                if ( !this.get("_next") && this.get("link_to").length === 0 ) {
-                    this.status.emit("deadend_frame", _.extend({}, this.toJSON() ) );
-                }
-
-
-            } else {
-                this.renderOnReady = oldID;
-            }
-
-            /* determines the z-index of the layer in relation to other layers on the frame */
-            this.layers.each(function(layer, i){
-                layer.updateZIndex( i );
-            });
-
-        },
-
-        onLayerReady: function( layer ) {
-
-            this.status.emit("layer_ready", layer );
-
-            if ( this.isFrameReady() && !this.ready ) {
-                this.onFrameReady();
-            }
-
-            // TODO: This does nothing?
-            // trigger events on layer readiness
-            var states = this.layers.map(function(layer){ return layer.state; });
-        },
-
-        onFrameReady: function() {
-            var data = {
-                frame: this.toJSON(),
-                layers: this.layers.toJSON()
-            };
-            this.ready = true;
-            this.state = "ready";
-            this.status.emit( "frame_ready", data );
-
-            if ( !_.isNull(this.renderOnReady) ) {
-                this.status.emit( "can_play", data );
-                this.render( this.renderOnReady );
-                this.renderOnReady = null;
-            }
-        },
-
-        getLayerStates: function() {
-            var layers = _.toArray( this.layers );
-
-            return [
-                "ready", "waiting", "loading", "destroyed", "error"
-            ].reduce(function( states, which ) {
-                var filtereds = layers.filter(function( layer ) {
-                    return layer.state === which;
-                });
-
-                states[ which ] = filtereds.map(function( layer ) {
-                    return layer.attributes;
-                });
-
-                return states;
-            }, {});
-        },
-
-        isFrameReady: function() {
-            var states = this.getLayerStates();
-
-            if ( (states.ready.length + states.error.length) === this.layers.length ) {
-                return true;
-            }
-            return false;
-        },
-
-        pause: function() {
-
-            // cancel the timer
-            // record the current elapsed time on the frame
-            // the elapsed time will be subtracted from the total advance time when the timer is restarted in play()
-            if( this.timer ) {
-                clearTimeout( this.timer );
-                this.elapsed += ( new Date().getTime() - this.status.playTimestamp );
-            }
-
-            this.layers.each(function( layer ) {
-                layer.pause();
-            });
-        },
-
-        play: function() {
-            var advance;
-
-            this.layers.each(function( layer ) {
-                layer.play();
-            });
-
-            // set frame timer
-            advance = this.get("attr").advance;
-            if ( advance ) {
-                this.startTimer( advance - this.elapsed );
-            }
-        },
-
-        startTimer: function( ms ) {
-            if ( this.timer ) {
-                clearTimeout( this.timer );
-            }
-            this.timer = setTimeout(function() {
-                this.relay.set({
-                    current_frame: this.get("_next")
-                });
-            }.bind(this), ms );
-        },
-
-        exit: function( newID ) {
-            var commonLayers = this.get("common_layers")[ newID ] || [];
-
-            this.elapsed = 0;
-            if( this.timer ) {
-                clearTimeout( this.timer );
-            }
-            this.layers.each(function( layer ) {
-                if ( !_.include(commonLayers, layer.id) ) {
-                    layer.exit();
-                }
-            });
-        },
-
-        unrender: function( newID ) {
-            // not sure I need this
-        },
-
-        // manages the removal of all child layers
-        destroy: function() {
-            // do not attempt to destroy if the layer is waiting or destroyed
-            if ( this.state !== "waiting" && this.state !== "destroyed" ) {
-                this.layers.each(function( layer ) {
-                    layer.destroy();
-                });
-                this.state = "destroyed";
-            }
-        }
-
-    });
-
-    Frame.Collection = Zeega.Backbone.Collection.extend({
-        model: FrameModel,
-
-        // logic that populates the frame with information about it's connections, state, and position within the project
-        load: function( sequences, layers, preloadRadius ) {
-            var _this = this,
-            // create a layer collection. this does not need to be saved anywhere
-                layerCollection = new Layer.Collection( layers );
-                sequenceCollection = new Zeega.Backbone.Collection( sequences );
-
-            this.each(function( frame ) {
-                var linkedArray = [];
-
-                // make a layer collection inside the frame
-                frame.layers = new Layer.Collection();
-                frame.relay = _this.relay;
-                frame.status = _this.status;
-                // add each layer to the collection
-                _.each( frame.get("layers"), function( layerID ) {
-                    frame.layers.add( layerCollection.get( layerID ) );
-                });
-                // make connections by sequence>frame order
-                sequenceCollection.each(function( sequence, i ){
-                    var frames = sequence.get("frames"),
-                        advance = sequence.get("advance_to"),
-                        index = frames.indexOf( frame.id ),
-                        prev = null,
-                        next = null;
-
-                    if ( index > -1 ) {
-
-                        if ( index > 0 && frames.length > 1 ) {
-                            prev = frames[ index - 1 ];
-                        } else if ( i > 0 && sequences[ i - 1 ].advance_to ) {
-
-                            // TODO connect sequences in reverse
-
-                        }
-
-                        if ( index < frames.length - 1 && frames.length > 1 ) {
-                            next = frames[ index +1 ];
-                        } else if ( advance && sequenceCollection.get( advance ) ) {
-                            next = sequenceCollection.get( advance ).get("frames")[0];
-                        } else if ( frame.get("attr").advance ) {
-                            next = sequenceCollection.get( sequence.id ).get("frames")[0];
-                        }
-
-                        frame.set({
-                            _prev: prev,
-                            _next: next,
-                            _sequence: sequence.id
-                        });
-                        frame.setConnections();
-                    }
-                });
-
-                // make connections by link layers
-                // get all a frame's link layers
-                var linkLayers = frame.layers.where({ type:"Link" }),
-                    linkTo = [],
-                    linkFrom = [];
-
-                _.each( linkLayers, function( layer ) {
-                    // links that originate from this frame
-                    if ( layer.get("attr").from_frame == frame.id ) {
-                        linkTo.push( layer.get("attr").to_frame );
-                    } else {
-                        // links that originate on other frames
-                        // remove layer model from collection because it shouldn"t be rendered
-                        frame.layers.remove( layer );
-                        linkFrom.push( layer.get("attr").from_frame );
-                    }
-                });
-
-                frame.set({
-                    link_to: linkTo,
-                    link_from: linkFrom
-                });
-
-
-                frame.layers.each(function( layer ) {
-                    layer.relay = _this.relay;
-                    layer.status = _this.status;
-                });
-
-            });
-
-            // another for loop that has to happen after all link layers are populated
-            this.each(function( frame ) {
-                // set common layers object
-                // {
-                //      123: [a,b,c],
-                //      234: [c,d,e]
-                // }
-                var connected, commonLayers,
-                    values = [ "_prev", "_next", "link_to", "link_from" ].map(function( value ) {
+        _setFrameCommonLayers: function() {
+            this.sequences.each(function( sequence ) {
+                sequence.frames.each(function( frame ) {
+                    var commonLayers = {},
+                        linkedFrames = [ "_prev", "_last", "_next", "linksTo", "linksFrom" ].map(function( value ) {
                         return frame.get( value );
                     });
 
-                // This is sort of insane...
-                connected = _.uniq( _.compact( _.union.apply( null, values ) ) );
+                    linkedFrames = _.compact( _.flatten( linkedFrames ) );
 
-                commonLayers = connected.reduce(function( common, id ) {
-                    common[ id ] = _.intersection(
-                        frame.layers.pluck("id"), this.get( id ).layers.pluck("id")
-                    );
-                    return common;
-                }.bind(_this), {});
+                    _.each( _.uniq( linkedFrames ), function( frameID ) {
+                        var targetFrame = this.getFrame( frameID );
+                        
+                        commonLayers[ frameID ] = _.intersection( targetFrame.get("layers"), frame.get("layers") );
+                    }, this );
+                    frame.put("common_layers", commonLayers );
+                }, this );
+            }, this );
+        },
 
-                frame.set({
-                    common_layers: commonLayers
-                });
-            });
+        _attach: function() {
+            this.sequences.each(function( sequence ) {
+                _.extend( sequence, this.options.attach );
+                sequence.frames.each(function( frame ) {
+                    _.extend( frame, this.options.attach );
+                    frame.layers.each(function( layer ) {
+                        _.extend( layer, this.options.attach );
+                    }, this );
+                }, this );
+            }, this );
+        },
 
-            // figure out the frames that should preload when this frame is rendered
-            // TODO: Investigate why (formerly preload_ahead) was being passed,
-            // despite it not actually being a functional parameter beyond ensuring that
-            // this conditional expression evaluated as true
-            // if ( preloadRadius ) {
-
-            this.each(function( frame ) {
-                var sequenceAhead = sequenceCollection.get( frame.get("_sequence") ) ? sequenceCollection.get( frame.get("_sequence") ).get("advance_to") : false,
-                    ahead = frame.get("_next"),
-                    behind = frame.get("_prev"),
-                    targets = [ frame.id, ahead, behind ];
-
-                for ( var i = 0; i < preloadRadius - 1; i++ ) {
-                    ahead = ahead ? this.get( ahead ).get("_next") : null;
-                    behind = behind ? this.get( behind ).get("_next") : null;
-
-                    if ( !ahead && !behind ) {
-                        break;
-                    }
-
-                    targets.push( ahead, behind );
-                }
-
-                targets = targets.filter( Boolean );
-
-                if( sequenceAhead && sequenceCollection.get( sequenceAhead ) ) {
-                    targets.push( sequenceCollection.get( sequenceAhead ).get("frames")[0] );
-                }
-
-                frame.set( "preload_frames",
-                    _.union(
-                        targets, frame.get("link_to"), frame.get("link_from")
-                    )
-                );
-            }.bind( this ));
+        getFrame: function( frameID ) {
+            return this.sequences.get( this.frameKey[ frameID ] ).frames.get( frameID );
         }
+
     });
 
-    return Frame;
+});
+zeega.define('zeega_parser/data-parsers/zeega-project-model',[
+    "zeega_parser/modules/project.model"
+],
+
+function( ProjectModel ) {
+    var type = "zeega-project-model",
+        Parser = {};
+
+    Parser[ type ] = { name: type };
+
+    Parser[ type ].validate = function( response ) {
+
+        if ( response.sequences && ( response instanceof ProjectModel ) ) {
+            return true;
+        }
+        return false;
+    };
+
+    // no op. projects are already formatted
+    Parser[type].parse = function( response, opts ) {
+        return response;
+    };
+
+    return Parser;
 });
 
-zeega.define('zeega_dir/data-parsers/zeega-project',["lodash"],
+zeega.define('zeega_parser/data-parsers/zeega-project',["lodash"],
 
 function() {
     var type = "zeega-project",
@@ -40477,7 +40609,7 @@ function() {
     return Parser;
 });
 
-zeega.define('zeega_dir/data-parsers/zeega-project-published',["lodash"],
+zeega.define('zeega_parser/data-parsers/zeega-project-published',["lodash"],
 
 function() {
     var type = "zeega-project-published",
@@ -40501,7 +40633,7 @@ function() {
     return Parser;
 });
 
-zeega.define('zeega_dir/data-parsers/zeega-project-collection',[
+zeega.define('zeega_parser/data-parsers/zeega-project-collection',[
     "lodash"
 ],
 function() {
@@ -40549,10 +40681,63 @@ function() {
     return Parser;
 });
 
-zeega.define('zeega_dir/data-parsers/zeega-collection',[
+/*
+
+    generates a valid slideshow layer from a set of images
+
+    pass in an array of image layers and it outputs a valid layer object
+
+*/
+zeega.define('zeega_parser/plugins/layers/slideshow/parser',[
     "lodash"
 ],
-function() {
+
+function( _ ) {
+
+    var Slideshow = {};
+
+    Slideshow.parse = function( layers, options ) {
+        var defaults, slides;
+
+        defaults = {
+            keyboard: false,
+            width: 100,
+            top: 0,
+            left: 0
+        };
+        
+        slides = _.filter( layers, function( layer ) {
+            if ( layer.layer_type == "Image" ) {
+                _.extend( layer, {
+                    attr: layer,
+                    type: layer.layer_type,
+                    id: layer.id
+                });
+                return true;
+            }
+            return false;
+        });
+
+        return {
+            attr: _.defaults({ slides: slides }, defaults ),
+            start_slide: parseInt( options.slideshow.start, 10 ) || 0,
+            start_slide_id: parseInt( options.slideshow.start_id, 10 ) || null,
+            slides_bleed: options.slideshow.bleed,
+            transition: options.slideshow.transition,
+            speed: options.slideshow.speed,
+            type: "SlideShow",
+            id: 1
+        };
+    };
+
+    return Slideshow;
+});
+
+zeega.define('zeega_parser/data-parsers/zeega-collection',[
+    "lodash",
+    "zeega_parser/plugins/layers/slideshow/parser"
+],
+function( _, Slideshow ) {
     var type = "zeega-collection",
         Parser = {};
 
@@ -40567,20 +40752,20 @@ function() {
     };
 
     Parser[ type ].parse = function( response, opts ) {
-        var project = {};
         if ( opts.layerOptions && opts.layerOptions.slideshow && opts.layerOptions.slideshow.display && response.items.length > 0 ) {
-            project = parseSlideshowCollection( response, opts );
+            return parseSlideshowCollection( response, opts );
         } else {
-            project = parseStandardCollection( response, opts );
+            return parseStandardCollection( response, opts );
         }
-        return project;
     };
 
-    var parseStandardCollection = function( response, opts ) {
+    function parseStandardCollection( response, opts ) {
+        var sequence, frames, layers;
+
         // layers from timebased items
-        var layers = generateLayerArrayFromItems( response.items ),
-            frames = generateFrameArrayFromItems( response.items ),
-            sequence = {
+        layers = generateLayerArrayFromItems( response.items );
+        frames = generateFrameArrayFromItems( response.items );
+        sequence = {
                 id: 0,
                 title: "collection",
                 persistent_layers: [],
@@ -40594,26 +40779,19 @@ function() {
                 frames: frames,
                 layers: layers
             });
-    };
+    }
 
     function parseSlideshowCollection( response, opts ) {
-        var frames,slideshowLayer,
-            imageLayers = [],
-            timebasedLayers = [];
+        var sequence, frames, layers, slideshowLayer, timebasedLayers;
 
-        _.each( response.items, function( item ) {
-            if ( item.layer_type == "Image" ) {
-                imageLayers.push(item);
-            } else if ( item.layer_type == "Audio" || item.media_type == "Video" ) {
-                timebasedLayers.push(item);
-            }
+        timebasedLayers = _.filter( response.items, function( item ) {
+            return item.layer_type == "Audio" || item.media_type == "Video";
         });
-        // slideshow layer from image items
-        if ( imageLayers.length ) {
-            slideshowLayer = generateSlideshowLayer( imageLayers, opts.layerOptions );
-        }
+
+        slideshowLayer = Slideshow.parse( response.items, opts.layerOptions );
         // layers from timebased items
-        var layers = generateLayerArrayFromItems( timebasedLayers );
+        layers = generateLayerArrayFromItems( timebasedLayers );
+        
         if ( slideshowLayer ) {
             layers.push( slideshowLayer );
         }
@@ -40629,7 +40807,7 @@ function() {
             }];
         }
 
-        var sequence = {
+        sequence = {
             id: 0,
             title: "collection",
             persistent_layers: slideshowLayer ? [ slideshowLayer.id ] : [],
@@ -40676,37 +40854,10 @@ function() {
         });
     }
 
-    function generateSlideshowLayer( imageLayerArray, layerOptions ) {
-        var layerDefaults = {
-                keyboard: false,
-                width: 100,
-                top: 0,
-                left: 0
-            },
-            slides = _.map( imageLayerArray, function( item ) {
-                return {
-                    attr: item,
-                    type: item.layer_type,
-                    id: item.id
-                };
-            });
-
-        return {
-            attr: _.defaults({ slides: slides }, layerDefaults ),
-            start_slide: parseInt( layerOptions.slideshow.start, 10 ) || 0,
-            start_slide_id: parseInt( layerOptions.slideshow.start_id, 10 ) || null,
-            slides_bleed: layerOptions.slideshow.bleed,
-            transition: layerOptions.slideshow.transition,
-            speed: layerOptions.slideshow.speed,
-            type: "SlideShow",
-            id: 1
-        };
-    }
-
     return Parser;
 });
 
-zeega.define('zeega_dir/data-parsers/flickr',[
+zeega.define('zeega_parser/data-parsers/flickr',[
     "lodash"
 ],
 function() {
@@ -40777,7 +40928,7 @@ function() {
     return Parser;
 });
 
-zeega.define('zeega_dir/data-parsers/youtube',[
+zeega.define('zeega_parser/data-parsers/youtube',[
     "lodash"
 ],
 function() {
@@ -40873,15 +41024,17 @@ this should be auto generated probably!!
 
 */
 
-zeega.define('zeega_dir/data-parsers/_all',[
-    "zeega_dir/data-parsers/zeega-project",
-    "zeega_dir/data-parsers/zeega-project-published",
-    "zeega_dir/data-parsers/zeega-project-collection",
-    "zeega_dir/data-parsers/zeega-collection",
-    "zeega_dir/data-parsers/flickr",
-    "zeega_dir/data-parsers/youtube"
+zeega.define('zeega_parser/data-parsers/_all',[
+    "zeega_parser/data-parsers/zeega-project-model",
+    "zeega_parser/data-parsers/zeega-project",
+    "zeega_parser/data-parsers/zeega-project-published",
+    "zeega_parser/data-parsers/zeega-project-collection",
+    "zeega_parser/data-parsers/zeega-collection",
+    "zeega_parser/data-parsers/flickr",
+    "zeega_parser/data-parsers/youtube"
 ],
 function(
+    zProjectModel,
     zProject,
     zProjectPublished,
     zProjectCollection,
@@ -40894,6 +41047,7 @@ function(
 
     return _.extend(
         Parsers,
+        zProjectModel,
         zProject,
         zProjectPublished,
         zProjectCollection,
@@ -40901,6 +41055,46 @@ function(
         flickr,
         youtube
     );
+});
+
+// parser.js
+zeega.define('zeega_parser/parser',[
+    "zeega",
+    "lodash",
+
+    "zeega_parser/modules/project.model",
+    "zeega_parser/data-parsers/_all"
+],
+
+function( Zeega, _, ProjectModel, DataParser ) {
+
+    var ZeegaParser = {};
+
+    ZeegaParser.parse = function( data, options ) {
+        var parsed;
+
+        // determine which parser to use
+        _.each( DataParser, function( p ) {
+            if ( p.validate( data ) ) {
+                if ( options.debugEvents ) {
+                    console.log( "parsed using: " + p.name );
+                }
+                options.parser = p.name;
+
+                // parse the data
+                parsed = p.parse( data, options );
+                return false;
+            }
+        }, this );
+
+        if ( parsed !== undefined ) {
+            return new ProjectModel( parsed, options );
+        } else {
+            throw new Error("Valid parser not found");
+        }
+    };
+
+    return ZeegaParser;
 });
 
 /*
@@ -40913,7 +41107,7 @@ function(
     primarily used to relay commands from a layer to the project
 */
 
-zeega.define('modules/player/relay',[
+zeega.define('modules/relay',[
     "zeega"
 ],
 function( Zeega ) {
@@ -40938,7 +41132,7 @@ function( Zeega ) {
     model that keeps track of player state, emits events, and relays commands to the player
 */
 
-zeega.define('modules/player/status',[
+zeega.define('modules/status',[
     "zeega"
 ],
 function( Zeega ) {
@@ -40999,8 +41193,8 @@ function( Zeega ) {
                 });
             }
             /* update the current_frame_model */
-            frame = this.get("project").get("frames").get( currentFrame );
-            sequence = frame.get("_sequence");
+            frame = this.get("project").project.getFrame( currentFrame );
+            sequence = frame.collection.sequence;
 
             fHist = this.get("frameHistory");
             fHist.push( frame.id );
@@ -41016,12 +41210,12 @@ function( Zeega ) {
 
             /* check to see if the sequence entered is new */
             // TODO: Investigate value of "sequence"
-            if ( this.get("current_sequence") != sequence ) {
+            if ( this.get("current_sequence") != sequence.id ) {
                 seqHist = this.get("sequenceHistory");
-                seqHist.push( sequence );
+                seqHist.push( sequence.id );
                 this.set({
-                    current_sequence: sequence,
-                    current_sequence_model: this.get("project").get("sequences").get( sequence ),
+                    current_sequence: sequence.id,
+                    current_sequence_model: sequence,
                     sequenceHistory: seqHist
                 });
 
@@ -41035,8 +41229,10 @@ function( Zeega ) {
             emit the state change to the external api
         */
         emit: function( e, info ) {
-            if ( this.get("project").get("debugEvents") && e != "media_timeupdate") {
-                console.log( e, info );
+            if ( this.get("project").get("debugEvents") === true && e != "media_timeupdate") {
+                console.log( "--player event: ",e, info );
+            } else if ( this.get("project").get("debugEvents") == e ) {
+                console.log( "--player event: ",e, info );
             }
             if ( !this.silent ) {
                 this.get("project").trigger( e, info );
@@ -41063,7 +41259,7 @@ function( Zeega ) {
     return Status;
 });
 
-zeega.define('modules/player/player-layout',[
+zeega.define('modules/player-layout',[
     "zeega"
 ],
 function( Zeega ) {
@@ -41153,30 +41349,54 @@ function( Zeega ) {
         },
 
         // calculate and return the correct window size for the player window
-        // uses the player"s window_ratio a || 4/3ttribute
         getWindowSize: function() {
-            // TODO: This could be refactored a bit more
-            var css = {},
-                windowRatio = this.model.get("window_ratio") || 4/3,
-                winWidth = Zeega.$( this.model.get("target") ).find(".ZEEGA-player").width(),
-                winHeight = Zeega.$( this.model.get("target") ).find(".ZEEGA-player").height(),
-                actualRatio = winWidth / winHeight;
+            var windowRatio, winWidth, winHeight, actualRatio,
+                css = {
+                    width: 0,
+                    height: 0,
+                    top: 0,
+                    left: 0
+                };
 
-            if ( this.model.get("window_fit") ) {
-                if ( actualRatio > windowRatio ) {
+            windowRatio = this.model.get("windowRatio");
+            winWidth = Zeega.$( this.model.get("target") ).find(".ZEEGA-player").width();
+            winHeight = Zeega.$( this.model.get("target") ).find(".ZEEGA-player").height();
+            actualRatio = winWidth / winHeight;
+
+            if ( this.model.get("cover") === true ) {
+                if ( actualRatio > windowRatio ) { // width > height // fit left & right
                     css.width = winWidth;
                     css.height = winWidth / windowRatio;
-                } else {
+                    css.top = (winHeight - css.height) / 2;
+                } else if ( this.model.get("cover") == "vertical" ) {
                     css.width = winHeight * windowRatio;
                     css.height = winHeight;
+                    css.left = (winWidth - css.width) / 2;
+                } else { // width < height
+                    css.width = winHeight * windowRatio;
+                    css.height = winHeight;
+                    css.left = (winWidth - css.width) / 2;
+                }
+            } else if ( this.model.get("cover") === false ) {
+                if ( actualRatio > windowRatio ) { // width > height
+                    css.width = winHeight * windowRatio;
+                    css.height = winHeight;
+                } else { // width < height
+                    css.width = winWidth;
+                    css.height = winWidth / windowRatio;
+                    css.top = (winHeight - css.height) / 2;
                 }
             } else {
-                if ( actualRatio > windowRatio ) {
-                    css.width = winHeight * windowRatio;
-                    css.height = winHeight;
-                } else {
+                if ( this.model.get("cover") == "horizontal" ) { // width > height // fit left & right
                     css.width = winWidth;
                     css.height = winWidth / windowRatio;
+                    css.top = (winHeight - css.height) / 2;
+                } else if ( this.model.get("cover") == "vertical" ) {
+                    var left = ( winWidth - winHeight * windowRatio ) / 2;
+
+                    css.width = winHeight * windowRatio;
+                    css.height = winHeight;
+                    css.left = left < 0 ? left : 0;
                 }
             }
 
@@ -41193,24 +41413,17 @@ function( Zeega ) {
     return Player;
 });
 
-zeega.define('modules/player/player',[
+zeega.define('modules/player',[
     "zeega",
 
-    "modules/player/data",
+    "zeega_parser/parser",
 
-    "zeega_dir/player/frame",
-    "zeega_dir/player/layer",
-
-    // parsers
-    "zeega_dir/data-parsers/_all",
-
-    "modules/player/relay",
-    "modules/player/status",
-
-    "modules/player/player-layout"
+    "modules/relay",
+    "modules/status",
+    "modules/player-layout"
 ],
 
-function( Zeega, Data, Frame, Layer, Parser, Relay, Status, PlayerLayout ) {
+function( Zeega, ZeegaParser, Relay, Status, PlayerLayout ) {
     /**
     Player
 
@@ -41249,6 +41462,16 @@ function( Zeega, Data, Frame, Layer, Parser, Relay, Status, PlayerLayout ) {
 
         // default settings -  can be overridden by project data
         defaults: {
+            
+            /**
+            Tells the player how to handle extra space around the player. Can be true, false, "horizontal", or "vertical"
+            @property cover
+            @type mixed
+            @default false
+            **/
+
+            cover: false,
+
             /**
             Instance of a Data.Model
 
@@ -41391,6 +41614,15 @@ function( Zeega, Data, Frame, Layer, Parser, Relay, Status, PlayerLayout ) {
             prev: null,
 
             /**
+            The aspect ratio that the zeega should be played in (width/height)
+
+            @property windowRatio
+            @type Float
+            @default 4/3
+            **/
+            windowRatio: 4/3,
+
+            /**
             The frame id to start the player
 
             @property startFrame
@@ -41434,9 +41666,6 @@ function( Zeega, Data, Frame, Layer, Parser, Relay, Status, PlayerLayout ) {
             this.relay = new Relay.Model();
             this.status = new Status.Model({ project: this });
 
-            this.data = new Data.Model( attributes );
-            this.data.url = attributes.url;
-
             this._setTarget();
             this._load( attributes );
         },
@@ -41452,83 +41681,53 @@ function( Zeega, Data, Frame, Layer, Parser, Relay, Status, PlayerLayout ) {
             if ( attributes.url ) {
                 rawDataModel.url = attributes.url;
                 rawDataModel.fetch().success(function( response ) {
-                    this._detectAndParseData( response );
+                    this._parseData( response );
                 }.bind( this )).error(function() {
                     throw new Error("Ajax load fail");
                 });
             } else if ( attributes.data ) {
-                this._detectAndParseData( attributes.data );
+                this._parseData( attributes.data );
             } else {
                 throw new TypeError("`url` expected non null");
             }
         },
 
+        // |target| may be a Selector, Node or jQuery object.
+        // If no |target| was provided, default to |document.body|
         _setTarget: function() {
-            this.put({
-                // |target| may be a Selector, Node or jQuery object.
-                // If no |target| was provided, default to |document.body|
-                target: Zeega.$( this.get("target") || document.body )
+            var target = Zeega.$( this.get("target") || document.body );
 
+            this.status.target = target;
+            this.put({
+                target: target
             });
         },
 
-        _detectAndParseData: function( response ) {
-            var parsed;
+        _parseData: function( response ) {
+            this.project = new ZeegaParser.parse( response,
+                _.extend({},
+                    this.toJSON(),
+                    {
+                        attach: {
+                            status: this.status,
+                            relay: this.relay
+                        }
+                    })
+                );
 
-            // determine which parser to use
-            _.each( Parser, function( p ) {
-                if ( p.validate( response ) ) {
-                    if ( this.get("debugEvents") ) {
-                        console.log( "parsed using: " + p.name );
-                    }
-                    // parse the response
-                    this.parser = p.name;
-                    parsed = p.parse( response, this.toJSON() );
-                    return false;
-                }
-            }.bind( this ));
+            this._setStartFrame();
 
-            if ( parsed !== undefined ) {
-                this.data.set( parsed );
-                this._parseProjectData( parsed );
-
-                this._listen();
-            } else {
-              throw new Error("Valid parser not found");
-            }
+            this.status.emit( "data_loaded", _.extend({}, this.project.toJSON() ) );
+            this._render();
+            this._listen();
         },
 
-        _parseProjectData: function( parsed ) {
-            var sequences, frames, layers, startFrame;
-
-            layers = this.data.get("layers");
-            frames = new Frame.Collection( this.data.get("frames") );
-            sequences = new Zeega.Backbone.Collection( this.data.get("sequences") );
-
-            // should be done another way ?
-            _.each( layers, function( layer ) {
-                layer._target = this.get("target");
-            }.bind( this ));
-            frames.relay = this.relay;
-            frames.status = this.status;
-
-            // ugly
-            frames.load( this.data.get("sequences"), layers, this.get("preloadRadius"), _ );
-
-            // set start frame
-            if ( this.get("startFrame") === null || frames.get( this.get("startFrame") ) === undefined ) {
+        _setStartFrame: function() {
+            if ( this.get("startFrame") === null || this.project.getFrame( this.get("startFrame") ) === undefined ) {
                 this.put({
-                    startFrame: sequences.at(0).get("frames")[0]
+                    startFrame: this.project.sequences.at(0).get("frames")[0]
                 });
             }
-
-            this.put({
-                frames: frames,
-                sequences: sequences
-            });
-
-            this._render();
-            this.status.emit( "data_loaded", _.extend({}, this.data.toJSON() ) );
         },
 
         // attach listeners
@@ -41539,7 +41738,7 @@ function( Zeega, Data, Frame, Layer, Parser, Relay, Status, PlayerLayout ) {
         },
 
         _remote_cueFrame: function( info, id ) {
-            this.cueFrame(id);
+            this.cueFrame( id );
         },
 
         // renders the player to the dom // this could be a _.once
@@ -41549,7 +41748,7 @@ function( Zeega, Data, Frame, Layer, Parser, Relay, Status, PlayerLayout ) {
             this.Layout = new PlayerLayout.Layout({
                 model: this,
                 attributes: {
-                    id: "ZEEGA-player-" + this.data.id,
+//                    id: "ZEEGA-player-" + this.data.id,
                     "data-projectID": this.id
                 }
             });
@@ -41593,13 +41792,15 @@ function( Zeega, Data, Frame, Layer, Parser, Relay, Status, PlayerLayout ) {
                             _this.cuePrev();
                             break;
                         case 39: // right arrow
-                            _this.cueNext();
+                            if ( this.status.get("current_frame_model").get("attr").advance === 0 ) {
+                                _this.cueNext();
+                            }
                             break;
                         case 32: // spacebar
                             _this.playPause();
                             break;
                     }
-                });
+                }.bind( this ));
             }
         },
 
@@ -41621,8 +41822,7 @@ function( Zeega, Data, Frame, Layer, Parser, Relay, Status, PlayerLayout ) {
 
             if ( !this.ready ) {
                 this.render(); // render the player first!
-            }
-            else if ( this.state == "paused" ) {
+            } else if ( this.state == "paused" ) {
                 this._fadeIn();
                 if ( currentFrame ) {
                     this.state = "playing";
@@ -41632,14 +41832,13 @@ function( Zeega, Data, Frame, Layer, Parser, Relay, Status, PlayerLayout ) {
 
                 // TODO: Find out what values currentFrame and startFrame could possibly be
                 // eg. current_frame, startFrame
-
                 isCurrentNull = currentFrame === null;
                 isStartNull = startFrame === null;
 
                 // if there is no info on where the player is or where to start go to first frame in project
                 if ( isCurrentNull && isStartNull ) {
-                    this.cueFrame( this.get("sequences")[0].frames[0] );
-                } else if ( isCurrentNull && !isStartNull && this.get("frames").get( startFrame ) ) {
+                    this.cueFrame( this.project.sequences.get("sequences")[0].frames[0] );
+                } else if ( isCurrentNull && !isStartNull && this.project.getFrame( startFrame ) ) {
                     this.cueFrame( startFrame );
                 } else if ( !isCurrentNull ) {
                     // unpause the player
@@ -41678,8 +41877,7 @@ function( Zeega, Data, Frame, Layer, Parser, Relay, Status, PlayerLayout ) {
         // goes to specified frame after n ms
         cueFrame: function( id, ms ) {
             ms = ms || 0;
-
-            if ( id !== undefined && this.get("frames").get(id) !== undefined ) {
+            if ( id !== undefined && id !== null && this.project.getFrame( id ) !== undefined ) {
                 if ( ms > 0 ) {
                     _.delay(function() {
                         this._goToFrame( id );
@@ -41693,14 +41891,15 @@ function( Zeega, Data, Frame, Layer, Parser, Relay, Status, PlayerLayout ) {
 
         // should this live in the cueFrame method so it"s not exposed?
         _goToFrame:function( id ) {
-            var oldID;
+            var oldID ;
 
             this.preloadFramesFrom( id );
 
-            if (this.status.get("current_frame")) {
+            if ( this.status.get("current_frame") ) {
                 this.status.get("current_frame_model").exit( id );
                 oldID = this.status.get("current_frame_model").id;
             }
+
             // unrender current frame
             // swap out current frame with new one
             // Use |set| to ensure that a "change" event is triggered
@@ -41709,7 +41908,6 @@ function( Zeega, Data, Frame, Layer, Parser, Relay, Status, PlayerLayout ) {
             // Use |put| to ensure that NO "change" event is triggered
             // from this.relay
             this.relay.put( "current_frame", id );
-
             // render current frame // should trigger a frame rendered event when successful
             this.status.get("current_frame_model").render( oldID );
             if ( this.state !== "playing" ) {
@@ -41741,13 +41939,16 @@ function( Zeega, Data, Frame, Layer, Parser, Relay, Status, PlayerLayout ) {
         },
 
         preloadFramesFrom: function( id ) {
-            var _this = this,
-                frame = this.get("frames").get( id );
-            _.each( frame.get("preload_frames"), function( frameID ) {
-                _this.get("frames").get( frameID ).preload();
-            });
+            if ( id ) {
+                var frame = this.project.getFrame( id );
+
+                _.each( frame.get("preload_frames"), function( frameID ) {
+                    this.project.getFrame( frameID ).preload();
+                }, this );
+            }
         },
 
+        // TODO: update this
         // returns project metadata
         getProjectData: function() {
             var frames = this.get("frames").map(function( frame ) {
@@ -41810,7 +42011,7 @@ function( Zeega, Data, Frame, Layer, Parser, Relay, Status, PlayerLayout ) {
 
 zeega.require([
     // Application.
-    "modules/player/player"
+    "modules/player"
 ],
 function( Zeega ) {
     window.Zeega = Zeega;
@@ -56790,7 +56991,7 @@ function( app, Backbone ) {
             firstVisit: true,
             fullscreen: false,
             initialized: false,
-            projectID: 74886,
+            projectID: null,
             frameID: null
         }
     });
@@ -57709,23 +57910,13 @@ define('modules/loader',[
 
 function( app, Backbone ) {
 
-    // Create a new module
-    var Loader = {};
-
-    // This will fetch the tutorial template and render it.
-    Loader.View = Backbone.View.extend({
-
-        DELAY: 2000,
-        /* variables keeping track of generic layer states */
-        layerCount : 0,
-        layersReady : 0,
+    return Backbone.View.extend({
 
         className: "ZEEGA-loader-overlay",
         template: "loader",
 
         initialize: function() {
-            this.model.on("layer_loading", this.onLayerLoading, this );
-            this.model.on("layer_ready", this.onLayerReady, this );
+            this.model.on("frame_ready", this.onCanPlay, this );
         },
 
         serialize: function() {
@@ -57734,13 +57925,13 @@ function( app, Backbone ) {
             }
         },
 
+        events: {
+            "click .mobile-play": "play"
+        },
+
         afterRender: function() {
+            var coverImage = this.model.project.get("cover_image");
 
-            // investigate the ui for this
-            /*
-            var coverImage;
-
-            coverImage = this.model.data.get("cover_image");
             if( !_.isNull( coverImage ) && coverImage != "../../../images/default_cover.png" ) {
                 this.$(".ZEEGA-loader-bg").css({
                     "background": "url('" + coverImage +"')",
@@ -57753,355 +57944,25 @@ function( app, Backbone ) {
                     "background-size": "cover"
                 });
             }
-            */
-        },
-
-        onLayerLoading: function( layer ) {
-            this.layerCount++;
-            if( layer.attr.citation ) {
-                var item, itemType;
-
-                itemType = layer.attr.archive || layer.type;
-                item = "<li><i class='zitem-" + itemType.toLowerCase() +" zitem-30' data-id='" + layer.id + "'></i></li>";
-                this.$(".ZEEGA-loading-layers").append( item );
-            }
-        },
-
-        onLayerReady: function(layer) {
-            this.layersReady++;
-
-            this.$("[data-id='" + layer.id + "']").addClass('loaded');
-
-            this.$(".ZEEGA-loading-bar").stop().animate({
-                width: (this.layersReady/this.layerCount*100) +"%"
-            });
-            if (this.layersReady == this.layerCount) {
-                this.onCanPlay();
-            }
         },
 
         onCanPlay: function() {
-            _.delay(function(){
-                this.$el.fadeOut(function(){
-                    this.remove();
-                }.bind( this ));
-                this.model.play();
-            }.bind( this ), this.DELAY );
+            console.log("can play")
+            this.$(".mobile-play").fadeIn();
+        },
+
+        play: function() {
+            console.log("play", this)
+            this.$el.fadeOut(function(){
+                this.remove();
+            }.bind( this ));
+            this.model.play();
         }
 
   });
 
-  // Required, return the module for AMD compliance
-  return Loader;
-
 });
 
-define('modules/controls',[
-    "app",
-    // Libs
-    "backbone"
-],
-
-function(app, Backbone) {
-
-    // Create a new module
-    var Controls = {};
-
-    // This will fetch the tutorial template and render it.
-    Controls.View = Backbone.View.extend({
-        
-        template: "controls",
-
-        className: "ZEEGA-player-controls",
-
-        initialize: function() {
-            /* update the arrow state whenever a frame is rendered */
-            this.model.on("frame_rendered", this.updateArrowState, this);
-        },
-
-        events: {
-            "click .next": "next",
-            "click .prev": "prev"
-        },
-
-        next: function() {
-            this.model.cueNext();
-            return false;
-        },
-
-        prev: function() {
-            this.model.cuePrev();
-            return false;
-        },
-
-        updateArrowState: function( info ) {
-            switch(info._connections) {
-                case "l":
-                    this.activateArrow("prev");
-                    this.disableArrow("next");
-                    break;
-                case "r":
-                    this.disableArrow("prev");
-                    this.activateArrow("next");
-                    break;
-                case "lr":
-                    this.activateArrow("prev");
-                    this.activateArrow("next");
-                    break;
-                default:
-                    this.disableArrow("prev");
-                    this.disableArrow("next");
-            }
-        },
-
-        activateArrow: function(className) {
-            this.$("."+ className +".disabled").removeClass("disabled");
-        },
-
-        disableArrow: function(className) {
-            this.$("."+ className).addClass("disabled");
-        }
-    });
-
-    return Controls;
-});
-define('modules/menu-bar-bottom',[
-    "app",
-    // Libs
-    "backbone"
-],
-
-function(app, Backbone) {
-
-    // Create a new module
-    var Citations = {};
-
-    // This will fetch the tutorial template and render it.
-    Citations.View = Backbone.View.extend({
-        
-        visible : true,
-        hover: false,
-        playing: false,
-
-        template: "menu-bar-bottom",
-
-        className: "ZEEGA-player-citations",
-
-        serialize: function() {
-            if ( this.model.project ) {
-                return this.model.project.toJSON();
-            }
-        },
-
-        initialize: function() {
-            /* update the arrow state whenever a frame is rendered */
-            this.model.on("frame_rendered", this.updateCitations, this);
-            this.model.on("data_loaded", this.render, this);
-            this.model.on("play", this.onPlay, this );
-            this.model.on("pause", this.onPause, this );
-        },
-
-        onPlay: function() {
-            this.$("#project-play-pause i").addClass("icon-pause").removeClass("icon-play");
-        },
-
-        onPause: function() {
-            this.$("#project-play-pause i").addClass("icon-play").removeClass("icon-pause");
-            this.fadeIn();
-        },
-
-        updateCitations: function( info ) {
-            var layersToCite = _.map( info.layers, function(layer){
-                if( layer.attr.citation && layer.attr.archive ) return layer;
-                return false;
-            });
-
-            this.$(".ZEEGA-citations-primary").empty();
-            _.each( _.compact( layersToCite ), function(layer){
-                var citation = new CitationView({ model: new Backbone.Model(layer) });
-                this.$(".ZEEGA-citations-primary").append(citation.el);
-                citation.render();
-            }.bind( this ));
-        },
-
-        events: {
-            "mouseenter": "onMouseenter",
-            "mouseleave": "onMouseleave",
-            "click #project-play-pause": "playpause"
-        },
-
-        fadeOut: function() {
-            if(this.visible && !this.hover && app.player.status != "paused" ) {
-                this.visible = false;
-                this.$el.fadeOut();
-            }
-        },
-     
-        fadeIn: function() {
-            if(!this.visible) {
-                this.visible = true;
-                this.$el.fadeIn();
-            }
-        },
-
-        onMouseenter: function() {
-            this.hover = true;
-        },
-
-        onMouseleave: function() {
-            this.hover = false;
-        },
-
-        playpause: function() {
-            if ( this.model.state == "paused") {
-                this.model.play();
-            } else {
-                this.model.pause();
-            }
-            return false;
-        }
-    });
-
-    var CitationView = Backbone.View.extend({
-        tagName: "li",
-        template: "citation",
-
-        serialize: function() {
-            return this.model.toJSON();
-        },
-
-        events: {
-            "hover": "onHover"
-        },
-
-        onHover: function() {
-            this.$("i").toggleClass("loaded");
-        }
-  
-    });
-
-    return Citations;
-});
-define('modules/menu-bar-top',[
-    "app",
-    // Libs
-    "backbone"
-],
-
-function(app, Backbone) {
-
-    // Create a new module
-    var MenuBar = {};
-
-    // This will fetch the tutorial template and render it.
-    MenuBar.View = Backbone.View.extend({
-        
-        visible: true,
-        hover: false,
-
-        template: "menu-bar-top",
-
-        className: "ZEEGA-player-menu-bar",
-
-        serialize: function() {
-            if ( this.model.project ) {
-                return this.model.project.toJSON();
-            }
-        },
-
-        initialize: function() {
-            this.model.on("data_loaded", this.render, this);
-            this.model.on("sequence_enter", this.onEnterSequence, this );
-        },
-
-        onEnterSequence: function( info ) {
-            this.updateDescription( info );
-        },
-
-        updateDescription: function( info ) {
-            /* update the sequence title in the menu bar */
-            // var def = /Sequence ([0-9]*)/g.test(info.title);
-            // var seqTitle = def ? "" : " - "+ info.title;
-            // this.$(".sequence-description").text(seqTitle);
-        },
-
-        events: {
-            "click #project-share": "share",
-            "click #project-credits": "credits",
-            "click #project-fullscreen-toggle": "toggleFullscreen",
-            "mouseenter": "onMouseenter",
-            "mouseleave": "onMouseleave"
-        },
-
-        share: function() {
-            this.model.pause();
-            this.$(".slide-menu").toggle();
-            return false;
-        },
-
-        credits: function() {
-            return false;
-        },
-
-        toggleFullscreen: function() {
-            if ( app.state.get("fullscreen") ) {
-                this.leaveFullscreen();
-            } else {
-                this.goFullscreen();
-            }
-            return false;
-        },
-
-        goFullscreen : function() {
-            app.state.set("fullscreen", true );
-            docElm = document.getElementById("main");
-              
-            if ( docElm.requestFullscreen ) docElm.requestFullscreen();
-            else if ( docElm.mozRequestFullScreen ) docElm.mozRequestFullScreen();
-            else if ( docElm.webkitRequestFullScreen ) docElm.webkitRequestFullScreen();
-
-            this.$("#project-fullscreen-toggle i")
-                .removeClass("icon-resize-full")
-                .addClass("icon-resize-small");
-        },
-
-        leaveFullscreen : function() {
-            app.state.set("fullscreen", false );
-            if ( document.exitFullscreen )        document.exitFullscreen();
-            else if ( document.mozCancelFullScreen )    document.mozCancelFullScreen();
-            else if ( document.webkitCancelFullScreen )   document.webkitCancelFullScreen();
-
-            this.$("#project-fullscreen-toggle i")
-                .addClass("icon-resize-full")
-                .removeClass("icon-resize-small");
-        },
-
-        fadeOut: function() {
-            if( this.visible && !this.hover && app.player.status != "paused") {
-                this.visible = false;
-                this.$el.fadeOut();
-            }
-        },
-     
-        fadeIn: function() {
-            if ( !this.visible ) {
-                this.visible = true;
-                this.$el.fadeIn();
-            }
-        },
-
-        onMouseenter: function() {
-            this.hover = true;
-        },
-
-        onMouseleave: function() {
-            this.hover = false;
-        }
-
-    });
-
-    return MenuBar;
-});
 /*
 
   ui.js
@@ -58116,13 +57977,10 @@ define('modules/ui',[
     "backbone",
 
     // Modules,
-    "modules/loader",
-    "modules/controls",
-    "modules/menu-bar-bottom",
-    "modules/menu-bar-top"
+    "modules/loader"
 ],
 
-function( app, Backbone, Loader, Controls, MenuBarBottom, MenuBarTop ) {
+function( app, Backbone, Loader ) {
 
     // Create a new module
     var UI = {};
@@ -58135,38 +57993,14 @@ function( app, Backbone, Loader, Controls, MenuBarBottom, MenuBarTop ) {
         el: "#main",
 
         initialize: function() {
-
-            this.loader = new Loader.View({ model: app.player });
-            this.controls = new Controls.View({ model: app.player });
-            this.citations = new MenuBarBottom.View({ model: app.player });
-            this.menuBar = new MenuBarTop.View({ model: app.player });
+            this.loader = new Loader({ model: app.player });
 
             this.insertView("#overlays", this.loader );
-            this.insertView("#overlays", this.controls );
-            this.insertView("#overlays", this.citations );
-            this.insertView("#overlays", this.menuBar );
             this.render();
         },
 
         afterRender: function() {
             app.state.set("baseRendered", true );
-            this.resetFadeOutTimer();
-        },
-
-        events : {
-            "mousemove": "resetFadeOutTimer"
-        },
-
-        resetFadeOutTimer: function() {
-            this.citations.fadeIn();
-            this.menuBar.fadeIn();
-            if ( this.timer ) {
-                clearTimeout( this.timer );
-            }
-            this.timer = setTimeout(function(){
-                this.citations.fadeOut();
-                this.menuBar.fadeOut();
-            }.bind( this ), FADE_OUT_DELAY);
         }
 
     });
@@ -58199,13 +58033,14 @@ function(app, Backbone, UI) {
 
         initPlayer: function() {
             app.player = new Zeega.player({
-                // debugEvents: true,
+                debugEvents: true,
                 // window_fit: false,
                 autoplay: false,
                 target: '#player',
                 data: $.parseJSON( window.projectJSON ) || null,
-                // url: "http://staging.zeega.org/api/projects/2707",
-                url: window.projectJSON ? null : app.api + "/items/" + app.state.get("projectID"),
+                url: window.projectJSON ? null :
+                    app.state.get("projectID") !== null ? app.api + "/items/" + app.state.get("projectID") :
+                    "testproject.json",
                 startFrame: app.state.get("frameID")
             });
             // outputs player events to the console
@@ -58257,11 +58092,6 @@ function( app, Initializer ) {
             "frame/:frameID": "goToFrame"
         },
 
-        /*
-        when no route is present.
-
-        player could wait for user input or rely on bootstrapped data
-        */
         base: function() {
             initialize();
         },
@@ -58280,7 +58110,7 @@ function( app, Initializer ) {
 
     /* create init fxn that can only run once per load */
     var init = function() {
-        new Initializer.Model();
+        new Initializer();
         app.state.set("initialized", true );
     };
     var initialize = _.once( init );
