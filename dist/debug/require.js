@@ -57947,12 +57947,10 @@ function( app, Backbone ) {
         },
 
         onCanPlay: function() {
-            console.log("can play")
             this.$(".mobile-play").fadeIn();
         },
 
         play: function() {
-            console.log("play", this)
             this.$el.fadeOut(function(){
                 this.remove();
             }.bind( this ));
@@ -58033,7 +58031,7 @@ function(app, Backbone, UI) {
 
         initPlayer: function() {
             app.player = new Zeega.player({
-                debugEvents: true,
+                // debugEvents: true,
                 // window_fit: false,
                 autoplay: false,
                 target: '#player',
@@ -58043,9 +58041,6 @@ function(app, Backbone, UI) {
                     "testproject.json",
                 startFrame: app.state.get("frameID")
             });
-            // outputs player events to the console
-            // player.on('all', function(e, obj) { if(e!='media_timeupdate') console.log('    player event:',e,obj);});
-            // listen for frame events to update the router
             if( window.projectJSON ) {
                 this.onDataLoaded();
             } else {
