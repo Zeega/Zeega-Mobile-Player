@@ -21,8 +21,7 @@ function( app, Backbone ) {
         template: "loader",
 
         initialize: function() {
-            this.model.on("layer_loading", this.onLayerLoading, this );
-            this.model.on("layer_ready", this.onLayerReady, this );
+            this.model.on("frame_ready", this.onCanPlay, this );
         },
 
         serialize: function() {
@@ -32,12 +31,9 @@ function( app, Backbone ) {
         },
 
         afterRender: function() {
+            console.log( this )
+            var coverImage = this.model.project.get("cover_image");
 
-            // investigate the ui for this
-            /*
-            var coverImage;
-
-            coverImage = this.model.data.get("cover_image");
             if( !_.isNull( coverImage ) && coverImage != "../../../images/default_cover.png" ) {
                 this.$(".ZEEGA-loader-bg").css({
                     "background": "url('" + coverImage +"')",
@@ -50,40 +46,17 @@ function( app, Backbone ) {
                     "background-size": "cover"
                 });
             }
-            */
-        },
-
-        onLayerLoading: function( layer ) {
-            this.layerCount++;
-            if( layer.attr.citation ) {
-                var item, itemType;
-
-                itemType = layer.attr.archive || layer.type;
-                item = "<li><i class='zitem-" + itemType.toLowerCase() +" zitem-30' data-id='" + layer.id + "'></i></li>";
-                this.$(".ZEEGA-loading-layers").append( item );
-            }
-        },
-
-        onLayerReady: function(layer) {
-            this.layersReady++;
-
-            this.$("[data-id='" + layer.id + "']").addClass('loaded');
-
-            this.$(".ZEEGA-loading-bar").stop().animate({
-                width: (this.layersReady/this.layerCount*100) +"%"
-            });
-            if (this.layersReady == this.layerCount) {
-                this.onCanPlay();
-            }
         },
 
         onCanPlay: function() {
-            _.delay(function(){
-                this.$el.fadeOut(function(){
-                    this.remove();
-                }.bind( this ));
-                this.model.play();
-            }.bind( this ), this.DELAY );
+            console.log('can play')
+
+            // _.delay(function(){
+            //     this.$el.fadeOut(function(){
+            //         this.remove();
+            //     }.bind( this ));
+            //     this.model.play();
+            // }.bind( this ), this.DELAY );
         }
 
   });
