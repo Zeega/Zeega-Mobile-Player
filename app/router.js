@@ -15,11 +15,6 @@ function( app, Initializer ) {
             "frame/:frameID": "goToFrame"
         },
 
-        /*
-        when no route is present.
-
-        player could wait for user input or rely on bootstrapped data
-        */
         base: function() {
             initialize();
         },

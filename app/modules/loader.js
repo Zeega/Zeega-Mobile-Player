@@ -6,16 +6,7 @@ define([
 
 function( app, Backbone ) {
 
-    // Create a new module
-    var Loader = {};
-
-    // This will fetch the tutorial template and render it.
-    Loader.View = Backbone.View.extend({
-
-        DELAY: 2000,
-        /* variables keeping track of generic layer states */
-        layerCount : 0,
-        layersReady : 0,
+    return Backbone.View.extend({
 
         className: "ZEEGA-loader-overlay",
         template: "loader",
@@ -30,8 +21,11 @@ function( app, Backbone ) {
             }
         },
 
+        events: {
+            "click .mobile-play": "play"
+        },
+
         afterRender: function() {
-            console.log( this )
             var coverImage = this.model.project.get("cover_image");
 
             if( !_.isNull( coverImage ) && coverImage != "../../../images/default_cover.png" ) {
@@ -49,19 +43,16 @@ function( app, Backbone ) {
         },
 
         onCanPlay: function() {
-            console.log('can play')
+            this.$(".mobile-play").fadeIn();
+        },
 
-            // _.delay(function(){
-            //     this.$el.fadeOut(function(){
-            //         this.remove();
-            //     }.bind( this ));
-            //     this.model.play();
-            // }.bind( this ), this.DELAY );
+        play: function() {
+            this.$el.fadeOut(function(){
+                this.remove();
+            }.bind( this ));
+            this.model.play();
         }
 
   });
-
-  // Required, return the module for AMD compliance
-  return Loader;
 
 });

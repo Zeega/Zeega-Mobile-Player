@@ -28,7 +28,7 @@ function( app, Backbone, Loader ) {
         el: "#main",
 
         initialize: function() {
-            this.loader = new Loader.View({ model: app.player });
+            this.loader = new Loader({ model: app.player });
 
             this.insertView("#overlays", this.loader );
             this.render();
