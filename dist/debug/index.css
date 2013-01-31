@@ -1201,11 +1201,11 @@ a:active {
 .ZEEGA-loader-overlay h2 {
   font-size: 1em;
   opacity: 0.7;
-  margin-top: 20px;
+  margin-top: 10px;
   text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.5);
 }
 .ZEEGA-loader-overlay .ZEEGA-loader-inner {
-  padding: 100px 20px 0 20px;
+  padding: 10px 20px 0 20px;
 }
 .ZEEGA-loader-overlay .ZEEGA-loading-bar-wrapper {
   height: 4px;
@@ -1246,6 +1246,9 @@ a:active {
   right: 0;
   margin: auto;
   display: none;
-  width: 25%;
+  width: 50%;
   height: 25%;
+}
+.ZEEGA-loader-overlay .mobile-play img {
+  width: 100%;
 }
