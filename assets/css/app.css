@@ -1154,11 +1154,11 @@ a:active {
 .ZEEGA-loader-overlay h2 {
   font-size: 1em;
   opacity: 0.7;
-  margin-top: 20px;
+  margin-top: 10px;
   text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.5);
 }
 .ZEEGA-loader-overlay .ZEEGA-loader-inner {
-  padding: 100px 20px 0 20px;
+  padding: 10px 20px 0 20px;
 }
 .ZEEGA-loader-overlay .ZEEGA-loading-bar-wrapper {
   height: 4px;
@@ -1192,15 +1192,16 @@ a:active {
   z-index: -1;
 }
 .ZEEGA-loader-overlay .mobile-play {
-  background: red;
-  display: none;
-  height: 200px;
-  width: 200px;
-  border-radius: 100px;
-  margin: 0 auto;
   position: absolute;
-  left: 40%;
-  top: 30%;
-  opacity: 0.5;
-  z-index: 20;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  display: none;
+  width: 50%;
+  height: 25%;
+}
+.ZEEGA-loader-overlay .mobile-play img {
+  width: 100%;
 }

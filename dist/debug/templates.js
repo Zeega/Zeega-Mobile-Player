@@ -3,7 +3,7 @@ this["JST"] = this["JST"] || {};
 this["JST"]["app/templates/loader.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<a href="#" class="mobile-play"></a>\n\n<div class="ZEEGA-loader-inner">\n    <h1>'+
+__p+='<a href="#" class="mobile-play"><img src="assets/img/start-button.png"/></a>\n\n<div class="ZEEGA-loader-inner">\n    <h1>'+
 ( title )+
 '</h1>\n    <h2>by '+
 ( authors )+
