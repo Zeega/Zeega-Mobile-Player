@@ -7,15 +7,13 @@
 
 define([
     "app",
-
-    // Libs
     "backbone",
 
-    // Modules,
-    "modules/loader"
+    "modules/loader",
+    "modules/pause"
 ],
 
-function( app, Backbone, Loader ) {
+function( app, Backbone, Loader, Pause ) {
 
     // Create a new module
     var UI = {};
@@ -25,6 +23,7 @@ function( app, Backbone, Loader ) {
     // This will fetch the tutorial template and render it.
     UI.Layout = Backbone.Layout.extend({
         
+        pauseView: null,
         el: "#main",
 
         initialize: function() {
@@ -36,6 +35,20 @@ function( app, Backbone, Loader ) {
 
         afterRender: function() {
             app.state.set("baseRendered", true );
+        },
+
+        events: {
+            "click #player": "pause"
+        },
+
+        pause: function() {
+            app.player.playPause();
+
+            if ( this.pauseView === null ) {
+                this.pauseView = new Pause({ model: app.player });
+            }
+            this.$("#overlays").html( this.pauseView.el );
+            this.pauseView.render();
         }
 
     });

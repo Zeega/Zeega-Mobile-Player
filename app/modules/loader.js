@@ -42,7 +42,6 @@ function( app, Backbone, Spinner ) {
                 });
             }
 
-
             this.spinner = new Spinner({
                 lines: 12, // The number of lines to draw
                 length: 20, // The length of each line

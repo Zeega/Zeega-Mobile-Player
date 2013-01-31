@@ -348,6 +348,18 @@ __p+='<a href="#" class="mobile-play"><img src="assets/img/start-button.png"/></
 '</h2>\n</div>\n<span class="ZEEGA-loader-bg"></span>';
 }
 return __p;
+};
+
+this["JST"]["app/templates/pause.html"] = function(obj){
+var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+with(obj||{}){
+__p+='<a href="#" class="mobile-play"><img src="assets/img/start-button.png"/></a>\n\n<div class="ZEEGA-pause-meta">\n    <h1>'+
+( title )+
+'</h1>\n    <h2>by '+
+( authors )+
+'</h2>\n</div>\n\n<div class="ZEEGA-pause-footer">\n    <a href="http://www.zeega.com/" target="blank">Explore more of the Zeegaverse!</a>\n</div>';
+}
+return __p;
 };;
 /*
 
@@ -46787,7 +46799,6 @@ function( app, Backbone, Spinner ) {
                 });
             }
 
-
             this.spinner = new Spinner({
                 lines: 12, // The number of lines to draw
                 length: 20, // The length of each line
@@ -46820,6 +46831,35 @@ function( app, Backbone, Spinner ) {
 
 });
 
+define('modules/pause',[
+    "app",
+    "backbone"
+],
+
+function( app, Backbone ) {
+
+    return Backbone.View.extend({
+
+        className: "ZEEGA-pause-overlay",
+        template: "pause",
+
+        serialize: function() {
+            return this.model.project.toJSON();
+        },
+
+        events: {
+            "click .mobile-play": "play"
+        },
+
+        play: function() {
+            this.remove();
+            this.model.play();
+        }
+
+  });
+
+});
+
 /*
 
   ui.js
@@ -46829,15 +46869,13 @@ function( app, Backbone, Spinner ) {
 
 define('modules/ui',[
     "app",
-
-    // Libs
     "backbone",
 
-    // Modules,
-    "modules/loader"
+    "modules/loader",
+    "modules/pause"
 ],
 
-function( app, Backbone, Loader ) {
+function( app, Backbone, Loader, Pause ) {
 
     // Create a new module
     var UI = {};
@@ -46847,6 +46885,7 @@ function( app, Backbone, Loader ) {
     // This will fetch the tutorial template and render it.
     UI.Layout = Backbone.Layout.extend({
         
+        pauseView: null,
         el: "#main",
 
         initialize: function() {
@@ -46858,6 +46897,20 @@ function( app, Backbone, Loader ) {
 
         afterRender: function() {
             app.state.set("baseRendered", true );
+        },
+
+        events: {
+            "click #player": "pause"
+        },
+
+        pause: function() {
+            app.player.playPause();
+
+            if ( this.pauseView === null ) {
+                this.pauseView = new Pause({ model: app.player });
+            }
+            this.$("#overlays").html( this.pauseView.el );
+            this.pauseView.render();
         }
 
     });
@@ -46891,7 +46944,7 @@ function(app, Backbone, UI) {
         initPlayer: function() {
             app.player = new Zeega.player({
                 // debugEvents: true,
-                // window_fit: false,
+                cover: true,
                 autoplay: false,
                 target: '#player',
                 data: $.parseJSON( window.projectJSON ) || null,

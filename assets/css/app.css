@@ -927,9 +927,7 @@ html {
   z-index: 10;
 }
 #main #overlays {
-  height: 100%;
   position: absolute;
-  width: 100%;
   z-index: 2;
   background: none !important;
 }
@@ -1142,6 +1140,7 @@ a:active {
   src: local('Ewert'), local('Ewert-Regular'), url(http://themes.googleusercontent.com/static/fonts/ewert/v1/32zt7mPTGOP9C_29yULlQaCWcynf_cDxXwCLxiixG1c.woff) format('woff');
 }
 .ZEEGA-loader-overlay {
+  position: fixed;
   height: 100%;
   width: 100%;
   background: rgba(0, 0, 0, 0.25);
@@ -1203,5 +1202,44 @@ a:active {
   height: 25%;
 }
 .ZEEGA-loader-overlay .mobile-play img {
+  width: 100%;
+}
+.ZEEGA-pause-overlay {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+}
+.ZEEGA-pause-overlay h1 {
+  font-size: 4em;
+  text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.5);
+}
+.ZEEGA-pause-overlay h2 {
+  font-size: 1em;
+  opacity: 0.7;
+  margin-top: 10px;
+  text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.5);
+}
+.ZEEGA-pause-overlay .ZEEGA-pause-meta {
+  padding: 10px 20px 0 20px;
+}
+.ZEEGA-pause-overlay .ZEEGA-pause-footer {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  text-decoration: underline;
+}
+.ZEEGA-pause-overlay .mobile-play {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 50%;
+  height: 25%;
+}
+.ZEEGA-pause-overlay .mobile-play img {
   width: 100%;
 }
