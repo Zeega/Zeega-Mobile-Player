@@ -22,18 +22,6 @@ function(app, Backbone, UI) {
             // this.getData();
         },
 
-        // getData: function () {
-        //     Zeega.parse({
-        //         data: $.parseJSON( window.projectJSON ) || null,
-        //         url: window.projectJSON ? null :
-        //             app.state.get("projectID") !== null ? app.api + "/items/" + app.state.get("projectID") :
-        //             "testproject.json",
-        //         callback: function( parsed, data ) {
-        //             this.onDataLoaded( parsed );
-        //         }.bind( this )
-        //     });
-        // },
-
         initPlayer: function() {
             app.player = new Zeega.player({
                 // debugEvents: true,
@@ -47,9 +35,13 @@ function(app, Backbone, UI) {
                     app.state.get("projectID") !== null ? app.api + "/items/" + app.state.get("projectID") :
                     "testproject.json"
             });
-            app.player.once('data_loaded', function() {
+            if ( window.projectJSON ) {
                 this.onDataLoaded();
-            }, this);
+            } else {
+                app.player.once('data_loaded', function() {
+                    this.onDataLoaded();
+                }, this);
+            }
             app.player.on('frame_rendered', this.onFrameRender, this);
             app.player.on('sequence_enter', this.updateWindowTitle, this);
         },

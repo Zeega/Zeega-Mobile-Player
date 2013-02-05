@@ -30330,13 +30330,13 @@ function( Zeega, ZeegaParser, Relay, Status, PlayerLayout, Parse ) {
                 }.bind( this )).error(function() {
                     throw new Error("Ajax load fail");
                 });
-            // } else if ( attributes.data && attributes.data.parser !== null ) {
-            //     attributes.data.attach({
-            //         status: this.status,
-            //         relay: this.relay
-            //     });
-            //     this.project = attributes.data;
-            //     this._afterParse();
+            } else if ( attributes.data && attributes.data.parser && attributes.data.parser !== null ) {
+                attributes.data.attach({
+                    status: this.status,
+                    relay: this.relay
+                });
+                this.project = attributes.data;
+                this._afterParse();
             } else if ( attributes.data ) {
                 this._parseData( attributes.data );
             } else {
@@ -47152,18 +47152,6 @@ function(app, Backbone, UI) {
             // this.getData();
         },
 
-        // getData: function () {
-        //     Zeega.parse({
-        //         data: $.parseJSON( window.projectJSON ) || null,
-        //         url: window.projectJSON ? null :
-        //             app.state.get("projectID") !== null ? app.api + "/items/" + app.state.get("projectID") :
-        //             "testproject.json",
-        //         callback: function( parsed, data ) {
-        //             this.onDataLoaded( parsed );
-        //         }.bind( this )
-        //     });
-        // },
-
         initPlayer: function() {
             app.player = new Zeega.player({
                 // debugEvents: true,
@@ -47177,9 +47165,13 @@ function(app, Backbone, UI) {
                     app.state.get("projectID") !== null ? app.api + "/items/" + app.state.get("projectID") :
                     "testproject.json"
             });
-            app.player.once('data_loaded', function() {
+            if ( window.projectJSON ) {
                 this.onDataLoaded();
-            }, this);
+            } else {
+                app.player.once('data_loaded', function() {
+                    this.onDataLoaded();
+                }, this);
+            }
             app.player.on('frame_rendered', this.onFrameRender, this);
             app.player.on('sequence_enter', this.updateWindowTitle, this);
         },
