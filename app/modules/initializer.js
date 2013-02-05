@@ -40,7 +40,8 @@ function(app, Backbone, UI) {
                 cover: true,
                 target: '#player',
                 data: parsed,
-                startFrame: app.state.get("frameID")
+                startFrame: app.state.get("frameID"),
+                keyboard: false
             });
             app.player.once('canplay', function() {
                 parsed.trigger("canplay");
@@ -50,7 +51,7 @@ function(app, Backbone, UI) {
         },
 
         onDataLoaded: function( parsed ) {
-            parsed.on("project_play", this.initPlayer, this );
+            parsed.once("project_play", this.initPlayer, this );
             app.layout = new UI.Layout({ model: parsed });
         },
 
