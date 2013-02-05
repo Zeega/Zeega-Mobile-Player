@@ -17,17 +17,11 @@ function( app, Backbone, Spinner ) {
         },
 
         serialize: function() {
-            if ( this.model.project ) {
-                return this.model.project.toJSON();
-            }
-        },
-
-        events: {
-            "click .mobile-play": "play"
+            return this.model.toJSON();
         },
 
         afterRender: function() {
-            var coverImage = this.model.project.get("cover_image");
+            var coverImage = this.model.get("cover_image");
 
             if( !_.isNull( coverImage ) && coverImage != "../../../images/default_cover.png" ) {
                 this.$(".ZEEGA-loader-bg").css({
@@ -41,6 +35,14 @@ function( app, Backbone, Spinner ) {
                     "background-size": "cover"
                 });
             }
+        },
+
+        events: {
+            "click .mobile-play": "play"
+        },
+
+        play: function() {
+            this.$(".mobile-play").fadeOut();
 
             this.spinner = new Spinner({
                 lines: 12, // The number of lines to draw
@@ -56,18 +58,16 @@ function( app, Backbone, Spinner ) {
                 className: 'spinner', // The CSS class to assign to the spinner
                 zIndex: 2e9 // The z-index (defaults to 2000000000)
             }).spin( this.el );
+
+            this.model.once("canplay", this.fadeOut, this );
+            this.model.trigger("project_play", this.model );
         },
 
-        onCanPlay: function() {
+        fadeOut: function() {
             this.spinner.spin(false);
-            this.$(".mobile-play").fadeIn();
-        },
-
-        play: function() {
             this.$el.fadeOut(function(){
                 this.remove();
             }.bind( this ));
-            this.model.play();
         }
 
   });
