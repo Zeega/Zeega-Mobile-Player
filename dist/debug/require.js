@@ -47100,6 +47100,7 @@ function(app, Backbone, UI) {
         },
 
         onDataLoaded: function( parsed ) {
+            console.log("data loaded", parsed)
             parsed.once("project_play", this.initPlayer, this );
             app.layout = new UI.Layout({ model: parsed });
         },
