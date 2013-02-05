@@ -17,11 +17,11 @@ function( app, Backbone, Spinner ) {
         },
 
         serialize: function() {
-            return this.model.toJSON();
+            return this.model.project.toJSON();
         },
 
         afterRender: function() {
-            var coverImage = this.model.get("cover_image");
+            var coverImage = this.model.project.get("cover_image");
 
             if( !_.isNull( coverImage ) && coverImage != "../../../images/default_cover.png" ) {
                 this.$(".ZEEGA-loader-bg").css({
@@ -42,8 +42,8 @@ function( app, Backbone, Spinner ) {
         },
 
         play: function() {
+            this.model.mobileLoadAudioLayers();
             this.$(".mobile-play").fadeOut();
-
             this.spinner = new Spinner({
                 lines: 12, // The number of lines to draw
                 length: 20, // The length of each line
@@ -60,7 +60,7 @@ function( app, Backbone, Spinner ) {
             }).spin( this.el );
 
             this.model.once("canplay", this.fadeOut, this );
-            this.model.trigger("project_play", this.model );
+            this.model.play();
         },
 
         fadeOut: function() {

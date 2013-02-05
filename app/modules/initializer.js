@@ -18,41 +18,44 @@ function(app, Backbone, UI) {
     return Backbone.Model.extend({
 
         initialize: function() {
-            // this.initPlayer();
-            this.getData();
+            this.initPlayer();
+            // this.getData();
         },
 
-        getData: function () {
-            Zeega.parse({
+        // getData: function () {
+        //     Zeega.parse({
+        //         data: $.parseJSON( window.projectJSON ) || null,
+        //         url: window.projectJSON ? null :
+        //             app.state.get("projectID") !== null ? app.api + "/items/" + app.state.get("projectID") :
+        //             "testproject.json",
+        //         callback: function( parsed, data ) {
+        //             this.onDataLoaded( parsed );
+        //         }.bind( this )
+        //     });
+        // },
+
+        initPlayer: function() {
+            app.player = new Zeega.player({
+                // debugEvents: true,
+                autoplay: false,
+                cover: true,
+                target: '#player',
+                startFrame: app.state.get("frameID"),
+                keyboard: false,
                 data: $.parseJSON( window.projectJSON ) || null,
                 url: window.projectJSON ? null :
                     app.state.get("projectID") !== null ? app.api + "/items/" + app.state.get("projectID") :
-                    "testproject.json",
-                    callback: function( parsed, data ) {
-                        this.onDataLoaded( parsed );
-                    }.bind( this )
+                    "testproject.json"
             });
-        },
-
-        initPlayer: function( parsed ) {
-            app.player = new Zeega.player({
-                // debugEvents: true,
-                cover: true,
-                target: '#player',
-                data: parsed,
-                startFrame: app.state.get("frameID"),
-                keyboard: false
-            });
-            app.player.once('canplay', function() {
-                parsed.trigger("canplay");
+            app.player.once('data_loaded', function() {
+                this.onDataLoaded();
             }, this);
             app.player.on('frame_rendered', this.onFrameRender, this);
             app.player.on('sequence_enter', this.updateWindowTitle, this);
         },
 
         onDataLoaded: function( parsed ) {
-            parsed.once("project_play", this.initPlayer, this );
-            app.layout = new UI.Layout({ model: parsed });
+            app.layout = new UI.Layout({ model: app.player });
         },
 
         onFrameRender: function( info ) {

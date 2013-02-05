@@ -30191,7 +30191,7 @@ function( Zeega, ZeegaParser, Relay, Status, PlayerLayout, Parse ) {
 
             @property parser
             @type String
-            @default true
+            @default null
             **/
 
             parser: null,
@@ -30541,6 +30541,21 @@ function( Zeega, ZeegaParser, Relay, Status, PlayerLayout, Parse ) {
                     this._goToFrame( id );
                 }
             }
+        },
+
+        // mobile only hack
+        mobileLoadAudioLayers: function() {
+            this.project.sequences.each(function( sequence ) {
+                sequence.frames.each(function( frame ) {
+                    frame.layers.each(function( layer ) {
+                        if ( layer.get("type") == "Audio") {
+                            var audio = document.getElementById("audio-el-" + layer.id );
+                            
+                            audio.load();
+                        }
+                    });
+                });
+            });
         },
 
         // should this live in the cueFrame method so it"s not exposed?
@@ -46969,11 +46984,11 @@ function( app, Backbone, Spinner ) {
         },
 
         serialize: function() {
-            return this.model.toJSON();
+            return this.model.project.toJSON();
         },
 
         afterRender: function() {
-            var coverImage = this.model.get("cover_image");
+            var coverImage = this.model.project.get("cover_image");
 
             if( !_.isNull( coverImage ) && coverImage != "../../../images/default_cover.png" ) {
                 this.$(".ZEEGA-loader-bg").css({
@@ -46994,8 +47009,8 @@ function( app, Backbone, Spinner ) {
         },
 
         play: function() {
+            this.model.mobileLoadAudioLayers();
             this.$(".mobile-play").fadeOut();
-
             this.spinner = new Spinner({
                 lines: 12, // The number of lines to draw
                 length: 20, // The length of each line
@@ -47012,7 +47027,7 @@ function( app, Backbone, Spinner ) {
             }).spin( this.el );
 
             this.model.once("canplay", this.fadeOut, this );
-            this.model.trigger("project_play", this.model );
+            this.model.play();
         },
 
         fadeOut: function() {
@@ -47102,7 +47117,7 @@ function( app, Backbone, Loader, Pause ) {
             app.player.playPause();
 
             if ( this.pauseView === null ) {
-                this.pauseView = new Pause({ model: app.player });
+                this.pauseView = new Pause({ model: this.model });
             }
             this.$("#overlays").html( this.pauseView.el );
             this.pauseView.render();
@@ -47133,41 +47148,44 @@ function(app, Backbone, UI) {
     return Backbone.Model.extend({
 
         initialize: function() {
-            // this.initPlayer();
-            this.getData();
+            this.initPlayer();
+            // this.getData();
         },
 
-        getData: function () {
-            Zeega.parse({
+        // getData: function () {
+        //     Zeega.parse({
+        //         data: $.parseJSON( window.projectJSON ) || null,
+        //         url: window.projectJSON ? null :
+        //             app.state.get("projectID") !== null ? app.api + "/items/" + app.state.get("projectID") :
+        //             "testproject.json",
+        //         callback: function( parsed, data ) {
+        //             this.onDataLoaded( parsed );
+        //         }.bind( this )
+        //     });
+        // },
+
+        initPlayer: function() {
+            app.player = new Zeega.player({
+                // debugEvents: true,
+                autoplay: false,
+                cover: true,
+                target: '#player',
+                startFrame: app.state.get("frameID"),
+                keyboard: false,
                 data: $.parseJSON( window.projectJSON ) || null,
                 url: window.projectJSON ? null :
                     app.state.get("projectID") !== null ? app.api + "/items/" + app.state.get("projectID") :
-                    "testproject.json",
-                    callback: function( parsed, data ) {
-                        this.onDataLoaded( parsed );
-                    }.bind( this )
+                    "testproject.json"
             });
-        },
-
-        initPlayer: function( parsed ) {
-            app.player = new Zeega.player({
-                // debugEvents: true,
-                cover: true,
-                target: '#player',
-                data: parsed,
-                startFrame: app.state.get("frameID"),
-                keyboard: false
-            });
-            app.player.once('canplay', function() {
-                parsed.trigger("canplay");
+            app.player.once('data_loaded', function() {
+                this.onDataLoaded();
             }, this);
             app.player.on('frame_rendered', this.onFrameRender, this);
             app.player.on('sequence_enter', this.updateWindowTitle, this);
         },
 
         onDataLoaded: function( parsed ) {
-            parsed.once("project_play", this.initPlayer, this );
-            app.layout = new UI.Layout({ model: parsed });
+            app.layout = new UI.Layout({ model: app.player });
         },
 
         onFrameRender: function( info ) {

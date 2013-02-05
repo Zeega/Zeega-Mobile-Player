@@ -45,7 +45,7 @@ function( app, Backbone, Loader, Pause ) {
             app.player.playPause();
 
             if ( this.pauseView === null ) {
-                this.pauseView = new Pause({ model: app.player });
+                this.pauseView = new Pause({ model: this.model });
             }
             this.$("#overlays").html( this.pauseView.el );
             this.pauseView.render();
