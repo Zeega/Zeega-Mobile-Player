@@ -122,7 +122,7 @@ module.exports = function(grunt) {
 			// Ensure the favicon is mapped correctly.
 			files: {
 				"favicon.ico": "favicon.ico",
-				"testproject.json": "testdata/twoframe.json"
+				"testproject.json": "testdata/oneframe-noaudio.json"
 			},
 
 			debug: {

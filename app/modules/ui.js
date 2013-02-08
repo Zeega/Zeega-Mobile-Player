@@ -11,10 +11,11 @@ define([
 
     "modules/loader",
     "modules/pause",
+    "modules/underlay",
     "vendor/hammer/hammer"
 ],
 
-function( app, Backbone, Loader, Pause ) {
+function( app, Backbone, Loader, Pause, Underlay ) {
 
     // Create a new module
     var UI = {};
@@ -29,6 +30,7 @@ function( app, Backbone, Loader, Pause ) {
             this.loader = new Loader({ model: this.model });
 
             this.insertView("#overlays", this.loader );
+            this.insertView("#underlay", new Underlay({ model: this.model }) );
             this.render();
         },
 
@@ -54,16 +56,30 @@ function( app, Backbone, Loader, Pause ) {
         startTouchEvents: function() {
             this.hammer = new Hammer( this.el );
             this.hammer.onswipe = function( e ) {
+                console.log('hammer swipe');
                 this.onSwipe( e );
             }.bind( this );
         },
 
         onSwipe: function( e ) {
+            console.log('on swipe', this.model )
             if ( this.model.state == "playing" ) {
                 if ( e.direction == "left") {
                     this.model.cueNext();
                 } else if ( e.direction == "right") {
                     this.model.cuePrev();
+                }
+            } else if ( this.model.state == "paused" ) {
+                if ( e.direction == "left") {
+                    $("#overlays, #player").animate({
+                        left: 0
+                    });
+                    $("#underlay").fadeOut();
+                } else if ( e.direction == "right") {
+                    $("#overlays, #player").animate({
+                        left: "95%"
+                    });
+                    $("#underlay").fadeIn();
                 }
             }
         }

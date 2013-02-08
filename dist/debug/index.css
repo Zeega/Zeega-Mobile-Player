@@ -972,6 +972,7 @@ html {
   width: 100%;
   position: absolute;
   z-index: 10;
+  overflow: hidden;
 }
 #main #overlays {
   position: absolute;
@@ -1288,4 +1289,38 @@ a:active {
 }
 .ZEEGA-pause-overlay .mobile-play img {
   width: 100%;
+}
+#underlay {
+  color: #333;
+  font-size: 2em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: none;
+}
+#underlay ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+#underlay li {
+  border-bottom: 1px solid #333;
+}
+#underlay li .header {
+  padding: 10px 20px;
+  color: #ccc;
+}
+#underlay li:last-child {
+  border-bottom: none;
+}
+#underlay a {
+  display: block;
+  padding: 10px 20px;
+}
+#underlay a:link,
+#underlay a:visited,
+#underlay a:hover,
+#underlay a:active {
+  color: white;
 }
