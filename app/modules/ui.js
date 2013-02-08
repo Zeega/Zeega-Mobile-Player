@@ -10,15 +10,14 @@ define([
     "backbone",
 
     "modules/loader",
-    "modules/pause"
+    "modules/pause",
+    "vendor/hammer/hammer"
 ],
 
 function( app, Backbone, Loader, Pause ) {
 
     // Create a new module
     var UI = {};
-
-    var FADE_OUT_DELAY = 3000;
 
     // This will fetch the tutorial template and render it.
     UI.Layout = Backbone.Layout.extend({
@@ -35,6 +34,7 @@ function( app, Backbone, Loader, Pause ) {
 
         afterRender: function() {
             app.state.set("baseRendered", true );
+            this.startTouchEvents();
         },
 
         events: {
@@ -49,6 +49,23 @@ function( app, Backbone, Loader, Pause ) {
             }
             this.$("#overlays").html( this.pauseView.el );
             this.pauseView.render();
+        },
+
+        startTouchEvents: function() {
+            this.hammer = new Hammer( this.el );
+            this.hammer.onswipe = function( e ) {
+                this.onSwipe( e );
+            }.bind( this );
+        },
+
+        onSwipe: function( e ) {
+            if ( this.model.state == "playing" ) {
+                if ( e.direction == "left") {
+                    this.model.cueNext();
+                } else if ( e.direction == "right") {
+                    this.model.cuePrev();
+                }
+            }
         }
 
     });

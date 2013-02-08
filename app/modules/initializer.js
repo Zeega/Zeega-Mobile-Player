@@ -19,7 +19,6 @@ function(app, Backbone, UI) {
 
         initialize: function() {
             this.initPlayer();
-            // this.getData();
         },
 
         initPlayer: function() {
@@ -42,22 +41,10 @@ function(app, Backbone, UI) {
                     this.onDataLoaded();
                 }, this);
             }
-            app.player.on('frame_rendered', this.onFrameRender, this);
-            app.player.on('sequence_enter', this.updateWindowTitle, this);
         },
 
         onDataLoaded: function( parsed ) {
             app.layout = new UI.Layout({ model: app.player });
-        },
-
-        onFrameRender: function( info ) {
-            app.router.navigate( 'f/'+ info.id );
-        },
-
-        updateWindowTitle: function( info ) {
-            var title = app.player.project.get("title") + " by " + app.player.project.get("authors");
-
-            $('title').text( title );
         }
 
   });
