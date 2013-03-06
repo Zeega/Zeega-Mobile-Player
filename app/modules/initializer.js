@@ -18,6 +18,7 @@ function(app, Backbone, UI) {
     return Backbone.Model.extend({
 
         initialize: function() {
+            console.log(app.api);
             this.initPlayer();
         },
 

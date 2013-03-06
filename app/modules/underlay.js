@@ -1,21 +1,28 @@
 define([
     "app",
-    "backbone"
+    "backbone",
+    "iscroll"
 ],
 
 function( app, Backbone ) {
 
     return Backbone.View.extend({
 
+        id: "ZEEGA-underlay",
         className: "ZEEGA-underlay",
         template: "underlay",
+        myScroll: null,
 
         serialize: function() {
-            return this.model.project.toJSON();
+            return _.extend({}, this.model.project.toJSON(), { frames: this.model.getProjectData().frames });
         },
 
-        initialize: function() {
-
+        show: function() {
+            if ( this.myScroll === null ) {
+                setTimeout(function () { 
+                    this.myScroll = new iScroll('scroller');
+                }.bind( this ), 0); 
+            }
         },
 
         events: {

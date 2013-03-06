@@ -28,9 +28,10 @@ function( app, Backbone, Loader, Pause, Underlay ) {
 
         initialize: function() {
             this.loader = new Loader({ model: this.model });
+            this.underlay = new Underlay({ model: this.model });
 
             this.insertView("#overlays", this.loader );
-            this.insertView("#underlay", new Underlay({ model: this.model }) );
+            this.insertView("#underlay", this.underlay );
             this.render();
         },
 
@@ -54,7 +55,9 @@ function( app, Backbone, Loader, Pause, Underlay ) {
         },
 
         startTouchEvents: function() {
-            this.hammer = new Hammer( this.el );
+            this.hammer = new Hammer( this.el, {
+                prevent_default: false
+            });
             this.hammer.onswipe = function( e ) {
                 console.log('hammer swipe');
                 this.onSwipe( e );
@@ -62,8 +65,7 @@ function( app, Backbone, Loader, Pause, Underlay ) {
         },
 
         onSwipe: function( e ) {
-            console.log('on swipe', this.model )
-            if ( this.model.state == "playing" ) {
+            if ( this.model.state == "playing" && this.model.status.get("current_frame_model").get("attr").advance === 0 ) {
                 if ( e.direction == "left") {
                     this.model.cueNext();
                 } else if ( e.direction == "right") {
@@ -71,11 +73,13 @@ function( app, Backbone, Loader, Pause, Underlay ) {
                 }
             } else if ( this.model.state == "paused" ) {
                 if ( e.direction == "left") {
+
                     $("#overlays, #player").animate({
                         left: 0
                     });
                     $("#underlay").fadeOut();
                 } else if ( e.direction == "right") {
+                    this.underlay.show();
                     $("#overlays, #player").animate({
                         left: "95%"
                     });

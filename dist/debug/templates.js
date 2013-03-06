@@ -27,9 +27,33 @@ return __p;
 this["JST"]["app/templates/underlay.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<ul class="underlay-menu">\n\n    <li class="header">'+
+__p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="header">\n            <div>'+
 ( title )+
-'</li>\n    <li><a href="#">Share on Twitter</a></li>\n    <li><a href="#">Share on Facebook</a></li>\n    <li><a href="#">Share on Email</a></li>\n    <li><a href="http://www.zeega.com/" target="blank">Explore the Zeegaverse</a></li>\n</ul>';
+'</div>\n            <div class="coffin-author">by '+
+( authors )+
+'</div>\n        </li>\n        <li><a href="https://mobile.twitter.com/compose/tweet?status=http://www.zeega.com/" target="blank">Share on Twitter</a></li>\n        <li><a href="http://m.facebook.com/sharer.php?u=http://www.zeega.com/&t='+
+( title )+
+' by '+
+( authors )+
+'" target="blank">Share on Facebook</a></li>\n        <li><a href="mailto:friend@example.com?subject=Check out this Zeega!&body=http://www.zeega.com/'+
+( id )+
+'">Share on Email</a></li>\n        <li class="spacer"></li>\n        <li class="header">Credits</li>\n        ';
+ _.each( frames, function( frame ) { 
+;__p+='\n            ';
+ _.each( frame.layers, function( layer ) { 
+;__p+='\n                ';
+ if (layer.type != "Link") { 
+;__p+='\n                    <li><a href="'+
+( layer.attr.uri )+
+'" target="blank">'+
+( layer.attr.title )+
+'</a></li>\n                ';
+ } 
+;__p+='\n            ';
+ }) 
+;__p+='\n        ';
+ }) 
+;__p+='\n        <li class="spacer"></li>\n        <li><a href="http://www.zeega.com/" target="blank">Explore the Zeegaverse</a></li>\n    </ul>\n</div>';
 }
 return __p;
 };

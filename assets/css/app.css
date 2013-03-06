@@ -1249,8 +1249,19 @@ a:active {
   position: absolute;
   top: 0;
   left: 0;
+  height: 100%;
   width: 100%;
   display: none;
+}
+#underlay .ZEEGA-underlay {
+  height: 100%;
+  position: relative;
+}
+#underlay #scroller {
+  height: 100%;
+}
+#underlay .coffin-author {
+  font-size: 0.75em;
 }
 #underlay ul {
   padding: 0;
@@ -1263,6 +1274,11 @@ a:active {
 #underlay li.header {
   padding: 10px 20px;
   color: #ccc;
+  line-height: 1.5em;
+}
+#underlay li.spacer {
+  height: 30px;
+  border-bottom: none;
 }
 #underlay li:last-child {
   border-bottom: none;

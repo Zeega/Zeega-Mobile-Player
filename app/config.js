@@ -15,6 +15,7 @@ require.config({
         lodash: "../assets/js/libs/lodash",
         backbone: "../assets/js/libs/backbone",
 
+        iscroll: "../assets/vendor/iscroll/src/iscroll-lite",
         zeega: "../assets/js/zeega",
 
         zeegaplayer: "../assets/vendor/zeegaplayer/dist/debug/zeega"
@@ -23,11 +24,13 @@ require.config({
     shim: {
         // Backbone library depends on lodash and jQuery.
         backbone: {
-            deps: ["jquery", "lodash","zeegaplayer"],
+            deps: ["jquery", "lodash"],
             exports: "Backbone"
         },
 
         zeegaplayer: ["jquery"],
+
+        iscroll: ["jquery"],
 
         // Backbone.LayoutManager depends on Backbone.
         "plugins/backbone.layoutmanager": ["backbone"],

@@ -4,3 +4,6 @@
 [submodule "assets/vendor/hammer"]
 	path = assets/vendor/hammer
 	url = https://github.com/EightMedia/hammer.js.git
+[submodule "assets/vendor/iscroll"]
+	path = assets/vendor/iscroll
+	url = https://github.com/cubiq/iscroll.git
