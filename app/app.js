@@ -32,8 +32,10 @@ function( $, _, Backbone, State ) {
         // Allow LayoutManager to augment Backbone.View.prototype.
         manage: true,
 
+        // path: "app/templates/",
+
         paths: {
-            layout: "app/templates/layouts/",
+            // layout: "app/templates/layouts/",
             template: "app/templates/"
         },
 

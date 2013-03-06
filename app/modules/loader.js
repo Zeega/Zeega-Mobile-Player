@@ -59,7 +59,11 @@ function( app, Backbone, Spinner ) {
                 zIndex: 2e9 // The z-index (defaults to 2000000000)
             }).spin( this.el );
 
-            this.model.once("canplay", this.fadeOut, this );
+            if ( this.model.ready ) {
+                this.fadeOut();
+            } else {
+                this.model.once("canplay", this.fadeOut, this );
+            }
             this.model.play();
         },
 
