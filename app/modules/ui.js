@@ -59,7 +59,7 @@ function( app, Backbone, Loader, Pause ) {
         },
 
         onSwipe: function( e ) {
-            if ( this.model.state == "playing" ) {
+            if ( this.model.state == "playing" && this.model.status.get("current_frame_model").get("attr").advance === 0 ) {
                 if ( e.direction == "left") {
                     this.model.cueNext();
                 } else if ( e.direction == "right") {

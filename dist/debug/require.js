@@ -48024,7 +48024,8 @@ function( app, Backbone, Loader, Pause ) {
         },
 
         onSwipe: function( e ) {
-            if ( this.model.state == "playing" ) {
+            console.log('swipe', this.model.status.get("current_frame_model").get("attr").advance );
+            if ( this.model.state == "playing" && this.model.status.get("current_frame_model").get("attr").advance === 0 ) {
                 if ( e.direction == "left") {
                     this.model.cueNext();
                 } else if ( e.direction == "right") {
@@ -48058,6 +48059,7 @@ function(app, Backbone, UI) {
     return Backbone.Model.extend({
 
         initialize: function() {
+            console.log(app.api);
             this.initPlayer();
         },
 
