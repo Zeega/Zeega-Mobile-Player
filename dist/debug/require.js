@@ -48024,7 +48024,6 @@ function( app, Backbone, Loader, Pause ) {
         },
 
         onSwipe: function( e ) {
-            console.log('swipe', this.model.status.get("current_frame_model").get("attr").advance );
             if ( this.model.state == "playing" && this.model.status.get("current_frame_model").get("attr").advance === 0 ) {
                 if ( e.direction == "left") {
                     this.model.cueNext();
