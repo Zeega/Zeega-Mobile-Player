@@ -19,7 +19,7 @@ __p+='<a href="#" class="mobile-play"><img src="assets/img/start-button.png"/></
 ( title )+
 '</h1>\n    <h2>by '+
 ( authors )+
-'</h2>\n</div>\n\n<div class="ZEEGA-pause-footer">\n    <a href="http://www.zeega.com/" target="blank">Explore more of the Zeegaverse!</a>\n</div>';
+'</h2>\n</div>\n\n<div class="ZEEGA-pause-footer">\n    \n</div>';
 }
 return __p;
 };

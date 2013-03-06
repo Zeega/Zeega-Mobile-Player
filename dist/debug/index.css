@@ -1317,7 +1317,7 @@ a:active {
   top: 0;
   left: 0;
   z-index: -1;
-  opacity: 0.2;
+  opacity: 0.15;
   -webkit-filter: blur(5px);
 }
 #underlay ul {
