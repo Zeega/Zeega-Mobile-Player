@@ -21,6 +21,17 @@
         font-size: 0.75em;
     }
 
+    .bg {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        opacity: 0.15;
+        -webkit-filter: blur(5px);
+    }
+
     ul {
         padding: 0;
         margin: 0;
@@ -28,7 +39,12 @@
     }
 
     li {
-        border-bottom: 1px solid #333;
+        white-space: nowrap;
+
+        a {
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
 
         &.header {
             padding: 10px 20px;
@@ -36,13 +52,15 @@
             line-height: 1.5em;
         }
 
+        &.underlay-citation {
+            font-size: 0.75em;
+        }
+
         &.spacer {
             height: 30px;
-            border-bottom: none;
         }
 
         &:last-child {
-            border-bottom: none;
         }
     }
 

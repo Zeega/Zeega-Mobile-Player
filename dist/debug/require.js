@@ -381,7 +381,7 @@ __p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="he
  _.each( frame.layers, function( layer ) { 
 ;__p+='\n                ';
  if (layer.type != "Link") { 
-;__p+='\n                    <li><a href="'+
+;__p+='\n                    <li class="underlay-citation"><a href="'+
 ( layer.attr.uri )+
 '" target="blank">'+
 ( layer.attr.title )+
@@ -391,7 +391,9 @@ __p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="he
  }) 
 ;__p+='\n        ';
  }) 
-;__p+='\n        <li class="spacer"></li>\n        <li><a href="http://www.zeega.com/" target="blank">Explore the Zeegaverse</a></li>\n    </ul>\n</div>';
+;__p+='\n        <li class="spacer"></li>\n        <li><a href="http://www.zeega.com/" target="blank">Explore the Zeegaverse</a></li>\n    </ul>\n</div>\n<div class="bg" style="\n    background: url('+
+( cover_image )+
+');\n    background-position: 50% 50%;\n    background-repeat: no-repeat no-repeat;\n    background-attachment: fixed;\n    -webkit-background-size: cover;\n    -moz-background-size: cover;\n    -o-background-size: cover;\n    background-size: cover;\n"></div>';
 }
 return __p;
 };;

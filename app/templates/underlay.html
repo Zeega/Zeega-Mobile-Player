@@ -12,7 +12,7 @@
         <% _.each( frames, function( frame ) { %>
             <% _.each( frame.layers, function( layer ) { %>
                 <% if (layer.type != "Link") { %>
-                    <li><a href="<%= layer.attr.uri %>" target="blank"><%= layer.attr.title %></a></li>
+                    <li class="underlay-citation"><a href="<%= layer.attr.uri %>" target="blank"><%= layer.attr.title %></a></li>
                 <% } %>
             <% }) %>
         <% }) %>
@@ -20,3 +20,13 @@
         <li><a href="http://www.zeega.com/" target="blank">Explore the Zeegaverse</a></li>
     </ul>
 </div>
+<div class="bg" style="
+    background: url(<%= cover_image %>);
+    background-position: 50% 50%;
+    background-repeat: no-repeat no-repeat;
+    background-attachment: fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+"></div>

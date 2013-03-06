@@ -1263,25 +1263,38 @@ a:active {
 #underlay .coffin-author {
   font-size: 0.75em;
 }
+#underlay .bg {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  opacity: 0.15;
+  -webkit-filter: blur(5px);
+}
 #underlay ul {
   padding: 0;
   margin: 0;
   list-style: none;
 }
 #underlay li {
-  border-bottom: 1px solid #333;
+  white-space: nowrap;
+}
+#underlay li a {
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 #underlay li.header {
   padding: 10px 20px;
   color: #ccc;
   line-height: 1.5em;
 }
+#underlay li.underlay-citation {
+  font-size: 0.75em;
+}
 #underlay li.spacer {
   height: 30px;
-  border-bottom: none;
-}
-#underlay li:last-child {
-  border-bottom: none;
 }
 #underlay a {
   display: block;
