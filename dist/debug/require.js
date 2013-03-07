@@ -345,7 +345,7 @@ __p+='<a href="#" class="mobile-play"><img src="assets/img/start-button.png"/></
 ( title )+
 '</h1>\n    <h2>by '+
 ( authors )+
-'</h2>\n</div>\n<div class="ZEEGA-paused-footer">\n    <a class="menu" href="#"><img src="assets/img/menu-icon.png"/></a>\n    <span class="pull-right tip">tip:';
+'</h2>\n</div>\n<div class="ZEEGA-paused-footer loader-footer">\n    <a class="menu" href="#"><img src="assets/img/menu-icon.png"/></a>\n    <span class="pull-right tip">tip:';
  if ( frames.length > 1 ) { 
 ;__p+=' Swipe to explore';
  } else { 
@@ -47161,7 +47161,7 @@ function( app, Backbone, Spinner ) {
 
         play: function() {
             this.model.mobileLoadAudioLayers();
-            this.$(".mobile-play").fadeOut();
+            this.$(".mobile-play, .loader-footer").fadeOut();
             this.spinner = new Spinner({
                 lines: 12, // The number of lines to draw
                 length: 20, // The length of each line

@@ -48,7 +48,7 @@ function( app, Backbone, Spinner ) {
 
         play: function() {
             this.model.mobileLoadAudioLayers();
-            this.$(".mobile-play").fadeOut();
+            this.$(".mobile-play, .loader-footer").fadeOut();
             this.spinner = new Spinner({
                 lines: 12, // The number of lines to draw
                 length: 20, // The length of each line
