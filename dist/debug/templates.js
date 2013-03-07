@@ -7,7 +7,13 @@ __p+='<a href="#" class="mobile-play"><img src="assets/img/start-button.png"/></
 ( title )+
 '</h1>\n    <h2>by '+
 ( authors )+
-'</h2>\n</div>\n<div class="ZEEGA-paused-footer">\n    <a class="menu" href="#"><img src="assets/img/menu-icon.png"/></a>\n    <span class="pull-right tip">tip: Swipe to explore</span>\n</div>\n<span class="ZEEGA-loader-bg"></span>';
+'</h2>\n</div>\n<div class="ZEEGA-paused-footer">\n    <a class="menu" href="#"><img src="assets/img/menu-icon.png"/></a>\n    <span class="pull-right tip">tip:';
+ if ( frames.length > 1 ) { 
+;__p+=' Swipe to explore';
+ } else { 
+;__p+='Tap to pause';
+ } 
+;__p+='</span>\n</div>\n<span class="ZEEGA-loader-bg"></span>';
 }
 return __p;
 };
