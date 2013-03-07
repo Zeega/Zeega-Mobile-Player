@@ -14,7 +14,7 @@
                 <% if (layer.type != "Link") { %>
                     <li class="underlay-citation">
                         <a href="<%= layer.attr.attribution_uri %>" target="blank">
-                            <i class="icon-<% if ( layer.type == "Audio" ) { %>music<% } else if ( layer.type == "Image" ) { %>picture<%} %> icon-white"></i> <% if ( layer.attr.title === "" ) { %>[untitled]<% } else { %><%= layer.attr.title %><% } %>
+                            <i class="icon-<%= layer.type.toLowerCase() %> icon-white"></i> <% if ( layer.attr.title === "" ) { %>[untitled]<% } else { %><%= layer.attr.title %><% } %>
                         </a>
                     </li>
                 <% } %>

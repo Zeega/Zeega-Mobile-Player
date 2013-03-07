@@ -497,7 +497,8 @@
 .icon-glass {
   background-position: 0      0;
 }
-.icon-music {
+.icon-music,
+.icon-audio {
   background-position: -24px 0;
 }
 .icon-search {
@@ -671,7 +672,8 @@
 .icon-facetime-video {
   background-position: -432px -48px;
 }
-.icon-picture {
+.icon-picture,
+.icon-image {
   background-position: -456px -48px;
 }
 .icon-pencil {
