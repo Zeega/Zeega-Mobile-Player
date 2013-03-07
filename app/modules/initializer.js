@@ -19,6 +19,11 @@ function(app, Backbone, UI) {
 
         initialize: function() {
             console.log(app.api);
+            $("#main").empty()
+                .append("<div id='overlays'></div>")
+                .append("<div id='player'></div>")
+                .append("<div id='underlay'></div>");
+
             this.initPlayer();
         },
 
