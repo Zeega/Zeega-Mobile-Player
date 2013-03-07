@@ -369,7 +369,11 @@ __p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="he
 ( title )+
 '</div>\n            <div class="coffin-author">by '+
 ( authors )+
-'</div>\n        </li>\n        <li><a href="https://mobile.twitter.com/compose/tweet?status=http://www.zeega.com/" target="blank"><i class="zsocial-twitter"></i>  Share on Twitter</a></li>\n        <li><a href="http://m.facebook.com/sharer.php?u=http://www.zeega.com/&t='+
+'</div>\n        </li>\n        <li><a href="https://mobile.twitter.com/compose/tweet?status=http://www.zeega.com/'+
+( id )+
+'" target="blank"><i class="zsocial-twitter"></i>  Share on Twitter</a></li>\n        <li><a href="http://m.facebook.com/sharer.php?u=http://www.zeega.com/'+
+( id )+
+'&t='+
 ( title )+
 ' by '+
 ( authors )+
