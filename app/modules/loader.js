@@ -38,7 +38,12 @@ function( app, Backbone, Spinner ) {
         },
 
         events: {
-            "click .mobile-play": "play"
+            "click .mobile-play": "play",
+            "click .menu": "toggleCoffin"
+        },
+
+        toggleCoffin: function() {
+            app.layout.toggleCoffin();
         },
 
         play: function() {
@@ -59,7 +64,7 @@ function( app, Backbone, Spinner ) {
                 zIndex: 2e9 // The z-index (defaults to 2000000000)
             }).spin( this.el );
 
-            if ( this.model.ready ) {
+            if ( this.model.canplay ) {
                 this.fadeOut();
             } else {
                 this.model.once("canplay", this.fadeOut, this );
@@ -68,6 +73,7 @@ function( app, Backbone, Spinner ) {
         },
 
         fadeOut: function() {
+            app.hasPlayed = true;
             this.spinner.spin(false);
             this.$el.fadeOut(function(){
                 this.remove();

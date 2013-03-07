@@ -7,7 +7,7 @@ __p+='<a href="#" class="mobile-play"><img src="assets/img/start-button.png"/></
 ( title )+
 '</h1>\n    <h2>by '+
 ( authors )+
-'</h2>\n</div>\n<span class="ZEEGA-loader-bg"></span>';
+'</h2>\n</div>\n<div class="ZEEGA-paused-footer">\n    <a class="menu" href="#"><img src="assets/img/menu-icon.png"/></a>\n    <span class="pull-right tip">tip: Swipe to explore</span>\n</div>\n<span class="ZEEGA-loader-bg"></span>';
 }
 return __p;
 };
@@ -19,7 +19,7 @@ __p+='<a href="#" class="mobile-play"><img src="assets/img/start-button.png"/></
 ( title )+
 '</h1>\n    <h2>by '+
 ( authors )+
-'</h2>\n</div>\n\n<div class="ZEEGA-pause-footer">\n    \n</div>';
+'</h2>\n</div>\n\n<div class="ZEEGA-paused-footer">\n    <a class="menu" href="#"><img src="assets/img/menu-icon.png"/></a>\n    <span class="pull-right tip">tip: Swipe to explore</span>\n</div>';
 }
 return __p;
 };
@@ -31,13 +31,13 @@ __p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="he
 ( title )+
 '</div>\n            <div class="coffin-author">by '+
 ( authors )+
-'</div>\n        </li>\n        <li><a href="https://mobile.twitter.com/compose/tweet?status=http://www.zeega.com/" target="blank">Share on Twitter</a></li>\n        <li><a href="http://m.facebook.com/sharer.php?u=http://www.zeega.com/&t='+
+'</div>\n        </li>\n        <li><a href="https://mobile.twitter.com/compose/tweet?status=http://www.zeega.com/" target="blank"><i class="zsocial-twitter"></i>  Share on Twitter</a></li>\n        <li><a href="http://m.facebook.com/sharer.php?u=http://www.zeega.com/&t='+
 ( title )+
 ' by '+
 ( authors )+
-'" target="blank">Share on Facebook</a></li>\n        <li><a href="mailto:friend@example.com?subject=Check out this Zeega!&body=http://www.zeega.com/'+
+'" target="blank"><i class="zsocial-facebook"></i>  Share on Facebook</a></li>\n        <li><a href="mailto:friend@example.com?subject=Check out this Zeega!&body=http://www.zeega.com/'+
 ( id )+
-'">Share on Email</a></li>\n        <li class="spacer"></li>\n        <li class="header">Credits</li>\n        ';
+'"><i class="zsocial-email"></i>  Share on Email</a></li>\n        <li class="spacer"></li>\n        <li class="header">Credits</li>\n        ';
  _.each( frames, function( frame ) { 
 ;__p+='\n            ';
  _.each( frame.layers, function( layer ) { 

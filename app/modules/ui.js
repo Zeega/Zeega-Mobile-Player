@@ -23,6 +23,7 @@ function( app, Backbone, Loader, Pause, Underlay ) {
     // This will fetch the tutorial template and render it.
     UI.Layout = Backbone.Layout.extend({
         
+        coffin: false,
         pauseView: null,
         el: "#main",
 
@@ -71,21 +72,40 @@ function( app, Backbone, Loader, Pause, Underlay ) {
                 } else if ( e.direction == "right") {
                     this.model.cuePrev();
                 }
-            } else if ( this.model.state == "paused" ) {
-                if ( e.direction == "left") {
-
-                    $("#overlays, #player").animate({
-                        left: 0
-                    });
-                    $("#underlay").fadeOut();
-                } else if ( e.direction == "right") {
-                    this.underlay.show();
-                    $("#overlays, #player").animate({
-                        left: "95%"
-                    });
-                    $("#underlay").fadeIn();
-                }
+            } else if ( this.model.state == "paused" && this.coffin && e.direction == "left" ) {
+                this.hideCoffin();
+            } else if ( this.model.state == "paused" && !this.coffin && e.direction == "right" ) {
+                this.showCoffin();
+            } else if ( !app.hasPlayed && !this.coffin && e.direction == "left" ) {
+                this.loader.play();
+            } else if ( app.hasPlayed && !this.coffin && e.direction == "left" ) {
+                this.pauseView.play();
             }
+        },
+
+        toggleCoffin: function() {
+            if ( this.coffin ) {
+                this.hideCoffin();
+            } else {
+                this.showCoffin();
+            }
+        },
+
+        showCoffin: function() {
+            this.coffin = true;
+            this.underlay.show();
+            $("#overlays, #player").animate({
+                left: "83%"
+            });
+            $("#underlay").fadeIn();
+        },
+
+        hideCoffin: function() {
+            this.coffin = false;
+            $("#overlays, #player").animate({
+                left: 0
+            });
+            $("#underlay").fadeOut();
         }
 
     });

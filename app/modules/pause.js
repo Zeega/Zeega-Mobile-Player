@@ -15,7 +15,12 @@ function( app, Backbone ) {
         },
 
         events: {
-            "click .mobile-play": "play"
+            "click .mobile-play": "play",
+            "click .menu": "toggleCoffin"
+        },
+
+        toggleCoffin: function() {
+            app.layout.toggleCoffin();
         },
 
         play: function() {

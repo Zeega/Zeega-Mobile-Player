@@ -345,7 +345,7 @@ __p+='<a href="#" class="mobile-play"><img src="assets/img/start-button.png"/></
 ( title )+
 '</h1>\n    <h2>by '+
 ( authors )+
-'</h2>\n</div>\n<span class="ZEEGA-loader-bg"></span>';
+'</h2>\n</div>\n<div class="ZEEGA-paused-footer">\n    <a class="menu" href="#"><img src="assets/img/menu-icon.png"/></a>\n    <span class="pull-right tip">tip: Swipe to explore</span>\n</div>\n<span class="ZEEGA-loader-bg"></span>';
 }
 return __p;
 };
@@ -357,7 +357,7 @@ __p+='<a href="#" class="mobile-play"><img src="assets/img/start-button.png"/></
 ( title )+
 '</h1>\n    <h2>by '+
 ( authors )+
-'</h2>\n</div>\n\n<div class="ZEEGA-pause-footer">\n    \n</div>';
+'</h2>\n</div>\n\n<div class="ZEEGA-paused-footer">\n    <a class="menu" href="#"><img src="assets/img/menu-icon.png"/></a>\n    <span class="pull-right tip">tip: Swipe to explore</span>\n</div>';
 }
 return __p;
 };
@@ -369,13 +369,13 @@ __p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="he
 ( title )+
 '</div>\n            <div class="coffin-author">by '+
 ( authors )+
-'</div>\n        </li>\n        <li><a href="https://mobile.twitter.com/compose/tweet?status=http://www.zeega.com/" target="blank">Share on Twitter</a></li>\n        <li><a href="http://m.facebook.com/sharer.php?u=http://www.zeega.com/&t='+
+'</div>\n        </li>\n        <li><a href="https://mobile.twitter.com/compose/tweet?status=http://www.zeega.com/" target="blank"><i class="zsocial-twitter"></i>  Share on Twitter</a></li>\n        <li><a href="http://m.facebook.com/sharer.php?u=http://www.zeega.com/&t='+
 ( title )+
 ' by '+
 ( authors )+
-'" target="blank">Share on Facebook</a></li>\n        <li><a href="mailto:friend@example.com?subject=Check out this Zeega!&body=http://www.zeega.com/'+
+'" target="blank"><i class="zsocial-facebook"></i>  Share on Facebook</a></li>\n        <li><a href="mailto:friend@example.com?subject=Check out this Zeega!&body=http://www.zeega.com/'+
 ( id )+
-'">Share on Email</a></li>\n        <li class="spacer"></li>\n        <li class="header">Credits</li>\n        ';
+'"><i class="zsocial-email"></i>  Share on Email</a></li>\n        <li class="spacer"></li>\n        <li class="header">Credits</li>\n        ';
  _.each( frames, function( frame ) { 
 ;__p+='\n            ';
  _.each( frame.layers, function( layer ) { 
@@ -28333,14 +28333,16 @@ function( Zeega, _Layer ){
         audio: null,
         ended: false,
         playbackCount: 0,
+        listening: false,
 
         serialize: function() {
             return this.model.toJSON();
         },
 
         onPlay: function() {
-            this.ended = false;
             this.audio.play();
+            this.ended = false;
+            
         },
 
         onPause: function() {
@@ -28353,11 +28355,52 @@ function( Zeega, _Layer ){
 
         verifyReady: function() {
             this.audio = document.getElementById("audio-el-" + this.model.id );
-            this.$('audio').on("canplay", function() {
-                this.audio.pause();
-                this.model.trigger( "visual_ready", this.model.id );
+
+            this.audio.load();
+            this.audio.addEventListener("canplaythrough", function() {
+                this.onCanPlay();
             }.bind( this ));
-        }
+        },
+
+        onCanPlay: _.once(function() {
+            this.audio.pause();
+            this.audio.currentTime = this.getAttr("cue_in");
+
+            if ( this.getAttr("cue_out") || this.getAttr("loop") ) {
+                this.listen();
+            }
+            this.model.trigger( "visual_ready", this.model.id );
+        }),
+
+        listen: _.once(function() {
+            this.audio.addEventListener("timeupdate", function(){
+                var currentTime = this.audio.currentTime;
+
+                if ( currentTime >= this.getAttr("cue_out" ) ) {
+                    if ( this.getAttr("loop") ) {
+                        this.audio.pause();
+                        this.audio.currentTime = this.getAttr("cue_in");
+                        this.audio.play();
+                    } else {
+                        this.audio.pause();
+                        this.audio.currentTime = this.getAttr("cue_in");
+                    }
+                }
+
+            }.bind( this ));
+
+            this.audio.addEventListener("ended", function(){
+                if ( this.getAttr("loop") ) {
+                    this.audio.pause();
+                    this.audio.currentTime = this.getAttr("cue_in");
+                    this.audio.play();
+                } else {
+                    this.audio.pause();
+                    this.audio.currentTime = this.getAttr("cue_in");
+                }
+            }.bind( this ));
+        })
+
 
     });
 
@@ -30132,6 +30175,7 @@ function( Zeega, ZeegaParser, Relay, Status, PlayerLayout, Parse ) {
 
     Player = Zeega.Backbone.Model.extend({
 
+        canplay: false,
         ready: false,          // the player is parsed and in the dom. can call play play. layers have not been preloaded yet
         state: "paused",
         relay: null,
@@ -30424,8 +30468,17 @@ function( Zeega, ZeegaParser, Relay, Status, PlayerLayout, Parse ) {
         // attach listeners
         _listen: function() {
             this.on("cue_frame", this.cueFrame, this );
+            this.on("frame_preloaded", this.onInitialFramesPreloaded, this );
             // relays
             this.relay.on("change:current_frame", this._remote_cueFrame, this );
+        },
+
+        onInitialFramesPreloaded: function( info ) {
+            if ( this.get("startFrame") == info.frame.id ) {
+                this.canplay = true;
+                this.status.emit("canplay", this );
+                this.off("frame_preloaded", this.onInitialFramesPreloaded );
+            }
         },
 
         _remote_cueFrame: function( info, id ) {
@@ -46620,6 +46673,8 @@ function( $, _, Backbone, State ) {
     var app = {
         // The root path to run the application.
         root: "/",
+
+        hasPlayed: false,
         // the path of the zeega api
         // only required for dynamically loaded zeegas
         api: localStorage.getItem("api") || "http://dev.zeega.org/joseph/web/api/projects/",
@@ -47068,7 +47123,12 @@ function( app, Backbone, Spinner ) {
         },
 
         events: {
-            "click .mobile-play": "play"
+            "click .mobile-play": "play",
+            "click .menu": "toggleCoffin"
+        },
+
+        toggleCoffin: function() {
+            app.layout.toggleCoffin();
         },
 
         play: function() {
@@ -47089,7 +47149,7 @@ function( app, Backbone, Spinner ) {
                 zIndex: 2e9 // The z-index (defaults to 2000000000)
             }).spin( this.el );
 
-            if ( this.model.ready ) {
+            if ( this.model.canplay ) {
                 this.fadeOut();
             } else {
                 this.model.once("canplay", this.fadeOut, this );
@@ -47098,6 +47158,7 @@ function( app, Backbone, Spinner ) {
         },
 
         fadeOut: function() {
+            app.hasPlayed = true;
             this.spinner.spin(false);
             this.$el.fadeOut(function(){
                 this.remove();
@@ -47125,7 +47186,12 @@ function( app, Backbone ) {
         },
 
         events: {
-            "click .mobile-play": "play"
+            "click .mobile-play": "play",
+            "click .menu": "toggleCoffin"
+        },
+
+        toggleCoffin: function() {
+            app.layout.toggleCoffin();
         },
 
         play: function() {
@@ -48661,6 +48727,7 @@ function( app, Backbone, Loader, Pause, Underlay ) {
     // This will fetch the tutorial template and render it.
     UI.Layout = Backbone.Layout.extend({
         
+        coffin: false,
         pauseView: null,
         el: "#main",
 
@@ -48709,21 +48776,40 @@ function( app, Backbone, Loader, Pause, Underlay ) {
                 } else if ( e.direction == "right") {
                     this.model.cuePrev();
                 }
-            } else if ( this.model.state == "paused" ) {
-                if ( e.direction == "left") {
-
-                    $("#overlays, #player").animate({
-                        left: 0
-                    });
-                    $("#underlay").fadeOut();
-                } else if ( e.direction == "right") {
-                    this.underlay.show();
-                    $("#overlays, #player").animate({
-                        left: "95%"
-                    });
-                    $("#underlay").fadeIn();
-                }
+            } else if ( this.model.state == "paused" && this.coffin && e.direction == "left" ) {
+                this.hideCoffin();
+            } else if ( this.model.state == "paused" && !this.coffin && e.direction == "right" ) {
+                this.showCoffin();
+            } else if ( !app.hasPlayed && !this.coffin && e.direction == "left" ) {
+                this.loader.play();
+            } else if ( app.hasPlayed && !this.coffin && e.direction == "left" ) {
+                this.pauseView.play();
             }
+        },
+
+        toggleCoffin: function() {
+            if ( this.coffin ) {
+                this.hideCoffin();
+            } else {
+                this.showCoffin();
+            }
+        },
+
+        showCoffin: function() {
+            this.coffin = true;
+            this.underlay.show();
+            $("#overlays, #player").animate({
+                left: "83%"
+            });
+            $("#underlay").fadeIn();
+        },
+
+        hideCoffin: function() {
+            this.coffin = false;
+            $("#overlays, #player").animate({
+                left: 0
+            });
+            $("#underlay").fadeOut();
         }
 
     });

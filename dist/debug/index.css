@@ -984,6 +984,7 @@ html {
   position: absolute;
   width: 100%;
   z-index: 1;
+  box-shadow: -50px 0 50px #000000;
 }
 a {
   color: white;
@@ -1290,6 +1291,28 @@ a:active {
 .ZEEGA-pause-overlay .mobile-play img {
   width: 100%;
 }
+.ZEEGA-paused-footer {
+  background: rgba(0, 0, 0, 0.75);
+  color: white;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+.ZEEGA-paused-footer .menu {
+  padding: 10px;
+  display: inline-block;
+}
+.ZEEGA-paused-footer .menu img {
+  height: 30px;
+}
+.ZEEGA-paused-footer .tip {
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  position: absolute;
+  height: 18px;
+  right: 10px;
+}
 #underlay {
   color: #333;
   font-size: 1.5em;
@@ -1331,6 +1354,7 @@ a:active {
 #underlay li a {
   text-overflow: ellipsis;
   overflow: hidden;
+  font-size: 0.75em;
 }
 #underlay li.header {
   padding: 10px 20px;
