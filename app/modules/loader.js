@@ -17,7 +17,6 @@ function( app, Backbone, Spinner ) {
         },
 
         serialize: function() {
-            console.log("pr",this.model.project.toJSON());
             return this.model.project.toJSON();
         },
 
