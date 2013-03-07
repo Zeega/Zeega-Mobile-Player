@@ -385,11 +385,23 @@ __p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="he
  _.each( frame.layers, function( layer ) { 
 ;__p+='\n                ';
  if (layer.type != "Link") { 
-;__p+='\n                    <li class="underlay-citation"><a href="'+
-( layer.attr.uri )+
-'" target="blank">'+
+;__p+='\n                    <li class="underlay-citation">\n                        <a href="'+
+( layer.attr.attribution_uri )+
+'" target="blank">\n                            <i class="icon-';
+ if ( layer.type == "Audio" ) { 
+;__p+='music';
+ } else if ( layer.type == "Image" ) { 
+;__p+='picture';
+} 
+;__p+=' icon-white"></i> ';
+ if ( layer.attr.title === "" ) { 
+;__p+='[untitled]';
+ } else { 
+;__p+=''+
 ( layer.attr.title )+
-'</a></li>\n                ';
+'';
+ } 
+;__p+='\n                        </a>\n                    </li>\n                ';
  } 
 ;__p+='\n            ';
  }) 
