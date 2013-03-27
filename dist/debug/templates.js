@@ -44,15 +44,15 @@ __p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="he
 '</div>\n            <div class="coffin-author">by '+
 ( authors )+
 '</div>\n        </li>\n        <li><a href="https://mobile.twitter.com/compose/tweet?status=http://www.zeega.com/'+
-( id )+
+( item_id )+
 '" target="blank"><i class="zsocial-twitter"></i>  Share on Twitter</a></li>\n        <li><a href="http://m.facebook.com/sharer.php?u=http://www.zeega.com/'+
-( id )+
+( item_id )+
 '&t='+
 ( title )+
 ' by '+
 ( authors )+
 '" target="blank"><i class="zsocial-facebook"></i>  Share on Facebook</a></li>\n        <li><a href="mailto:friend@example.com?subject=Check out this Zeega!&body=http://www.zeega.com/'+
-( id )+
+( item_id )+
 '"><i class="zsocial-email"></i>  Share on Email</a></li>\n        <li class="spacer"></li>\n        <li class="header">Credits</li>\n        ';
  _.each( frames, function( frame ) { 
 ;__p+='\n            ';
