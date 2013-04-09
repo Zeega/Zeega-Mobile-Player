@@ -338,14 +338,24 @@ var requirejs, require, define;
 }());
 ;this["JST"] = this["JST"] || {};
 
+this["JST"]["app/templates/chrome.html"] = function(obj){
+var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+with(obj||{}){
+__p+='<div class="chrome-top">\n    <div class="ZEEGA-tab"><img src="assets/img/zeega-logo-white-30.png"/></div>\n    <div class="chrome-title">'+
+( title )+
+'</div>\n</div>\n<div class="chrome-bottom">\n    <div class="playpause-wrapper">\n        <div href="#" class="ZEEGA-playpause pause-zcon"></div>\n    </div>\n</div>';
+}
+return __p;
+};
+
 this["JST"]["app/templates/loader.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<a href="#" class="mobile-play"><img src="assets/img/start-button.png"/></a>\n\n<div class="ZEEGA-loader-inner">\n    <h1>'+
+__p+='<div class="ZEEGA-tab"><img src="assets/img/zeega-logo-white-30.png"/></div>\n\n<div class="ZEEGA-loader-inner">\n    <h1>'+
 ( title )+
 '</h1>\n    <h2>by '+
 ( authors )+
-'</h2>\n</div>\n<div class="ZEEGA-paused-footer loader-footer">\n    <a class="menu" href="#"><img src="assets/img/menu-icon.png"/></a>\n    <span class="pull-right tip">tip:';
+'</h2>\n</div>\n\n<a href="#" class="mobile-play"><img src="assets/img/start-button.png"/></a>\n\n<div class="ZEEGA-paused-footer loader-footer">\n    <span class="pull-right tip">tip:';
  if ( frames.length > 1 ) { 
 ;__p+=' Swipe to explore';
  } else { 
@@ -47035,8 +47045,9 @@ define('app',[
 ],
 
 function( $, _, Backbone, State ) {
-    // Provide a global location to place configuration settings and module
-    // creation.
+
+    var meta = $("meta[name=zeega]");
+
     var app = {
         // The root path to run the application.
         root: "/",
@@ -47045,6 +47056,9 @@ function( $, _, Backbone, State ) {
         // the path of the zeega api
         // only required for dynamically loaded zeegas
         api: localStorage.getItem("api") || "http://dev.zeega.org/joseph/web/api/projects/",
+
+        hostname: meta.data("hostname"),
+        directory: meta.data("directory"),
 
       /*
         app.state stores information on the current state of the application
@@ -47466,6 +47480,7 @@ function( app, Backbone, Spinner ) {
 
         initialize: function() {
             this.model.on("frame_ready", this.onCanPlay, this );
+            console.log("INIT", app, this.model );
         },
 
         serialize: function() {
@@ -47491,7 +47506,7 @@ function( app, Backbone, Spinner ) {
 
         events: {
             "click .mobile-play": "play",
-            "click .menu": "toggleCoffin"
+            "click .ZEEGA-tab": "toggleCoffin"
         },
 
         toggleCoffin: function() {
@@ -48201,6 +48216,83 @@ function( app, Backbone ) {
         play: function() {
             this.remove();
             this.model.play();
+        }
+
+  });
+
+});
+
+define('modules/chrome',[
+    "app",
+    // Libs
+    "backbone",
+    "libs/spin"
+],
+
+function( app, Backbone, Spinner ) {
+
+    return Backbone.View.extend({
+
+        
+        FADE_TIMER: 5000,
+
+        className: "ZEEGA-chrome",
+        template: "chrome",
+
+        timer: null,
+
+        serialize: function() {
+            return this.model.project.toJSON();
+        },
+
+        initialize: function() {
+            this.model.on("canplay", this.onCanplay, this );
+        },
+
+        onCanplay: function() {
+            this.model.on("play", this.onPlay, this );
+            this.model.on("pause", this.onPause, this );
+        },
+
+        events: {
+            "click .playpause-wrapper": "playPause",
+            "click .ZEEGA-tab": "showCoffin"
+        },
+
+        show: function() {
+            if ( app.hasPlayed ) {
+                this.$(".chrome-top, .chrome-bottom").show();
+                clearInterval( this.timer );
+                this.timer = setTimeout(function() {
+                    this.hide();
+                }.bind( this ), this.FADE_TIMER );
+            }
+        },
+
+        onPlay: function() {
+            this.show();
+            this.$(".ZEEGA-playpause").addClass("pause-zcon").removeClass("play-zcon");
+        },
+
+        onPause: function() {
+            clearInterval( this.timer );
+            this.$(".ZEEGA-playpause").removeClass("pause-zcon").addClass("play-zcon");
+        },
+
+        hide: function( force ) {
+            if ( this.model.state != "paused" || force === true ) {
+                this.$(".chrome-top, .chrome-bottom").fadeOut();
+            }
+        },
+
+        playPause: function() {
+            this.model.playPause();
+        },
+
+        showCoffin: function() {
+            this.hide( true );
+            this.model.pause();
+            app.layout.showCoffin();
         }
 
   });
@@ -49083,26 +49175,28 @@ define('modules/ui',[
     "modules/loader",
     "modules/pause",
     "modules/underlay",
+    "modules/chrome",
     "vendor/hammer/hammer"
 ],
 
-function( app, Backbone, Loader, Pause, Underlay ) {
+function( app, Backbone, Loader, Pause, Underlay, Chrome ) {
 
-    // Create a new module
-    var UI = {};
-
-    // This will fetch the tutorial template and render it.
-    UI.Layout = Backbone.Layout.extend({
+    return Backbone.Layout.extend({
         
         coffin: false,
         pauseView: null,
+        glowTimer: null,
+
+        GLOW: 3000,
         el: "#main",
 
         initialize: function() {
             this.loader = new Loader({ model: this.model });
+            this.chrome = new Chrome({ model: this.model });
             this.underlay = new Underlay({ model: this.model });
 
             this.insertView("#overlays", this.loader );
+            this.insertView("#chrome", this.chrome );
             this.insertView("#underlay", this.underlay );
             this.render();
         },
@@ -49113,17 +49207,22 @@ function( app, Backbone, Loader, Pause, Underlay ) {
         },
 
         events: {
-            "click #player": "pause"
+            "click #player": "onTap"
         },
 
-        pause: function() {
-            app.player.playPause();
+        onTap: function() {
+            this.chrome.show();
+            this.glowLinks();
+        },
 
-            if ( this.pauseView === null ) {
-                this.pauseView = new Pause({ model: this.model });
+        glowLinks: function() {
+            if ( this.model.state != "paused" ) {
+                clearInterval( this.glowTimer );
+                $(".visual-element-link").addClass("mobile-glow");
+                this.timer = setTimeout(function() {
+                    $(".visual-element-link").removeClass("mobile-glow");
+                }, this.GLOW );
             }
-            this.$("#overlays").html( this.pauseView.el );
-            this.pauseView.render();
         },
 
         startTouchEvents: function() {
@@ -49137,7 +49236,7 @@ function( app, Backbone, Loader, Pause, Underlay ) {
         },
 
         onSwipe: function( e ) {
-            if ( this.model.state == "playing" && this.model.status.get("current_frame_model").get("attr").advance === 0 ) {
+            if ( this.model.state == "playing" ) {
                 if ( e.direction == "left") {
                     this.model.cueNext();
                 } else if ( e.direction == "right") {
@@ -49169,20 +49268,23 @@ function( app, Backbone, Loader, Pause, Underlay ) {
                 left: "83%"
             });
             $("#underlay").fadeIn();
+            this.chrome.hide( true );
         },
 
         hideCoffin: function() {
             this.coffin = false;
             $("#overlays, #player").animate({
                 left: 0
+            },{
+                complete: function() {
+                    this.chrome.show();
+                }.bind( this )
             });
             $("#underlay").fadeOut();
         }
 
     });
 
-    // Required, return the module for AMD compliance
-    return UI;
 });
 /*
 
@@ -49204,10 +49306,10 @@ function(app, Backbone, UI) {
     return Backbone.Model.extend({
 
         initialize: function() {
-            console.log(app.api);
             $("#main").empty()
                 .append("<div id='overlays'></div>")
                 .append("<div id='player'></div>")
+                .append("<div id='chrome'></div>")
                 .append("<div id='underlay'></div>");
 
             this.initPlayer();
@@ -49236,7 +49338,7 @@ function(app, Backbone, UI) {
         },
 
         onDataLoaded: function( parsed ) {
-            app.layout = new UI.Layout({ model: app.player });
+            app.layout = new UI({ model: app.player });
         }
 
   });

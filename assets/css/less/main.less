@@ -1,3 +1,8 @@
+.transition( @property, @sec ) {
+    transition: @property @sec;
+    -webkit-transition: @property @sec;
+}
+
 html {
 	background: black;
 	font-family: 'Helvetica', sans-serif;
@@ -20,8 +25,47 @@ html {
 		position: absolute;
 		width:100%;
 		z-index: 1;
-		box-shadow: -50px 0 50px black;
 	}
+}
+
+.ZEEGA-tab {
+    background: red;
+    display: inline-block;
+    padding: 5px;
+    margin-left: 20px;
+    width: 30px;
+    height: 35px;
+    float: left;
+    margin-right: 20px;
+    border-radius: 0 0 2px 2px;
+    img {
+        margin-top: 2px;
+    }
+}
+
+.mobile-play {
+	width: 125px;
+	height: 70px;
+	display: block;
+	bottom: 25%;
+	position: absolute;
+	left: 0;
+	right: 0;
+	margin: auto;
+
+	background: rgba(0,0,0,0.5);
+	border-radius: 56px;
+	padding: 5px 5px 3px 5px;
+
+	img {
+		width: 100%;
+	}
+}
+
+.visual-element.mobile-glow {
+	.transition( all, 0.5s );
+	box-shadow: 0 0 20px white;
+	background-color: rgba(255,255,255,0.25);
 }
 
 

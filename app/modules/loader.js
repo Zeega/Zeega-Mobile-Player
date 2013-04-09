@@ -14,6 +14,7 @@ function( app, Backbone, Spinner ) {
 
         initialize: function() {
             this.model.on("frame_ready", this.onCanPlay, this );
+            console.log("INIT", app, this.model );
         },
 
         serialize: function() {
@@ -39,7 +40,7 @@ function( app, Backbone, Spinner ) {
 
         events: {
             "click .mobile-play": "play",
-            "click .menu": "toggleCoffin"
+            "click .ZEEGA-tab": "toggleCoffin"
         },
 
         toggleCoffin: function() {

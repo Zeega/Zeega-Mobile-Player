@@ -12,26 +12,28 @@ define([
     "modules/loader",
     "modules/pause",
     "modules/underlay",
+    "modules/chrome",
     "vendor/hammer/hammer"
 ],
 
-function( app, Backbone, Loader, Pause, Underlay ) {
+function( app, Backbone, Loader, Pause, Underlay, Chrome ) {
 
-    // Create a new module
-    var UI = {};
-
-    // This will fetch the tutorial template and render it.
-    UI.Layout = Backbone.Layout.extend({
+    return Backbone.Layout.extend({
         
         coffin: false,
         pauseView: null,
+        glowTimer: null,
+
+        GLOW: 3000,
         el: "#main",
 
         initialize: function() {
             this.loader = new Loader({ model: this.model });
+            this.chrome = new Chrome({ model: this.model });
             this.underlay = new Underlay({ model: this.model });
 
             this.insertView("#overlays", this.loader );
+            this.insertView("#chrome", this.chrome );
             this.insertView("#underlay", this.underlay );
             this.render();
         },
@@ -42,17 +44,22 @@ function( app, Backbone, Loader, Pause, Underlay ) {
         },
 
         events: {
-            "click #player": "pause"
+            "click #player": "onTap"
         },
 
-        pause: function() {
-            app.player.playPause();
+        onTap: function() {
+            this.chrome.show();
+            this.glowLinks();
+        },
 
-            if ( this.pauseView === null ) {
-                this.pauseView = new Pause({ model: this.model });
+        glowLinks: function() {
+            if ( this.model.state != "paused" ) {
+                clearInterval( this.glowTimer );
+                $(".visual-element-link").addClass("mobile-glow");
+                this.timer = setTimeout(function() {
+                    $(".visual-element-link").removeClass("mobile-glow");
+                }, this.GLOW );
             }
-            this.$("#overlays").html( this.pauseView.el );
-            this.pauseView.render();
         },
 
         startTouchEvents: function() {
@@ -66,7 +73,7 @@ function( app, Backbone, Loader, Pause, Underlay ) {
         },
 
         onSwipe: function( e ) {
-            if ( this.model.state == "playing" && this.model.status.get("current_frame_model").get("attr").advance === 0 ) {
+            if ( this.model.state == "playing" ) {
                 if ( e.direction == "left") {
                     this.model.cueNext();
                 } else if ( e.direction == "right") {
@@ -98,18 +105,21 @@ function( app, Backbone, Loader, Pause, Underlay ) {
                 left: "83%"
             });
             $("#underlay").fadeIn();
+            this.chrome.hide( true );
         },
 
         hideCoffin: function() {
             this.coffin = false;
             $("#overlays, #player").animate({
                 left: 0
+            },{
+                complete: function() {
+                    this.chrome.show();
+                }.bind( this )
             });
             $("#underlay").fadeOut();
         }
 
     });
 
-    // Required, return the module for AMD compliance
-    return UI;
 });

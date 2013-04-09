@@ -18,10 +18,10 @@ function(app, Backbone, UI) {
     return Backbone.Model.extend({
 
         initialize: function() {
-            console.log(app.api);
             $("#main").empty()
                 .append("<div id='overlays'></div>")
                 .append("<div id='player'></div>")
+                .append("<div id='chrome'></div>")
                 .append("<div id='underlay'></div>");
 
             this.initPlayer();
@@ -50,7 +50,7 @@ function(app, Backbone, UI) {
         },
 
         onDataLoaded: function( parsed ) {
-            app.layout = new UI.Layout({ model: app.player });
+            app.layout = new UI({ model: app.player });
         }
 
   });

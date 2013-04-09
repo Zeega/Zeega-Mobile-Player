@@ -1,13 +1,23 @@
 this["JST"] = this["JST"] || {};
 
+this["JST"]["app/templates/chrome.html"] = function(obj){
+var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+with(obj||{}){
+__p+='<div class="chrome-top">\n    <div class="ZEEGA-tab"><img src="assets/img/zeega-logo-white-30.png"/></div>\n    <div class="chrome-title">'+
+( title )+
+'</div>\n</div>\n<div class="chrome-bottom">\n    <div class="playpause-wrapper">\n        <div href="#" class="ZEEGA-playpause pause-zcon"></div>\n    </div>\n</div>';
+}
+return __p;
+};
+
 this["JST"]["app/templates/loader.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<a href="#" class="mobile-play"><img src="assets/img/start-button.png"/></a>\n\n<div class="ZEEGA-loader-inner">\n    <h1>'+
+__p+='<div class="ZEEGA-tab"><img src="assets/img/zeega-logo-white-30.png"/></div>\n\n<div class="ZEEGA-loader-inner">\n    <h1>'+
 ( title )+
 '</h1>\n    <h2>by '+
 ( authors )+
-'</h2>\n</div>\n<div class="ZEEGA-paused-footer loader-footer">\n    <a class="menu" href="#"><img src="assets/img/menu-icon.png"/></a>\n    <span class="pull-right tip">tip:';
+'</h2>\n</div>\n\n<a href="#" class="mobile-play"><img src="assets/img/start-button.png"/></a>\n\n<div class="ZEEGA-paused-footer loader-footer">\n    <span class="pull-right tip">tip:';
  if ( frames.length > 1 ) { 
 ;__p+=' Swipe to explore';
  } else { 

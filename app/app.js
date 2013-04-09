@@ -10,8 +10,9 @@ define([
 ],
 
 function( $, _, Backbone, State ) {
-    // Provide a global location to place configuration settings and module
-    // creation.
+
+    var meta = $("meta[name=zeega]");
+
     var app = {
         // The root path to run the application.
         root: "/",
@@ -20,6 +21,9 @@ function( $, _, Backbone, State ) {
         // the path of the zeega api
         // only required for dynamically loaded zeegas
         api: localStorage.getItem("api") || "http://dev.zeega.org/joseph/web/api/projects/",
+
+        hostname: meta.data("hostname"),
+        directory: meta.data("directory"),
 
       /*
         app.state stores information on the current state of the application
