@@ -4,9 +4,9 @@
             <div><%= title %></div>
             <div class="coffin-author">by <%= authors %></div>
         </li>
-        <li><a href="https://mobile.twitter.com/compose/tweet?status=http://www.zeega.com/<%= id %>" target="blank"><i class="zsocial-twitter"></i>  Share on Twitter</a></li>
-        <li><a href="http://m.facebook.com/sharer.php?u=http://www.zeega.com/<%= id %>&t=<%= title %> by <%= authors %>" target="blank"><i class="zsocial-facebook"></i>  Share on Facebook</a></li>
-        <li><a href="mailto:friend@example.com?subject=Check out this Zeega!&body=http://www.zeega.com/<%= id %>"><i class="zsocial-email"></i>  Share on Email</a></li>
+        <li><a href="https://mobile.twitter.com/compose/tweet?status=http://www.zeega.com/<%= item_id %>" target="blank"><i class="zsocial-twitter"></i>  Share on Twitter</a></li>
+        <li><a href="http://m.facebook.com/sharer.php?u=http://www.zeega.com/<%= item_id %>&t=<%= title %> by <%= authors %>" target="blank"><i class="zsocial-facebook"></i>  Share on Facebook</a></li>
+        <li><a href="mailto:?subject=Check out this Zeega!&body=http://www.zeega.com/<%= item_id %>"><i class="zsocial-email"></i>  Share on Email</a></li>
         <li class="spacer"></li>
         <li class="header">Credits</li>
         <% _.each( frames, function( frame ) { %>
