@@ -1,0 +1,58 @@
+@image-folder: '../img';
+
+.ZEEGA-chrome {
+
+    .chrome-top, .chrome-bottom {
+        z-index: 100;
+        display: none;
+    }
+
+    .chrome-top {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 30px;
+        width: 100%;
+
+        .chrome-title {
+            color: white;
+            font-size: 30px;
+            background: rgba(0,0,0,0.5);
+            padding: 10px 10px 5px 10px;
+            position: absolute;
+            left: 70px;
+            right: 20px;
+            border-radius: 0 0 2px 2px;
+        }
+    }
+
+    .chrome-bottom {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 30px;
+        width: 100%;
+
+        .playpause-wrapper {
+            position: absolute;
+            left: 10px;
+            bottom: 0;
+            padding: 10px;
+            display: block;
+        }
+
+    }
+}
+
+.play-zcon,
+.pause-zcon {
+    background-image: url('@{image-folder}/playpause.png');
+    background-position: -3px 0px;
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 30px;
+    width: 30px; 
+}
+.pause-zcon {
+    background-position: -33px 0px;
+}
