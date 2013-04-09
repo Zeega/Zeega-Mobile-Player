@@ -1438,7 +1438,10 @@ a:active {
 }
 .ZEEGA-chrome .chrome-bottom .playpause-wrapper {
   position: absolute;
-  left: 10px;
+  right: 0;
+  left: 0;
+  width: 30px;
+  margin: auto;
   bottom: 0;
   padding: 10px;
   display: block;
