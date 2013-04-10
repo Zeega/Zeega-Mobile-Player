@@ -77,7 +77,7 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome ) {
                 if ( e.direction == "left") {
                     this.model.cueNext();
                 } else if ( e.direction == "right") {
-                    this.model.cuePrev();
+                    this.model.cueBack();
                 }
             } else if ( this.model.state == "paused" && this.coffin && e.direction == "left" ) {
                 this.hideCoffin();

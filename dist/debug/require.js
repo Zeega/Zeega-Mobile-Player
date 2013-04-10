@@ -485,7 +485,7 @@ return __p;
 this["JST"]["app/templates/plugins/link.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<a href=\'#\' class=\'ZEEGA-link-inner\'></a>';
+__p+='<div href=\'#\' class=\'ZEEGA-link-inner\'></div>';
 }
 return __p;
 };
@@ -25076,7 +25076,7 @@ function( Zeega, _Layer ) {
     },
 
     events: {
-        "click a": "goClick",
+        "click": "goClick",
         "mouseover": "onMouseOver",
         "mouseout": "onMouseOut"
     },
@@ -30256,7 +30256,11 @@ function( Zeega ) {
             sequence = frame.collection.sequence;
 
             fHist = this.get("frameHistory");
-            fHist.push( frame.id );
+            if ( fHist.length === 0 || fHist[ fHist.length - 1 ] != frame.id ){
+                fHist.push( frame.id );
+            }
+            
+
             this.put({
                 current_frame_model: frame,
                 frameHistory: fHist
@@ -30282,6 +30286,19 @@ function( Zeega ) {
                     _.extend({}, this.get("current_sequence_model").toJSON() )
                 );
             }
+        },
+
+        onBack: function() {
+
+            fHist = this.get("frameHistory");
+            
+            if( fHist.length > 1 && fHist[ fHist.length - 1 ] == this.get("current_frame")){
+                fHist.pop();
+                this.put({
+                    frameHistory: fHist
+                }); 
+            }
+            
         },
 
         /*
@@ -30996,6 +31013,15 @@ function( Zeega, ZeegaParser, Relay, Status, PlayerLayout, Parse ) {
         // goes to the prev frame after n ms
         cuePrev: function( ms ) {
             this.cueFrame( this.status.get("current_frame_model").get("_prev"), ms );
+        },
+
+        // goes to previous frame in history
+        cueBack: function() {
+            this.status.onBack();
+            var history = this.status.get("frameHistory");
+            if( history.length > 0 ){
+                this.cueFrame( history [ history.length - 1 ] );
+            }
         },
 
         // goes to specified frame after n ms
@@ -49266,7 +49292,7 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome ) {
                 if ( e.direction == "left") {
                     this.model.cueNext();
                 } else if ( e.direction == "right") {
-                    this.model.cuePrev();
+                    this.model.cueBack();
                 }
             } else if ( this.model.state == "paused" && this.coffin && e.direction == "left" ) {
                 this.hideCoffin();
