@@ -15,6 +15,7 @@ function( app, Backbone, Spinner ) {
         className: "ZEEGA-chrome",
         template: "chrome",
 
+        visible: false,
         timer: null,
 
         serialize: function() {
@@ -30,6 +31,14 @@ function( app, Backbone, Spinner ) {
             this.model.on("pause", this.onPause, this );
         },
 
+        toggle: function() {
+            if ( this.visible ) {
+                this.hide();
+            } else {
+                this.show();
+            }
+        },
+
         events: {
             "click .playpause-wrapper": "playPause",
             "click .ZEEGA-tab": "showCoffin"
@@ -42,6 +51,8 @@ function( app, Backbone, Spinner ) {
                 this.timer = setTimeout(function() {
                     this.hide();
                 }.bind( this ), this.FADE_TIMER );
+
+                this.visible = true;
             }
         },
 
@@ -58,6 +69,8 @@ function( app, Backbone, Spinner ) {
         hide: function( force ) {
             if ( this.model.state != "paused" || force === true ) {
                 this.$(".chrome-top, .chrome-bottom").fadeOut();
+
+                this.visible = false;
             }
         },
 

@@ -48,7 +48,7 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome ) {
         },
 
         onTap: function() {
-            this.chrome.show();
+            this.chrome.toggle();
             this.glowLinks();
         },
 
