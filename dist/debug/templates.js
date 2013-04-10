@@ -5,7 +5,11 @@ var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
 __p+='<div class="chrome-top">\n    <div class="ZEEGA-tab"><img src="assets/img/zeega-logo-white-30.png"/></div>\n    <div class="chrome-title">'+
 ( title )+
-'</div>\n</div>\n<div class="chrome-bottom">\n    <div class="playpause-wrapper">\n        <div href="#" class="ZEEGA-playpause pause-zcon"></div>\n    </div>\n</div>';
+'</div>\n</div>\n\n';
+ if ( hasAudio ) { 
+;__p+='\n<div class="chrome-bottom">\n    <div class="playpause-wrapper">\n        <div href="#" class="ZEEGA-playpause pause-zcon"></div>\n    </div>\n</div>\n';
+ } 
+;__p+='';
 }
 return __p;
 };

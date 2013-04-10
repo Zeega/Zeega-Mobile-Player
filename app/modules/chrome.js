@@ -19,7 +19,13 @@ function( app, Backbone, Spinner ) {
         timer: null,
 
         serialize: function() {
-            return this.model.project.toJSON();
+            var projectData, hasAudio;
+
+            // determine if the project has a soundtrack to hide play/pause if needed
+            projectData = this.model.getProjectData();
+            hasAudio = !_.isUndefined( projectData.sequences[0].attr.soundtrack );
+
+            return _.extend({ hasAudio: hasAudio }, this.model.project.toJSON() );
         },
 
         initialize: function() {
