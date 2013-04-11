@@ -406,9 +406,7 @@ __p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="he
 '" target="blank"><i class="zsocial-facebook"></i>  Share on Facebook</a></li>\n        <li><a href="mailto:?subject=Check out this Zeega!&body=http://www.zeega.com/'+
 ( item_id )+
 '"><i class="zsocial-email"></i>  Share on Email</a></li>\n        <li class="spacer"></li>\n        <li class="header">Credits</li>\n        ';
- _.each( frames, function( frame ) { 
-;__p+='\n            ';
- _.each( frame.layers, function( layer ) { 
+ _.each( layers, function( layer ) { 
 ;__p+='\n                ';
  if (layer.type != "Link") { 
 ;__p+='\n                    <li class="underlay-citation">\n                        <a href="'+
@@ -425,8 +423,6 @@ __p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="he
  } 
 ;__p+='\n                        </a>\n                    </li>\n                ';
  } 
-;__p+='\n            ';
- }) 
 ;__p+='\n        ';
  }) 
 ;__p+='\n        <li class="spacer"></li>\n        <li><a href="http://www.zeega.com/" target="blank">Explore the Zeegaverse</a></li>\n    </ul>\n</div>\n<div class="bg" style="\n    background: url('+
@@ -31116,24 +31112,35 @@ function( Zeega, ZeegaParser, Relay, Status, PlayerLayout, Parse ) {
         // TODO: update this
         // returns project metadata
         getProjectData: function() {
-            var frames = [];
+            var frames = [],
+                layers = [];
 
             this.project.sequences.each(function( sequence ) {
                 sequence.frames.each(function( frame ) {
-                    var f = _.extend({},
+                    var l, f;
+
+                    l = frame.layers.toJSON();
+                    f = _.extend({},
                         frame.toJSON(),
-                        { layers: frame.layers.toJSON() }
+                        { layers: l }
                     );
 
+                    layers.push( l );
                     frames.push( f );
                 });
+            });
+
+            layers = _.flatten( layers );
+            layers = _.uniq( layers, function( lay) {
+                return lay.id;
             });
 
             return _.extend({},
                 this.toJSON(),
                 {
                     sequences: this.project.sequences.toJSON(),
-                    frames: frames
+                    frames: frames,
+                    layers: layers
                 }
             );
         },
@@ -48231,7 +48238,11 @@ function( app, Backbone ) {
         myScroll: null,
 
         serialize: function() {
-            return _.extend({}, this.model.project.toJSON(), { frames: this.model.getProjectData().frames });
+            return _.extend({},
+                this.model.project.toJSON(),
+                {
+                    layers: this.model.getProjectData().layers
+                });
         },
 
         show: function() {

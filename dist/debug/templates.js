@@ -68,9 +68,7 @@ __p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="he
 '" target="blank"><i class="zsocial-facebook"></i>  Share on Facebook</a></li>\n        <li><a href="mailto:?subject=Check out this Zeega!&body=http://www.zeega.com/'+
 ( item_id )+
 '"><i class="zsocial-email"></i>  Share on Email</a></li>\n        <li class="spacer"></li>\n        <li class="header">Credits</li>\n        ';
- _.each( frames, function( frame ) { 
-;__p+='\n            ';
- _.each( frame.layers, function( layer ) { 
+ _.each( layers, function( layer ) { 
 ;__p+='\n                ';
  if (layer.type != "Link") { 
 ;__p+='\n                    <li class="underlay-citation">\n                        <a href="'+
@@ -87,8 +85,6 @@ __p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="he
  } 
 ;__p+='\n                        </a>\n                    </li>\n                ';
  } 
-;__p+='\n            ';
- }) 
 ;__p+='\n        ';
  }) 
 ;__p+='\n        <li class="spacer"></li>\n        <li><a href="http://www.zeega.com/" target="blank">Explore the Zeegaverse</a></li>\n    </ul>\n</div>\n<div class="bg" style="\n    background: url('+

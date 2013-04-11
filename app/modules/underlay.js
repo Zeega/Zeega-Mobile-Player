@@ -14,7 +14,11 @@ function( app, Backbone ) {
         myScroll: null,
 
         serialize: function() {
-            return _.extend({}, this.model.project.toJSON(), { frames: this.model.getProjectData().frames });
+            return _.extend({},
+                this.model.project.toJSON(),
+                {
+                    layers: this.model.getProjectData().layers
+                });
         },
 
         show: function() {

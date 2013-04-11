@@ -9,8 +9,7 @@
         <li><a href="mailto:?subject=Check out this Zeega!&body=http://www.zeega.com/<%= item_id %>"><i class="zsocial-email"></i>  Share on Email</a></li>
         <li class="spacer"></li>
         <li class="header">Credits</li>
-        <% _.each( frames, function( frame ) { %>
-            <% _.each( frame.layers, function( layer ) { %>
+        <% _.each( layers, function( layer ) { %>
                 <% if (layer.type != "Link") { %>
                     <li class="underlay-citation">
                         <a href="<%= layer.attr.attribution_uri %>" target="blank">
@@ -18,7 +17,6 @@
                         </a>
                     </li>
                 <% } %>
-            <% }) %>
         <% }) %>
         <li class="spacer"></li>
         <li><a href="http://www.zeega.com/" target="blank">Explore the Zeegaverse</a></li>
