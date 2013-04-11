@@ -41,6 +41,7 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome ) {
         afterRender: function() {
             app.state.set("baseRendered", true );
             this.startTouchEvents();
+            window.scrollTo(0, 1);
         },
 
         events: {

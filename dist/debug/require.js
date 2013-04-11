@@ -48309,8 +48309,6 @@ function( app, Backbone, Spinner ) {
             projectData = this.model.getProjectData();
             hasAudio = !_.isUndefined( projectData.sequences[0].attr.soundtrack );
 
-console.log( projectData, hasAudio )
-
             return _.extend({ hasAudio: hasAudio }, this.model.project.toJSON() );
         },
 
@@ -49285,6 +49283,7 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome ) {
         afterRender: function() {
             app.state.set("baseRendered", true );
             this.startTouchEvents();
+            window.scrollTo(0, 1);
         },
 
         events: {
