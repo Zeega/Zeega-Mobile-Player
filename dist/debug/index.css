@@ -987,6 +987,18 @@ html {
   width: 100%;
   z-index: 1;
 }
+.profile-token {
+  border-radius: 28px;
+  height: 50px;
+  width: 50px;
+  overflow: hidden;
+  float: left;
+  border: 3px solid 
+    orangered;
+}
+.profile-token img {
+  width: 100%;
+}
 .ZEEGA-tab {
   background: red;
   display: inline-block;
@@ -1233,7 +1245,7 @@ a:active {
   color: white;
 }
 .ZEEGA-loader-overlay h1 {
-  font-size: 4em;
+  font-size: 2em;
   text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.5);
 }
 .ZEEGA-loader-overlay h2 {
@@ -1250,6 +1262,11 @@ a:active {
   top: 0px;
   padding: 10px;
   border-radius: 0 0 2px 2px;
+}
+.ZEEGA-loader-overlay .ZEEGA-loader-inner .profile-name {
+  float: left;
+  position: relative;
+  padding: 18px 10px;
 }
 .ZEEGA-loader-overlay .ZEEGA-loading-bar-wrapper {
   height: 4px;
@@ -1390,6 +1407,13 @@ a:active {
   padding: 10px 20px;
   color: #ccc;
   line-height: 1.5em;
+}
+#underlay li.header .project-views {
+  font-size: 0.75em;
+}
+#underlay li.header .project-views i {
+  margin-left: 2px;
+  margin-top: 7px;
 }
 #underlay li.underlay-citation {
   font-size: 0.75em;

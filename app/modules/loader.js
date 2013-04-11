@@ -18,7 +18,13 @@ function( app, Backbone, Spinner ) {
         },
 
         serialize: function() {
-            return this.model.project.toJSON();
+            return _.extend(
+                {
+                    userId: app.userId,
+                    profileImage: app.profileImage
+                },
+                this.model.project.toJSON()
+            );
         },
 
         afterRender: function() {

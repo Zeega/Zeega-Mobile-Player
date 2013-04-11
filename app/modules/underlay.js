@@ -17,6 +17,7 @@ function( app, Backbone ) {
             return _.extend({},
                 this.model.project.toJSON(),
                 {
+                    views: app.views,
                     layers: this.model.getProjectData().layers
                 });
         },

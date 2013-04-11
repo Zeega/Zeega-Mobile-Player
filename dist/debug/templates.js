@@ -19,9 +19,13 @@ var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
 __p+='<div class="ZEEGA-tab"><img src="assets/img/zeega-logo-white-30.png"/></div>\n\n<div class="ZEEGA-loader-inner">\n    <h1>'+
 ( title )+
-'</h1>\n    <h2>by '+
+'</h1>\n    <h2>\n        <a href="http://zeega.com/user/'+
+( userId )+
+'" target="blank">\n            <div class="profile-token"><img src="'+
+( profileImage )+
+'"/></div>\n            <div class="profile-name">'+
 ( authors )+
-'</h2>\n</div>\n\n<a href="#" class="mobile-play"><img src="assets/img/start-button.png"/></a>\n\n<div class="ZEEGA-paused-footer loader-footer">\n    <span class="pull-right tip">tip:';
+'</div>\n        </a>\n    </h2>\n</div>\n\n<a href="#" class="mobile-play"><img src="assets/img/start-button.png"/></a>\n\n<div class="ZEEGA-paused-footer loader-footer">\n    <span class="pull-right tip">tip:';
  if ( frames.length > 1 ) { 
 ;__p+=' Swipe to explore';
  } else { 
@@ -55,9 +59,11 @@ var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
 __p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="header">\n            <div>'+
 ( title )+
-'</div>\n            <div class="coffin-author">by '+
+'</div>\n            <div class="coffin-author">A Zeega by '+
 ( authors )+
-'</div>\n        </li>\n        <li><a href="https://mobile.twitter.com/compose/tweet?status=http://www.zeega.com/'+
+'</div>\n            <div class="project-views">\n                <i class="icon-eye-open icon-white"></i> '+
+( views )+
+' views\n            </div>\n        </li>\n\n        <li><a href="https://mobile.twitter.com/compose/tweet?status=http://www.zeega.com/'+
 ( item_id )+
 '" target="blank"><i class="zsocial-twitter"></i>  Share on Twitter</a></li>\n        <li><a href="http://m.facebook.com/sharer.php?u=http://www.zeega.com/'+
 ( item_id )+
