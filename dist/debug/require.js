@@ -48303,13 +48303,7 @@ function( app, Backbone, Spinner ) {
         timer: null,
 
         serialize: function() {
-            var projectData, hasAudio;
-
-            // determine if the project has a soundtrack to hide play/pause if needed
-            projectData = this.model.getProjectData();
-            hasAudio = !_.isUndefined( projectData.sequences[0].attr.soundtrack );
-
-            return _.extend({ hasAudio: hasAudio }, this.model.project.toJSON() );
+            return _.extend({ hasAudio: app.hasSoundtrack }, this.model.project.toJSON() );
         },
 
         initialize: function() {
@@ -48370,7 +48364,6 @@ function( app, Backbone, Spinner ) {
 
         showCoffin: function() {
             this.hide( true );
-            this.model.pause();
             app.layout.showCoffin();
         }
 
@@ -49262,6 +49255,7 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome ) {
 
     return Backbone.Layout.extend({
         
+        preCoffin: null,
         coffin: false,
         pauseView: null,
         glowTimer: null,
@@ -49342,6 +49336,9 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome ) {
         },
 
         showCoffin: function() {
+            this.preCoffin = this.model.state;
+            this.model.pause();
+
             this.coffin = true;
             this.underlay.show();
             $("#overlays, #player").animate({
@@ -49358,6 +49355,9 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome ) {
             },{
                 complete: function() {
                     this.chrome.show();
+                    if ( this.preCoffin == "playing" || !app.hasSoundtrack ) {
+                        this.model.play();
+                    } 
                 }.bind( this )
             });
             $("#underlay").fadeOut();
@@ -49418,6 +49418,7 @@ function(app, Backbone, UI) {
         },
 
         onDataLoaded: function( parsed ) {
+            app.hasSoundtrack = !_.isUndefined( app.player.getProjectData().sequences[0].attr.soundtrack );
             app.layout = new UI({ model: app.player });
         }
 

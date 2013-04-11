@@ -50,6 +50,7 @@ function(app, Backbone, UI) {
         },
 
         onDataLoaded: function( parsed ) {
+            app.hasSoundtrack = !_.isUndefined( app.player.getProjectData().sequences[0].attr.soundtrack );
             app.layout = new UI({ model: app.player });
         }
 

@@ -20,6 +20,7 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome ) {
 
     return Backbone.Layout.extend({
         
+        preCoffin: null,
         coffin: false,
         pauseView: null,
         glowTimer: null,
@@ -100,6 +101,9 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome ) {
         },
 
         showCoffin: function() {
+            this.preCoffin = this.model.state;
+            this.model.pause();
+
             this.coffin = true;
             this.underlay.show();
             $("#overlays, #player").animate({
@@ -116,6 +120,9 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome ) {
             },{
                 complete: function() {
                     this.chrome.show();
+                    if ( this.preCoffin == "playing" || !app.hasSoundtrack ) {
+                        this.model.play();
+                    } 
                 }.bind( this )
             });
             $("#underlay").fadeOut();
