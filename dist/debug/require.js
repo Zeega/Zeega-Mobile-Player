@@ -344,7 +344,7 @@ with(obj||{}){
 __p+='<div class="chrome-top">\n    <div class="ZEEGA-tab"><img src="assets/img/zeega-logo-white-30.png"/></div>\n    <div class="chrome-title">'+
 ( title )+
 '</div>\n</div>\n\n';
- if ( hasAudio ) { 
+ if ( hasAudio === true ) { 
 ;__p+='\n<div class="chrome-bottom">\n    <div class="playpause-wrapper">\n        <div href="#" class="ZEEGA-playpause pause-zcon"></div>\n    </div>\n</div>\n';
  } 
 ;__p+='';
@@ -48308,6 +48308,8 @@ function( app, Backbone, Spinner ) {
             // determine if the project has a soundtrack to hide play/pause if needed
             projectData = this.model.getProjectData();
             hasAudio = !_.isUndefined( projectData.sequences[0].attr.soundtrack );
+
+console.log( projectData, hasAudio )
 
             return _.extend({ hasAudio: hasAudio }, this.model.project.toJSON() );
         },
