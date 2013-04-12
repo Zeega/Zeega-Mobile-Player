@@ -57,7 +57,7 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome ) {
         glowLinks: function() {
             if ( this.model.state != "paused" ) {
                 clearInterval( this.glowTimer );
-                $(".visual-element-link").addClass("mobile-glow");
+                $(".visual-element-link[data-glowonhover=true]").addClass("mobile-glow");
                 this.timer = setTimeout(function() {
                     $(".visual-element-link").removeClass("mobile-glow");
                 }, this.GLOW );

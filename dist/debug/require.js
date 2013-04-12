@@ -487,7 +487,7 @@ return __p;
 this["JST"]["app/templates/plugins/link.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<div href=\'#\' class=\'ZEEGA-link-inner\'></div>';
+__p+='<div class=\'ZEEGA-link-inner\'></div>';
 }
 return __p;
 };
@@ -24798,7 +24798,7 @@ function( Zeega ) {
         },
 
         player_onPlay: function() {
-            if ( this.getAttr("blink_on_start") ) {
+            if ( this.getAttr("blink_on_start") && this.getAttr("link_type") == "default" ) {
                 this.glowOnFrameStart();
             }
             this.onPlay();
@@ -25071,8 +25071,10 @@ function( Zeega, _Layer ) {
           "box-shadow": "0 0 10px rgba(255,255,255,"+ this.getAttr("opacity") + ")"
       };
 
-      this.$el.attr("data-glowOnHover", this.getAttr("glow_on_hover") );
-
+      if ( this.getAttr("link_type") == "default" ) {
+        this.$el.attr("data-glowOnHover", this.getAttr("glow_on_hover") );
+      }
+      
       this.$el.addClass("link-type-" + this.getAttr("link_type") );
       this.$(".ZEEGA-link-inner").css( style );
     },
@@ -49292,7 +49294,7 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome ) {
         glowLinks: function() {
             if ( this.model.state != "paused" ) {
                 clearInterval( this.glowTimer );
-                $(".visual-element-link").addClass("mobile-glow");
+                $(".visual-element-link[data-glowonhover=true]").addClass("mobile-glow");
                 this.timer = setTimeout(function() {
                     $(".visual-element-link").removeClass("mobile-glow");
                 }, this.GLOW );
