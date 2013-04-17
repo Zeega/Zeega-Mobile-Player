@@ -29463,7 +29463,7 @@ function( Zeega, _Layer, TextModal ) {
             this.$(".visual-target").text( this.model.get("attr").content );
             
             this.$el.css({
-                    color: "#" + this.model.get("attr").color,
+                    color: this.model.get("attr").color,
                     fontWeight: this.model.get("attr").bold ? "bold" : "normal",
                     fontStyle: this.model.get("attr").italic ? "italic" : "normal",
                     fontFamily: this.model.get("attr").fontFamily,
@@ -29480,7 +29480,7 @@ function( Zeega, _Layer, TextModal ) {
             }
 
             this.$el.css({
-                color: "#" + this.model.get("attr").color,
+                color: this.model.get("attr").color,
                 fontSize: this.model.get("attr").fontSize + "%",
                 fontFamily: this.model.get("attr").fontFamily
             });
