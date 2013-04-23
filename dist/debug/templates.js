@@ -73,7 +73,7 @@ __p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="he
 ( authors )+
 '" target="blank"><i class="zsocial-facebook"></i>  Share on Facebook</a></li>\n        <li><a href="mailto:?subject=Check out this Zeega!&body=http://www.zeega.com/'+
 ( item_id )+
-'"><i class="zsocial-email"></i>  Share on Email</a></li>\n        <li class="spacer"></li>\n        <li class="header">Credits</li>\n        ';
+'"><i class="zsocial-email"></i>  Share on Email</a></li>\n        <li class="spacer"></li>\n        <li><a href="http://www.zeega.com/" target="blank">Zeega Home</a></li>\n        <li class="spacer"></li>\n        <li class="header">Credits</li>\n        ';
  _.each( layers, function( layer ) { 
 ;__p+='\n                ';
  if (layer.type != "Link") { 
@@ -93,7 +93,7 @@ __p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="he
  } 
 ;__p+='\n        ';
  }) 
-;__p+='\n        <li class="spacer"></li>\n        <li><a href="http://www.zeega.com/" target="blank">Explore the Zeegaverse</a></li>\n    </ul>\n</div>\n<div class="bg" style="\n    background: url('+
+;__p+='\n        \n    </ul>\n</div>\n<div class="bg" style="\n    background: url('+
 ( cover_image )+
 ');\n    background-position: 50% 50%;\n    background-repeat: no-repeat no-repeat;\n    background-attachment: fixed;\n    -webkit-background-size: cover;\n    -moz-background-size: cover;\n    -o-background-size: cover;\n    background-size: cover;\n"></div>';
 }
