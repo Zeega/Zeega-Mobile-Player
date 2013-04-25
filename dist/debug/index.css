@@ -970,7 +970,7 @@ html {
   font-family: 'Helvetica', sans-serif;
 }
 #main {
-  height: 100%;
+  height: -webkit-calc(100% + 60px);
   width: 100%;
   position: absolute;
   z-index: 10;
