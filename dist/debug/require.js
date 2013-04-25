@@ -55109,13 +55109,14 @@ function( app, Backbone, Spinner ) {
         },
 
         initialize: function() {
-            this.model.on("canplay", this.onCanplay, this );
+            //this.onCanplay();
+            this.model.on("frame_play", this.onCanplay, this );
         },
 
-        onCanplay: function() {
+        onCanplay: _.once(function() {
             this.model.on("play", this.onPlay, this );
             this.model.on("pause", this.onPause, this );
-        },
+        }),
 
         toggle: function() {
             if ( this.visible ) {
@@ -56199,7 +56200,8 @@ function(app, Backbone, UI) {
 
         initPlayer: function() {
             app.player = new Zeega.player({
-                debugEvents: true,
+                // debugEvents: true,
+                controls: false,
                 autoplay: false,
                 cover: true,
                 target: '#player',

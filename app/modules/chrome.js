@@ -23,13 +23,13 @@ function( app, Backbone, Spinner ) {
         },
 
         initialize: function() {
-            this.model.on("canplay", this.onCanplay, this );
+            this.model.on("frame_play", this.onCanplay, this );
         },
 
-        onCanplay: function() {
+        onCanplay: _.once(function() {
             this.model.on("play", this.onPlay, this );
             this.model.on("pause", this.onPause, this );
-        },
+        }),
 
         toggle: function() {
             if ( this.visible ) {
