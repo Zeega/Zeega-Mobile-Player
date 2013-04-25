@@ -8,9 +8,24 @@ html {
 	font-family: 'Helvetica', sans-serif;
 }
 
+/* Portrait */
+@media screen and (orientation:portrait) {
+    #main {
+        height: -webkit-calc(~"100% + 60px");
+    }
+
+}
+
+/* Landscape */
+@media screen and (orientation:landscape) {
+    #main {
+        height: 100%;
+    }
+}
+
+
+
 #main {
-	height: -webkit-calc(~"100% + 60px");
-    //height: 100%;
     width: 100%;
 	position: absolute;
 	z-index: 10;

@@ -37,6 +37,32 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome ) {
             this.insertView("#chrome", this.chrome );
             this.insertView("#underlay", this.underlay );
             this.render();
+
+            this.listenForOrientationChange();
+        },
+
+        listenForOrientationChange: function() {
+            jQuery(window).bind('orientationchange', function(e) {
+
+                window.scrollTo(0, 1);
+
+                // switch ( window.orientation ) {
+
+                //     case 0:
+                //         alert('portrait mode');
+                //         break;
+
+                //     case 90:
+                //         alert('landscape mode screen turned to the left');
+                //         break;
+
+                //     case -90:
+                //         alert('landscape mode screen turned to the right');
+                //         break;
+
+                //     }
+
+                });
         },
 
         afterRender: function() {
