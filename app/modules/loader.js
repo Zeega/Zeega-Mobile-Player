@@ -74,7 +74,7 @@ function( app, Backbone, Spinner ) {
             if ( this.model.canplay ) {
                 this.fadeOut();
             } else {
-                this.model.once("canplay", this.fadeOut, this );
+                this.model.once("frame_play", this.fadeOut, this );
             }
             this.model.play();
         },
