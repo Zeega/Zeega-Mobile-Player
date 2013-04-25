@@ -73,7 +73,7 @@ __p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="he
 ( authors )+
 '" target="blank"><i class="zsocial-facebook"></i>  Share on Facebook</a></li>\n        <li><a href="mailto:?subject=Check out this Zeega!&body=http://www.zeega.com/'+
 ( item_id )+
-'"><i class="zsocial-email"></i>  Share on Email</a></li>\n        <li class="spacer"></li>\n        <li><a href="http://www.zeega.com/" target="blank">Zeega Home</a></li>\n        <li class="spacer"></li>\n        <li class="header">Credits</li>\n        ';
+'"><i class="zsocial-email"></i>  Share on Email</a></li>\n        <li class="spacer"></li>\n        <li><a href="http://www.zeega.com/" target="blank"><i class="icon-home icon-white"></i> Zeega Home</a></li>\n        <li class="spacer"></li>\n        <li class="header">Credits</li>\n        ';
  _.each( layers, function( layer ) { 
 ;__p+='\n                ';
  if (layer.type != "Link") { 

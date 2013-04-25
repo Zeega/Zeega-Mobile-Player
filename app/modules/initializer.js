@@ -21,8 +21,10 @@ function(app, Backbone, UI) {
             $("#main").empty()
                 .append("<div id='overlays'></div>")
                 .append("<div id='player'></div>")
-                .append("<div id='chrome'></div>")
+                // .append("<div id='chrome'></div>")
                 .append("<div id='underlay'></div>");
+
+            $("#player").append("<div id='chrome'></div>");
 
             this.initPlayer();
         },
