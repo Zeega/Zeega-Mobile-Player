@@ -56106,6 +56106,11 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome ) {
             app.state.set("baseRendered", true );
             this.startTouchEvents();
             window.scrollTo(0, 1);
+
+            $('#main').bind("touchmove", {}, function(event){
+                event.preventDefault();
+            });
+
         },
 
         events: {
