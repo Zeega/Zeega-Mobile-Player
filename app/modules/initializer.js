@@ -32,6 +32,7 @@ function(app, Backbone, UI) {
         initPlayer: function() {
             app.player = new Zeega.player({
                 // debugEvents: true,
+                mobile: true,
                 controls: false,
                 autoplay: false,
                 cover: true,
