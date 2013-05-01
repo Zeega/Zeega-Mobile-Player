@@ -35417,7 +35417,7 @@ function( Zeega, LayerModel, Visual ) {
     Layer.Youtube.Visual = Visual.extend({
 
         template: "youtube/youtube",
-        ignoreFirst: true,
+        //ignoreFirst: true,
         afterRender: function(){
             if( /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent) ) {
                 this.$(".youtube-player").addClass( "mobile" );
@@ -35453,11 +35453,13 @@ function( Zeega, LayerModel, Visual ) {
         },
 
         onStateChange: function(e){
-            if( /iPad/i.test(navigator.userAgent) && e.data ==2 && this.ignoreFirst ) {
-                this.ignoreFirst = false;
-                this.ytPlayer.playVideo();
-            }
-            else if(e.data == 2 || e.data == 5){
+            // if( /iPad/i.test(navigator.userAgent) && e.data ==2 && this.ignoreFirst ) {
+            //     this.ignoreFirst = false;
+            //     this.ytPlayer.playVideo();
+            // }
+            // else
+
+            if (e.data == 2 || e.data == 5){
                 if( /iPad/i.test(navigator.userAgent) ) {
                     this.$(".ipad-cover").removeClass("visible");
                 }
