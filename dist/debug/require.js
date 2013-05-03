@@ -343,11 +343,7 @@ var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
 __p+='<div class="chrome-top">\n    <div class="ZEEGA-tab"><img src="assets/img/zeega-logo-white-30.png"/></div>\n    <div class="chrome-title">'+
 ( title )+
-'</div>\n</div>\n\n';
- if ( hasAudio === true ) { 
-;__p+='\n<div class="chrome-bottom">\n    <div class="playpause-wrapper">\n        <div href="#" class="ZEEGA-playpause pause-zcon"></div>\n    </div>\n</div>\n';
- } 
-;__p+='';
+'</div>\n</div>\n';
 }
 return __p;
 };
@@ -571,7 +567,7 @@ __p+='<div class="modal-content">\n    <div class="modal-title">Edit your text</
 ( attr.content )+
 '</textarea>\n\n        <div class="textarea-info">max 140 characters</div>\n\n        <div class="text-controls clearfix">\n            <div class="color-selector">\n                <input class="simple-color" value="'+
 ( attr.color )+
-'"/>\n            </div>\n            <a href="#" class="btnz btnz-light text-btn-bold"><i class="icon-bold"></i></a>\n            <a href="#" class="btnz btnz-light text-btn-italic"><i class="icon-italic"></i></a>\n            <a href="#" class="btnz btnz-light text-btn-align-left"><i class="icon-align-left"></i></a>\n            <a href="#" class="btnz btnz-light text-btn-align-center"><i class="icon-align-center"></i></a>\n            <a href="#" class="btnz btnz-light text-btn-align-right"><i class="icon-align-right"></i></a>\n\n            <select class="font-list" style=""></select>\n\n            <div class="control-module">\n                <div class="control-title">font size</div>\n                <select class="size-list" style="">\n                    <option value="100">8</option>\n                    <option value="125">10</option>\n                    <option value="150">12</option>\n                    <option value="175">14</option>\n                    <option value="200">18</option>\n                    <option value="250">24</option>\n                    <option value="375">36</option>\n                    <option value="500">48</option>\n                    <option value="800">72</option>\n                    <option value="1600">144</option>\n                    <option value="2400">200</option>\n                    <option value="3600">300</option>\n                </select>\n            </div>\n\n            <div class="control-module">\n                <div class="control-title">line height</div>\n                <select class="line-height-list">\n                    <option value="1">1</option>\n                    <option value="1.25">1.25</option>\n                    <option value="1.5">1.5</option>\n                    <option value="1.75">1.75</option>\n                    <option value="2">2</option>\n                </select>\n            </div>\n\n            <div class="control-module">\n                <div class="control-title">text-position</div>\n                <select class="text-position-list">\n                    <option value="top">top</option>\n                    <option value="middle">middle</option>\n                    <option value="bottom">bottom</option>\n                </select>\n            </div>\n            \n        </div>\n\n        <div class="sample-header">sample</div>\n        <div class="text-sample">'+
+'"/>\n            </div>\n            <a href="#" class="btnz btnz-light text-btn-bold"><i class="icon-bold"></i></a>\n            <a href="#" class="btnz btnz-light text-btn-italic"><i class="icon-italic"></i></a>\n            <a href="#" class="btnz btnz-light text-btn-align-left"><i class="icon-align-left"></i></a>\n            <a href="#" class="btnz btnz-light text-btn-align-center"><i class="icon-align-center"></i></a>\n            <a href="#" class="btnz btnz-light text-btn-align-right"><i class="icon-align-right"></i></a>\n\n            <select class="font-list" style=""></select>\n\n            <div class="control-module">\n                <div class="control-title">font size</div>\n                <select class="size-list" style="">\n                    <option value="100">8</option>\n                    <option value="125">10</option>\n                    <option value="150">12</option>\n                    <option value="175">14</option>\n                    <option value="200">18</option>\n                    <option value="250">24</option>\n                    <option value="375">36</option>\n                    <option value="500">48</option>\n                    <option value="800">72</option>\n                    <option value="1600">144</option>\n                    <option value="2400">200</option>\n                    <option value="3600">300</option>\n                </select>\n            </div>\n\n            <div class="control-module">\n                <div class="control-title">line height</div>\n                <select class="line-height-list">\n                    <option value="1">1</option>\n                    <option value="1.25">1.25</option>\n                    <option value="1.5">1.5</option>\n                    <option value="1.75">1.75</option>\n                    <option value="2">2</option>\n                </select>\n            </div>\n\n            <div class="control-module">\n                <div class="control-title">mobile position</div>\n                <select class="text-position-list">\n                    <option value="top">top</option>\n                    <option value="middle">middle</option>\n                    <option value="bottom">bottom</option>\n                </select>\n            </div>\n            \n        </div>\n\n        <div class="sample-header">sample</div>\n        <div class="text-sample">'+
 ( attr.content )+
 '</div>\n\n        <div class="bottom-chooser clearfix">\n            <a href="#" class="submit btnz btnz-submit">OK</a>\n        </div>\n    </div>\n</div>\n';
 }
@@ -32251,6 +32247,7 @@ function( Backbone, jquery, Spinner ) {
 
         attributes: {},
         parserPath: "app/zeega-parser/",
+        hasSoundtrack: false,
 
         gmapAPI: "waiting",
         spinner: new Spinner({
@@ -33641,7 +33638,6 @@ function( app, Controls ) {
     return app.Backbone.LayoutView.extend({
 
         className: function() {
-            console.log("classname", this)
             return "visual-element visual-" + this.model.get("type").toLowerCase();
         },
 
@@ -33768,6 +33764,7 @@ function( app, Controls ) {
         applyVisualProperties: function() {
             var mediaTargetCSS = {},
                 containerCSS = {};
+
             _.each( this.visualProperties, function( prop ) {
                 if ( _.contains( this.containerAttributes, prop ) ) {
                     containerCSS[ prop ] = this.getAttr( prop ) + ( this.units[ prop ] ? this.units[ prop ] : "" );
@@ -35311,7 +35308,6 @@ function( app, _Layer, Visual, TextModal ) {
 
                 this.$el.css(css );
             } else {
-                console.log("APPLY WRONG")
                 this.$el.css({
                     top: this.getAttr("top") + "%",
                     left: this.getAttr("left") + "%"
@@ -35420,7 +35416,7 @@ function( Zeega, LayerModel, Visual ) {
     Layer.Youtube.Visual = Visual.extend({
 
         template: "youtube/youtube",
-        //ignoreFirst: true,
+        ignoreFirst: true,
         afterRender: function(){
             if( /iPhone|iPod/i.test(navigator.userAgent) ) {
                 this.$(".youtube-player").addClass( "mobile" );
@@ -35455,13 +35451,18 @@ function( Zeega, LayerModel, Visual ) {
         },
 
         onStateChange: function(e){
-            // if( /iPad/i.test(navigator.userAgent) && e.data ==2 && this.ignoreFirst ) {
-            //     this.ignoreFirst = false;
-            //     this.ytPlayer.playVideo();
-            // }
-            // else
+            var currentSequence;
+            if(this.model.status.get("current_sequence_model")){
+                currentSequence = this.model.status.get("current_sequence_model");
+            } else {
+                currentSequence = this.model.status.get("currentSequence");
+            }
 
-            if (e.data == 2 || e.data == 5){
+
+            if( currentSequence.get("attr").soundtrack && /iPad/i.test(navigator.userAgent) && e.data ==2 && this.ignoreFirst ) {
+                this.ignoreFirst = false;
+                this.ytPlayer.playVideo();
+            } else if (e.data == 2 || e.data == 5){
                 if( /iPad/i.test(navigator.userAgent) ) {
                     this.$(".ipad-cover").removeClass("visible");
                 }
@@ -35472,7 +35473,9 @@ function( Zeega, LayerModel, Visual ) {
                 this.$(".play-button").fadeIn("fast");
                 
             } else if (e.data == 1 ){
-                
+                if( Zeega.mode == "player"){
+                    this.model.status.get("project").suspend();
+                }
                 this.$(".play-button").fadeOut("fast");
                 this.$(".youtube-player").addClass("active");
                
@@ -35515,6 +35518,9 @@ function( Zeega, LayerModel, Visual ) {
 
         onExit: function(){
             this.ytPlayer.pauseVideo();
+            if( Zeega.mode == "player"){
+                this.model.status.get("project").play();
+            }
         }
 
     });
@@ -35570,6 +35576,8 @@ function( app, Layers ) {
 
     return app.Backbone.Model.extend({
 
+        soundtrackModel: null,
+
         defaults: {
             advance_to: null,
             attr: {
@@ -35593,10 +35601,16 @@ function( app, Layers ) {
         lazySave: null,
 
         initialize: function() {
-
             this.lazySave = _.debounce(function() {
                 this.save();
             }.bind( this ), 1000 );
+        },
+
+        initSoundtrackModel: function( layers ) {
+            if ( this.get("attr").soundtrack ) {
+                this.soundtrackModel = app.soundtrack = layers.get( this.get("attr").soundtrack );
+                this.soundtrackModel.status = app.status;
+            }
         },
 
         onFrameSort: function() {
@@ -35637,7 +35651,6 @@ function( app, Layers ) {
 
                 attr.soundtrack = newLayer.id;
                 this.set("attr", attr );
-                this.persistLayer( newLayer );
                 view.setSoundtrackLayer( newLayer );
 
                 this.lazySave();
@@ -35647,7 +35660,6 @@ function( app, Layers ) {
         removeSoundtrack: function( layer ) {
             var attr = this.get("attr");
 
-            this.unpersistLayer( layer );
             attr.soundtrack = false;
             this.set("attr", attr );
         },
@@ -35919,7 +35931,8 @@ function( app, Backbone, Layers, ThumbWorker ) {
                 commonLayers = this.get("common_layers")[ oldID ] || [];
                 // if the frame is "ready", then just render the layers
                 this.layers.each(function( layer ) {
-                    if ( !_.include(commonLayers, layer.id) ) {
+                    // disable existing soundtrack layers inside a frame !!!
+                    if ( !_.include(commonLayers, layer.id) && layer.get("type") != "Audio" ) {
                         layer.render();
                     }
                 });
@@ -36250,6 +36263,7 @@ function( app, SequenceModel, FrameCollection, LayerCollection, LayerModels ) {
                 layerModel.initVisual( LayerModels[ layer.type ] );
                 return layerModel;
             });
+
             layerCollection = new LayerCollection( classedLayers );
 
             this.each(function( sequence ) {
@@ -36270,6 +36284,8 @@ function( app, SequenceModel, FrameCollection, LayerCollection, LayerModels ) {
                 sequence.frames.sequence = sequence;
                 sequence.frames.initLayers( layerCollection, options );
             });
+
+            this.at(0).initSoundtrackModel( layerCollection );
             // at this point, all frames should be loaded with layers and layer classes
         }
     });
@@ -36288,7 +36304,7 @@ function( app, SequenceCollection ) {
 
         defaults: {
             authors: null,
-            cover_image: null,
+            cover_image: "",
             date_created: null,
             date_published: null,
             date_updated: null,
@@ -36307,6 +36323,23 @@ function( app, SequenceCollection ) {
             user_id: null
         },
 
+        defaultCoverImages: [
+            "http://giphy.com/gifs/VxbP9tLeKzazm",
+            "http://giphy.com/gifs/4lLVnnMbawnss",
+            "http://giphy.com/gifs/bq6gi8shRqgyA",
+            "http://giphy.com/gifs/BDqInV6xYl1Ju",
+            "http://giphy.com/gifs/k0ywWCPu4IlEs",
+            "http://giphy.com/gifs/Mi6gE0Qjw2dWM",
+            "http://www.musicobsessed.com/wp-content/gallery/sfmo/tv-set-funky-cuteo.gif",
+            "http://24.media.tumblr.com/tumblr_m8582nac7y1r0k830o1_500.gif",
+            "http://24.media.tumblr.com/tumblr_lnxkb8K8u61qjvkx9o1_500.gif",
+            "http://25.media.tumblr.com/tumblr_mbjwlvwO5R1reeolao1_500.gif",
+            "http://reignandpour.com/home_files/tv.gif",
+            "http://s8.favim.com/orig/72/gif-animated-gif-tv-static-glitch-Favim.com-687367.gif",
+            "http://alaingiffard.files.wordpress.com/2007/12/applaudissements-001_1173713587.gif",
+            "http://www.poly.edu/sites/polyproto.poly.edu/files/cinemaNOISE.gif"
+        ],
+
         defaultOptions: {
             preloadRadius: 2,
             attach: {}
@@ -36317,6 +36350,9 @@ function( app, SequenceCollection ) {
         },
 
         initialize: function( data, options ) {
+            // if ( this.get("cover_image") == "" ) {
+            //     this.set("cover_image", this.defaultCoverImages[ Math.floor( Math.random() * this.defaultCoverImages.length ) ])
+            // }
             this.options = _.defaults( options, this.defaultOptions );
             this.parser = options.parser;
             this.parseSequences();
@@ -36516,6 +36552,9 @@ function( app, SequenceCollection ) {
                 sequence.frames.each(function( frame ) {
                     layers = layers.concat( frame.layers.toJSON() );
                 });
+                if ( sequence.soundtrackModel ) {
+                    layers = layers.concat( [ sequence.soundtrackModel.toJSON() ] );
+                }
             });
 
             return _.extend({}, this.toJSON(), {
@@ -36558,7 +36597,6 @@ function( app, SequenceCollection ) {
         publishProject: function() {
 
             if ( this.get("date_updated") != this.get("date_published") || this.updated ) {
-                var mobile = this.validateMobile();
                 
                 this.updated = false;
                 this.once("sync", this.onProjectPublish, this);
@@ -36568,7 +36606,7 @@ function( app, SequenceCollection ) {
                 }
                 this.save({
                     publish_update: 1,
-                    mobile: mobile
+                    mobile: true
                 });
                 console.log("already published. published again");
             } else {
@@ -36578,48 +36616,6 @@ function( app, SequenceCollection ) {
 
         onProjectPublish: function( model, response ) {
             this.set({ publish_update: 0 });
-        },
-
-        validateMobile: function() {
-            var layers, validLayerTypes, maxAudioLayers, valid;
-            
-            layers = [];
-            validLayerTypes = ["Image", "Audio", "Text", "Link", "Rectangle"];
-            maxAudioLayers = 1;
-            maxFrames = null;
-            valid = true;
-
-
-            this.sequences.each(function( sequence ) {
-
-                if ( maxFrames !== null && ( maxFrames -= sequence.frames.length ) < 0 ) {
-                    valid = false;
-                    return false;
-                }
-
-                sequence.frames.each(function( frame ) {
-                    frame.layers.each(function( layer ) {
-
-                        var layerTypeValid = _.contains( validLayerTypes, layer.get("type") );
-
-                        if ( !layerTypeValid ) {
-                            valid = false;
-                            return false;
-                        }
-
-                        // dupe layer. ignore
-                        if ( !_.contains( layers, layer.id ) && layer.get("type") == "Audio" && maxFrames-- < 0 ) {
-                            layers.push( layer.id );
-                            valid = false;
-                            return false;
-                        } else if ( !_.contains( layers, layer.id ) && layer.get("type") == "Audio" ) {
-                            layers.push( layer.id );
-                        }
-                    });
-                });
-            });
-
-            return valid;
         }
 
     });
@@ -37864,6 +37860,7 @@ function( app, ZeegaParser, Relay, Status, PlayerLayout ) {
             this._mergeAttributes( attributes );
             this.relay = new Relay.Model();
             this.status = new Status.Model({ project: this });
+            app.status = this.status; // booooo
 
             this._setTarget();
             this._load( attributes );
@@ -38022,12 +38019,16 @@ function( app, ZeegaParser, Relay, Status, PlayerLayout ) {
             var currentFrame = this.status.get("current_frame"),
                 startFrame = this.get("startFrame"),
                 isCurrentNull, isStartNull;
+
+            this.loadSoundtrack();
+
             if ( !this.ready ) {
                 this.render(); // render the player first!
             } else if ( this.state == "paused" || this.state == "suspended" ) {
                 this._fadeIn();
                 if ( currentFrame ) {
                     this.state = "playing";
+                    app.soundtrack.play();
                     this.status.emit( "play", this );
                     this.status.get("current_frame_model").play();
                 }
@@ -38050,12 +38051,20 @@ function( app, ZeegaParser, Relay, Status, PlayerLayout ) {
             }
         },
 
+        loadSoundtrack: _.once(function() {
+            app.soundtrack.on("layer_ready", function() {
+                app.soundtrack.play();
+            });
+            app.soundtrack.render();
+        }),
+
         // if the player is playing, pause the project
         pause: function() {
             if ( this.state == "playing" ) {
                 this.state ="paused";
                 // pause each frame - layer
                 this.status.get("current_frame_model").pause();
+                app.soundtrack.pause();
                 // pause auto advance
                 this.status.emit("pause");
             }
@@ -38247,7 +38256,7 @@ function( app, ZeegaParser, Relay, Status, PlayerLayout ) {
                 this.project.sequences.each(function( sequence ) {
                     sequence.frames.each(function( frame ) {
                         if ( frame ) {
-                            frame.destroy();
+                            // frame.destroy();
                             frame.layers.each(function( layer ) {
                                 layer.destroy();
                             });
