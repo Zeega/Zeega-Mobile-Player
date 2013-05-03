@@ -359,13 +359,7 @@ __p+='<div class="ZEEGA-tab"><img src="assets/img/zeega-logo-white-30.png"/></di
 ( profileImage )+
 '"/></div>\n            <div class="profile-name">'+
 ( authors )+
-'</div>\n        </a>\n    </h2>\n</div>\n\n<div href="#" class="mobile-play"><img src="assets/img/start-button.png"/></div>\n\n<div class="ZEEGA-paused-footer loader-footer">\n    <span class="pull-right tip">tip:';
- if ( frames.length > 1 ) { 
-;__p+=' Swipe to explore';
- } else { 
-;__p+='Tap to pause';
- } 
-;__p+='</span>\n</div>\n<span class="ZEEGA-loader-bg"></span>';
+'</div>\n        </a>\n    </h2>\n</div>\n\n<div href="#" class="mobile-play"><img src="assets/img/start-button.png"/></div>\n\n<div class="ZEEGA-paused-footer loader-footer">\n</div>\n<span class="ZEEGA-loader-bg"></span>';
 }
 return __p;
 };
@@ -37857,6 +37851,19 @@ function( app, ZeegaParser, Relay, Status, PlayerLayout ) {
         */
 
         initialize: function( attributes ) {
+            this.loadSoundtrack = _.once(function() {
+                if ( app.soundtrack ) {
+                    if ( app.soundtrack.state == "ready" ) {
+                        app.soundtrack.play();
+                    } else {
+                        app.soundtrack.on("layer_ready", function() {
+                            app.soundtrack.play();
+                        });
+                    }
+                    app.soundtrack.render();
+                }
+            });
+
             this._mergeAttributes( attributes );
             this.relay = new Relay.Model();
             this.status = new Status.Model({ project: this });
@@ -38028,7 +38035,10 @@ function( app, ZeegaParser, Relay, Status, PlayerLayout ) {
                 this._fadeIn();
                 if ( currentFrame ) {
                     this.state = "playing";
-                    app.soundtrack.play();
+
+                    if ( app.soundtrack ) {
+                        app.soundtrack.play();
+                    }
                     this.status.emit( "play", this );
                     this.status.get("current_frame_model").play();
                 }
@@ -38051,12 +38061,7 @@ function( app, ZeegaParser, Relay, Status, PlayerLayout ) {
             }
         },
 
-        loadSoundtrack: _.once(function() {
-            app.soundtrack.on("layer_ready", function() {
-                app.soundtrack.play();
-            });
-            app.soundtrack.render();
-        }),
+        loadSoundtrack: null,
 
         // if the player is playing, pause the project
         pause: function() {
@@ -38064,7 +38069,9 @@ function( app, ZeegaParser, Relay, Status, PlayerLayout ) {
                 this.state ="paused";
                 // pause each frame - layer
                 this.status.get("current_frame_model").pause();
-                app.soundtrack.pause();
+                if ( app.soundtrack ) {
+                    app.soundtrack.pause();
+                }
                 // pause auto advance
                 this.status.emit("pause");
             }
@@ -38075,6 +38082,9 @@ function( app, ZeegaParser, Relay, Status, PlayerLayout ) {
                 this.state ="suspended";
                 // pause each frame - layer
                 this.status.get("current_frame_model").pause();
+                if ( app.soundtrack ) {
+                    app.soundtrack.pause();
+                }
                 // pause auto advance
                 this.status.emit("suspend");
             }
