@@ -17,6 +17,26 @@
 		text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.5);
 	}
 
+	.instructions {
+		position: absolute;
+		bottom: 30px;
+		right: 20px;
+		width: 200px;
+
+		li {
+			opacity: 0;
+			position: absolute;
+			text-align: right;
+			width: 200px;
+			.transition( opacity, 0.5s );
+
+			&.active {
+				opacity: 1;
+				.transition( opacity, 0.5s );
+			}
+		}
+	}
+
 	.ZEEGA-loader-inner {
 		left: 70px;
 		background: 
@@ -34,31 +54,12 @@
 		}
 	}
 
-	.ZEEGA-loading-bar-wrapper {
-		height: 4px;
-		background: rgba(255,255,255,0.5);
-		border-radius: 4px;
-		margin-top: 20px;
-		position: relative;
-		box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.5);
-
-		.ZEEGA-loading-bar {
-			border-radius: 4px;
-			position: absolute;
-			left:0;
-			height:100%;
-			background: orangered;
-			width:0%;
-		}
-	}
-
-	.ZEEGA-loading-layers {
-		margin-top: 10px;
-
-		&>li {
-			float: left;
-			margin-right: 5px;
-		}
+	.ZEEGA-loader-bg-overlay {
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		background-image: url("../img/tiny-stripes-dark.png");
+		z-index: 0;
 	}
 
 	.ZEEGA-loader-bg {
@@ -68,6 +69,15 @@
 		top:0;
 		left:0;
 		z-index: -1;
+		opacity: 0.75;
+	}
+
+	.ZEEGA-tab {
+		position: relative;
+	}
+
+	.ZEEGA-tab, .ZEEGA-loader-inner, .swipe-left, .instructions {
+		z-index: 1;
 	}
 
 }

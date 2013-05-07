@@ -12,6 +12,11 @@ function( app, Backbone, Spinner ) {
         className: "ZEEGA-loader-overlay",
         template: "loader",
 
+        instruction: 0,
+        instructionCount: 0,
+        instructionDuration: 4000,
+        jumps: 0,
+
         initialize: function() {
             this.model.on("frame_ready", this.onCanPlay, this );
             console.log("INIT", app, this.model );
@@ -42,6 +47,31 @@ function( app, Backbone, Spinner ) {
                     "background-size": "cover"
                 });
             }
+            this.instructionCount = this.$(".instructions ul li").length;
+            this.cycleFacts();
+            this.swipeJump();
+        },
+
+        cycleFacts: function() {
+            this.interval = setInterval(function() {
+                this.instruction++;
+                this.$(".instructions .active").removeClass("active");
+                $(this.$(".instructions ul li")[ this.instruction % this.instructionCount ]).addClass("active");
+            }.bind( this ), this.instructionDuration );
+        },
+
+        swipeJump: function() {
+            this.jump = setInterval(function() {
+                if ( this.jumps < 4 ) {
+                    this.jumps ++;
+                    this.$(".swipe-left").addClass("jump");
+                    _.delay(function() {
+                        this.$(".swipe-left").removeClass("jump");
+                    }, 1000 );
+                } else {
+                    clearInterval( this.jump );
+                }
+            }.bind( this ), 5000);
         },
 
         events: {

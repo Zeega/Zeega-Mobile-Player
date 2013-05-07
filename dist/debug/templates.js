@@ -59,7 +59,7 @@ __p+='<div class="ZEEGA-tab"><img src="assets/img/zeega-logo-white-30.png"/></di
 ( profileImage )+
 '"/></div>\n            <div class="profile-name">'+
 ( authors )+
-'</div>\n        </a>\n    </h2>\n</div>\n\n<div href="#" class="mobile-play"><img src="assets/img/start-button.png"/></div>\n\n<div class="ZEEGA-paused-footer loader-footer">\n</div>\n<span class="ZEEGA-loader-bg"></span>';
+'</div>\n        </a>\n    </h2>\n</div>\n\n<div class="swipe-left"><img src="assets/img/swipe-left.png"/></div>\n<div class="instructions">\n    <ul>\n        <li class="active">swipe to start</li>\n        <li class="">swipe to explore</li>\n    </ul>\n</div>\n\n\n<div class="ZEEGA-loader-bg-overlay"></div>\n<span class="ZEEGA-loader-bg"></span>';
 }
 return __p;
 };
