@@ -1,0 +1,31 @@
+<div class="upper-wrapper">
+    <div class="ZEEGA-tab"><img src="assets/img/zeega-logo-white-30.png"/></div>
+
+    <div class="ZEEGA-loader-inner">
+        <h1><%= title %></h1>
+        <h2>
+            <a href="http://zeega.com/user/<%= userId %>" target="blank">
+                <div class="profile-token"><img src="<%= userThumbnail %>"/></div>
+                <div class="profile-name"><%= authors %></div>
+            </a>
+        </h2>
+    </div>
+</div>
+
+<div class="share-block">
+    <ul class="share-sites">
+        <li><a
+            href="https://twitter.com/intent/tweet?original_referer=<%= hostname %><%= directory %><%= item_id %>&text=<%= description %> &url=<%= hostname %><%= directory %><%= item_id %>"
+            target="blank"
+            ><i class="endpage-social endpage-social-twitter"
+            ></i></a></li>
+        <li><a
+            href="http://www.facebook.com/sharer.php?u=<%= hostname %><%= directory %><%= item_id %>"><i class="endpage-social endpage-social-facebook"
+            target="blank"
+            ></i></a></li>
+        <li><a
+            href="http://www.tumblr.com/share/photo?<%= tumblr_share %>"
+            target="blank"
+            ><i class="endpage-social endpage-social-tumblr"></i></a></li>
+    </ul>
+</div>

@@ -13,10 +13,11 @@ define([
     "modules/pause",
     "modules/underlay",
     "modules/chrome",
+    "modules/endpage",
     "vendor/hammer/hammer"
 ],
 
-function( app, Backbone, Loader, Pause, Underlay, Chrome ) {
+function( app, Backbone, Loader, Pause, Underlay, Chrome, EndPage ) {
 
     return Backbone.Layout.extend({
         
@@ -31,10 +32,12 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome ) {
         initialize: function() {
             this.loader = new Loader({ model: this.model });
             this.chrome = new Chrome({ model: this.model });
+            this.endpage = new EndPage({ model: this.model });
             this.underlay = new Underlay({ model: this.model });
 
             this.insertView("#overlays", this.loader );
             this.insertView("#chrome", this.chrome );
+            this.insertView("#endpage", this.endpage );
             this.insertView("#underlay", this.underlay );
             this.render();
 

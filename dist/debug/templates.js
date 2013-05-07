@@ -10,6 +10,44 @@ __p+='<div class="chrome-top">\n    <div class="ZEEGA-tab"><img src="assets/img/
 return __p;
 };
 
+this["JST"]["app/templates/endpage.html"] = function(obj){
+var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+with(obj||{}){
+__p+='<div class="upper-wrapper">\n    <div class="ZEEGA-tab"><img src="assets/img/zeega-logo-white-30.png"/></div>\n\n    <div class="ZEEGA-loader-inner">\n        <h1>'+
+( title )+
+'</h1>\n        <h2>\n            <a href="http://zeega.com/user/'+
+( userId )+
+'" target="blank">\n                <div class="profile-token"><img src="'+
+( userThumbnail )+
+'"/></div>\n                <div class="profile-name">'+
+( authors )+
+'</div>\n            </a>\n        </h2>\n    </div>\n</div>\n\n<div class="share-block">\n    <ul class="share-sites">\n        <li><a\n            href="https://twitter.com/intent/tweet?original_referer='+
+( hostname )+
+''+
+( directory )+
+''+
+( item_id )+
+'&text='+
+( description )+
+' &url='+
+( hostname )+
+''+
+( directory )+
+''+
+( item_id )+
+'"\n            target="blank"\n            ><i class="endpage-social endpage-social-twitter"\n            ></i></a></li>\n        <li><a\n            href="http://www.facebook.com/sharer.php?u='+
+( hostname )+
+''+
+( directory )+
+''+
+( item_id )+
+'"><i class="endpage-social endpage-social-facebook"\n            target="blank"\n            ></i></a></li>\n        <li><a\n            href="http://www.tumblr.com/share/photo?'+
+( tumblr_share )+
+'"\n            target="blank"\n            ><i class="endpage-social endpage-social-tumblr"></i></a></li>\n    </ul>\n</div>';
+}
+return __p;
+};
+
 this["JST"]["app/templates/loader.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
@@ -63,7 +101,7 @@ __p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="he
 ( authors )+
 '" target="blank"><i class="zsocial-facebook"></i>  Share on Facebook</a></li>\n        <li><a href="mailto:?subject=Check out this Zeega!&body=http://www.zeega.com/'+
 ( item_id )+
-'"><i class="zsocial-email"></i>  Share on Email</a></li>\n        <li class="spacer"></li>\n        <li><a href="http://www.zeega.com/" target="blank"><i class="icon-home icon-white"></i> Zeega Home</a></li>\n        <li class="spacer"></li>\n        <li class="header">Credits</li>\n        ';
+'"><i class="zsocial-email"></i>  Share on Email</a></li>\n        <li class="spacer"></li>\n        <li class="highlight"><a href="http://www.zeega.com/" target="blank"><i class="icon-home icon-white"></i> Zeega Home</a></li>\n        <li class="spacer"></li>\n        <li class="header">Credits</li>\n        ';
  _.each( layers, function( layer ) { 
 ;__p+='\n                ';
  if (layer.type != "Link") { 

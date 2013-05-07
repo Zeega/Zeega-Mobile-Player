@@ -22,6 +22,8 @@ function( $, _, Backbone, State ) {
         // only required for dynamically loaded zeegas
         api: localStorage.getItem("api") || "http://dev.zeega.org/joseph/web/api/projects/",
 
+        metadata: $("meta[name=zeega]").data(),
+
         hostname: meta.data("hostname"),
         directory: meta.data("directory"),
         views: meta.data("views"),

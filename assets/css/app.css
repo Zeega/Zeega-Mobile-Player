@@ -918,6 +918,11 @@
 .icon-fullscreen {
   background-position: -456px -144px;
 }
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
 html {
   background: black;
   font-family: 'Helvetica', sans-serif;
@@ -1367,6 +1372,9 @@ a:active {
   overflow: hidden;
   font-size: 0.75em;
 }
+#underlay li.highlight {
+  background: orangered;
+}
 #underlay li.header {
   padding: 10px 20px;
   color: #ccc;
@@ -1409,7 +1417,7 @@ a:active {
 }
 .ZEEGA-chrome .chrome-top .chrome-title {
   color: white;
-  font-size: 30px;
+  font-size: 2em;
   background: rgba(0, 0, 0, 0.5);
   padding: 10px 10px 5px 10px;
   position: absolute;
@@ -1445,4 +1453,80 @@ a:active {
 }
 .pause-zcon {
   background-position: -33px 0px;
+}
+.chrome-top {
+  min-height: 30px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+.chrome-top .chrome-title {
+  color: white;
+  font-size: 30px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  position: absolute;
+  left: 70px;
+  right: 20px;
+  border-radius: 0 0 2px 2px;
+}
+.ZEEGA-endpage {
+  display: none;
+  z-index: 1000;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.25);
+  color: white;
+}
+.ZEEGA-endpage h1 {
+  font-size: 2em;
+  text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.5);
+}
+.ZEEGA-endpage h2 {
+  font-size: 1em;
+  opacity: 0.7;
+  margin-top: 10px;
+  text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.5);
+}
+.ZEEGA-endpage .ZEEGA-loader-inner {
+  left: 70px;
+  background: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  right: 20px;
+  top: 0px;
+  padding: 10px;
+  border-radius: 0 0 2px 2px;
+}
+.ZEEGA-endpage .ZEEGA-loader-inner .profile-name {
+  float: left;
+  position: relative;
+  padding: 18px 10px;
+}
+.ZEEGA-endpage:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.ZEEGA-endpage .share-sites {
+  padding: 0;
+  list-style: none;
+  text-align: center;
+  margin: 20px 0;
+}
+.ZEEGA-endpage .share-sites li {
+  display: inline-block;
+  margin-right: 10px;
+  opacity: 0.9;
+}
+.ZEEGA-endpage .endpage-social {
+  height: 50px;
+  width: 50px;
+  display: inline-block;
+  background: url(../img/zeegaplayer/endpage-share-sprite.png);
+}
+.ZEEGA-endpage .endpage-social.endpage-social-facebook {
+  background-position: -50px 0;
+}
+.ZEEGA-endpage .endpage-social.endpage-social-tumblr {
+  background-position: -100px 0;
 }

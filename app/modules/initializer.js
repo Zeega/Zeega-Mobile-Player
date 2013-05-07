@@ -24,7 +24,9 @@ function(app, Backbone, UI) {
                 // .append("<div id='chrome'></div>")
                 .append("<div id='underlay'></div>");
 
-            $("#player").append("<div id='chrome'></div>");
+            $("#player")
+                .append("<div id='endpage'></div>")
+                .append("<div id='chrome'></div>");
 
             this.initPlayer();
         },
@@ -32,6 +34,7 @@ function(app, Backbone, UI) {
         initPlayer: function() {
             app.player = new Zeega.player({
                 // debugEvents: true,
+                endPage: true,
                 mobile: true,
                 controls: false,
                 autoplay: false,

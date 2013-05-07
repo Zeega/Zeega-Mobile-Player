@@ -15,6 +15,7 @@ function( app, Backbone, Spinner ) {
         className: "ZEEGA-chrome",
         template: "chrome",
 
+        active: true,
         visible: false,
         timer: null,
 
@@ -29,7 +30,20 @@ function( app, Backbone, Spinner ) {
         onCanplay: _.once(function() {
             this.model.on("play", this.onPlay, this );
             this.model.on("pause", this.onPause, this );
+
+            this.model.on("endpage_enter", this.onEndpageEnter, this );
+            this.model.on("endpage_exit", this.onEndpageExit, this );
         }),
+
+        onEndpageEnter: function() {
+            this.hide();
+            this.active = false;
+        },
+
+        onEndpageExit: function() {
+            this.active = true;
+            // this.hide();
+        },
 
         toggle: function() {
             if ( this.visible ) {
@@ -44,13 +58,17 @@ function( app, Backbone, Spinner ) {
             "click .ZEEGA-tab": "showCoffin"
         },
 
-        show: function() {
-            if ( app.hasPlayed ) {
+        // time = false
+        show: function( time ) {
+            if ( app.hasPlayed && this.active ) {
                 this.$(".chrome-top, .chrome-bottom").show();
                 clearInterval( this.timer );
-                this.timer = setTimeout(function() {
-                    this.hide();
-                }.bind( this ), this.FADE_TIMER );
+
+                if ( time !== false ) {
+                    this.timer = setTimeout(function() {
+                        this.hide();
+                    }.bind( this ), this.FADE_TIMER );
+                }
 
                 this.visible = true;
             }
