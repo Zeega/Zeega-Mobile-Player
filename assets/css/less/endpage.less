@@ -22,11 +22,12 @@
     position: absolute;
     height: 100%;
     width: 100%;
-    background: rgba(0, 0, 0, 0.25);
+    background-image: url("../img/tiny-stripes-dark.png");
+    background-color: rgba(0, 0, 0, 0.25);
     color: white;
 
     h1 {
-        font-size: 2em;
+        font-size: 1em;
         text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.5);
     }
     h2 {
@@ -38,8 +39,7 @@
 
     .ZEEGA-loader-inner {
         left: 70px;
-        background: 
-        rgba(0,0,0,0.5);
+        background: transparent;
         position: absolute;
         right: 20px;
         top: 0px;
@@ -55,11 +55,15 @@
 
     .clearfix;
 
+
+
     .share-sites {
         padding: 0;
         list-style: none;
         text-align: center;
-        margin: 20px 0;
+        margin: 40px 0;
+        margin-top: 70px;
+        
         li {
             display: inline-block;
             margin-right: 10px;
@@ -82,6 +86,10 @@
         &.endpage-social-tumblr {
             background-position: -100px 0;
         }
+    }
+
+    .endpage-actions {
+        text-align: center;
     }
 
 }

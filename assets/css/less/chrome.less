@@ -1,61 +1,104 @@
 @image-folder: '../img';
 
-.ZEEGA-chrome {
-
-    .chrome-top, .chrome-bottom {
-        z-index: 100;
-        display: none;
-    }
-
-    .chrome-top {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 30px;
-        width: 100%;
-
-        .chrome-title {
-            color: white;
-            font-size: 2em;
-            background: rgba(0,0,0,0.5);
-            padding: 10px 10px 5px 10px;
-            position: absolute;
-            left: 70px;
-            right: 20px;
-            border-radius: 0 0 2px 2px;
-        }
-    }
-
-    .chrome-bottom {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        height: 30px;
-        width: 100%;
-
-        .playpause-wrapper {
-            position: absolute;
-            right: 0;
-            left: 0;
-            width: 30px;
-            margin: auto;
-            bottom: 0;
-            padding: 10px;
-            display: block;
-        }
-
-    }
-}
-
-.play-zcon,
-.pause-zcon {
-    background-image: url('@{image-folder}/playpause.png');
-    background-position: -3px 0px;
-    background-repeat: no-repeat;
+.ZEEGA-tab {
+    background: red;
     display: inline-block;
-    height: 30px;
-    width: 30px; 
+    padding: 5px;
+    margin-left: 20px;
+    width: 30px;
+    height: 35px;
+    float: left;
+    margin-right: 20px;
+    border-radius: 0 0 2px 2px;
+    position: relative;
+    z-index: 2;
+    img {
+        margin-top: 2px;
+    }
 }
-.pause-zcon {
-    background-position: -33px 0px;
+
+.ZEEGA-chrome-metablock {
+    color: white;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1;
+
+    .meta-inner {
+        padding: 20px;
+        padding-top: 10px;
+        .clearfix;
+    }
+
+    .left-col {
+        .clearfix;
+        float:left;
+        margin-right: 10px
+    }
+
+    .right-col {
+        float: right;
+        width: -webkit-calc(~"100% - 66px");
+
+        .username {
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+        .caption {
+            line-height: 1.1em;
+        }
+    }
+}
+
+
+.swipe-left {
+    width: 125px;
+    display: block;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    height: 80px;
+    position: absolute;
+    right: 10%;
+    .transition( right, 0.5s );
+
+    &.jump {
+        right: 20%;
+        .transition( right, 0.5s );
+    }
+
+    img {
+        width: 100%;
+    }
+}
+
+.ZEEGA-notices {
+
+    position: absolute;
+    top: 70px;
+    left: 20px;
+
+    li {
+        margin-bottom: 5px;
+    }
+
+    .sticky {
+
+    }
+
+    .rotating {
+        li {
+            opacity: 0;
+            position: absolute;
+            width: 200px;
+            .transition( opacity, 0.5s );
+
+            &.active {
+                opacity: 1;
+                .transition( opacity, 0.5s );
+            }
+        }
+    }
+    
 }

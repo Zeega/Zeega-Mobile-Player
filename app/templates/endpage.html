@@ -1,21 +1,10 @@
-<div class="upper-wrapper">
-    <div class="ZEEGA-tab"><img src="assets/img/zeega-logo-white-30.png"/></div>
+<div class="ZEEGA-tab"><img src="assets/img/zeega-logo-white-30.png"/></div>
 
-    <div class="ZEEGA-loader-inner">
-        <h1><%= title %></h1>
-        <h2>
-            <a href="http://zeega.com/user/<%= userId %>" target="blank">
-                <div class="profile-token"><img src="<%= userThumbnail %>"/></div>
-                <div class="profile-name"><%= authors %></div>
-            </a>
-        </h2>
-    </div>
-</div>
 
 <div class="share-block">
     <ul class="share-sites">
         <li><a
-            href="https://twitter.com/intent/tweet?original_referer=<%= hostname %><%= directory %><%= item_id %>&text=<%= description %> &url=<%= hostname %><%= directory %><%= item_id %>"
+            href="https://twitter.com/intent/tweet?original_referer=<%= hostname %><%= directory %><%= item_id %>&text=<%= description %> Made w/ @zeega&url=<%= hostname %><%= directory %><%= item_id %>"
             target="blank"
             ><i class="endpage-social endpage-social-twitter"
             ></i></a></li>
@@ -28,4 +17,26 @@
             target="blank"
             ><i class="endpage-social endpage-social-tumblr"></i></a></li>
     </ul>
+</div>
+
+<div class="endpage-actions">
+    <a href="http://www.zeega.com/" class="btnz btnz-action" >Explore More Zeegas</a>
+</div>
+
+<div class="ZEEGA-chrome-metablock">
+    <div class="meta-inner">
+        <div class="left-col">
+            <a href="http://zeega.com/user/<%= userId %>" target="blank">
+                <div class="profile-token"><img src="<%= profileImage %>"/></div>
+            </a>
+        </div>
+        <div class="right-col">
+            <div class="username">
+                <a href="http://zeega.com/user/<%= userId %>" target="blank">
+                    <div class="profile-name"><%= authors %></div>
+                </a>
+            </div>
+            <div class="caption"><%= title %></div>
+        </div>
+    </div>
 </div>

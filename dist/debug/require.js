@@ -341,9 +341,17 @@ var requirejs, require, define;
 this["JST"]["app/templates/chrome.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<div class="chrome-top">\n    <div class="ZEEGA-tab"><img src="assets/img/zeega-logo-white-30.png"/></div>\n    <div class="chrome-title">'+
+__p+='<div class="ZEEGA-tab" style="display:none" ><img src="assets/img/zeega-logo-white-30.png"/></div>\n\n<div class="ZEEGA-chrome-metablock" style="display:none" >\n    <div class="meta-inner">\n        <div class="left-col">\n            <a href="http://zeega.com/user/'+
+( userId )+
+'" target="blank">\n                <div class="profile-token"><img src="'+
+( profileImage )+
+'"/></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a href="http://zeega.com/user/'+
+( userId )+
+'" target="blank">\n                    <div class="profile-name">'+
+( authors )+
+'</div>\n                </a>\n            </div>\n            <div class="caption">'+
 ( title )+
-'</div>\n</div>\n';
+'</div>\n        </div>\n    </div>\n</div>';
 }
 return __p;
 };
@@ -351,15 +359,7 @@ return __p;
 this["JST"]["app/templates/endpage.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<div class="upper-wrapper">\n    <div class="ZEEGA-tab"><img src="assets/img/zeega-logo-white-30.png"/></div>\n\n    <div class="ZEEGA-loader-inner">\n        <h1>'+
-( title )+
-'</h1>\n        <h2>\n            <a href="http://zeega.com/user/'+
-( userId )+
-'" target="blank">\n                <div class="profile-token"><img src="'+
-( userThumbnail )+
-'"/></div>\n                <div class="profile-name">'+
-( authors )+
-'</div>\n            </a>\n        </h2>\n    </div>\n</div>\n\n<div class="share-block">\n    <ul class="share-sites">\n        <li><a\n            href="https://twitter.com/intent/tweet?original_referer='+
+__p+='<div class="ZEEGA-tab"><img src="assets/img/zeega-logo-white-30.png"/></div>\n\n\n<div class="share-block">\n    <ul class="share-sites">\n        <li><a\n            href="https://twitter.com/intent/tweet?original_referer='+
 ( hostname )+
 ''+
 ( directory )+
@@ -367,7 +367,7 @@ __p+='<div class="upper-wrapper">\n    <div class="ZEEGA-tab"><img src="assets/i
 ( item_id )+
 '&text='+
 ( description )+
-' &url='+
+' Made w/ @zeega&url='+
 ( hostname )+
 ''+
 ( directory )+
@@ -381,7 +381,17 @@ __p+='<div class="upper-wrapper">\n    <div class="ZEEGA-tab"><img src="assets/i
 ( item_id )+
 '"><i class="endpage-social endpage-social-facebook"\n            target="blank"\n            ></i></a></li>\n        <li><a\n            href="http://www.tumblr.com/share/photo?'+
 ( tumblr_share )+
-'"\n            target="blank"\n            ><i class="endpage-social endpage-social-tumblr"></i></a></li>\n    </ul>\n</div>';
+'"\n            target="blank"\n            ><i class="endpage-social endpage-social-tumblr"></i></a></li>\n    </ul>\n</div>\n\n<div class="endpage-actions">\n    <a href="http://www.zeega.com/" class="btnz btnz-action" >Explore More Zeegas</a>\n</div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a href="http://zeega.com/user/'+
+( userId )+
+'" target="blank">\n                <div class="profile-token"><img src="'+
+( profileImage )+
+'"/></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a href="http://zeega.com/user/'+
+( userId )+
+'" target="blank">\n                    <div class="profile-name">'+
+( authors )+
+'</div>\n                </a>\n            </div>\n            <div class="caption">'+
+( title )+
+'</div>\n        </div>\n    </div>\n</div>';
 }
 return __p;
 };
@@ -389,15 +399,17 @@ return __p;
 this["JST"]["app/templates/loader.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<div class="ZEEGA-tab"><img src="assets/img/zeega-logo-white-30.png"/></div>\n\n<div class="ZEEGA-loader-inner">\n    <h1>'+
-( title )+
-'</h1>\n    <h2>\n        <a href="http://zeega.com/user/'+
+__p+='<div class="ZEEGA-tab"><img src="assets/img/zeega-logo-white-30.png"/></div>\n\n<div class="ZEEGA-notices">\n    <ul class="sticky">\n        <li><i class="icon-headphones icon-white"></i> turn up volume</li>\n    </ul>\n    <ul class="rotating">\n        <li class="active">swipe to start</li>\n        <li class="">swipe to explore</li>\n    </ul>\n</div>\n\n<div class="swipe-left"><img src="assets/img/swipe-left.png"/></div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a href="http://zeega.com/user/'+
 ( userId )+
-'" target="blank">\n            <div class="profile-token"><img src="'+
+'" target="blank">\n                <div class="profile-token"><img src="'+
 ( profileImage )+
-'"/></div>\n            <div class="profile-name">'+
+'"/></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a href="http://zeega.com/user/'+
+( userId )+
+'" target="blank">\n                    <div class="profile-name">'+
 ( authors )+
-'</div>\n        </a>\n    </h2>\n</div>\n\n<div class="swipe-left"><img src="assets/img/swipe-left.png"/></div>\n<div class="instructions">\n    <ul>\n        <li class="active">swipe to start</li>\n        <li class="">swipe to explore</li>\n    </ul>\n</div>\n\n\n<div class="ZEEGA-loader-bg-overlay"></div>\n<span class="ZEEGA-loader-bg"></span>';
+'</div>\n                </a>\n            </div>\n            <div class="caption">'+
+( title )+
+'</div>\n        </div>\n    </div>\n</div>\n\n<div class="ZEEGA-loader-bg-overlay"></div>\n<span class="ZEEGA-loader-bg"></span>';
 }
 return __p;
 };
@@ -54776,7 +54788,7 @@ function( app, Backbone, Spinner ) {
                     "background-size": "cover"
                 });
             }
-            this.instructionCount = this.$(".instructions ul li").length;
+            this.instructionCount = this.$(".ZEEGA-notices ul.rotating li").length;
             this.cycleFacts();
             this.swipeJump();
         },
@@ -54784,8 +54796,8 @@ function( app, Backbone, Spinner ) {
         cycleFacts: function() {
             this.interval = setInterval(function() {
                 this.instruction++;
-                this.$(".instructions .active").removeClass("active");
-                $(this.$(".instructions ul li")[ this.instruction % this.instructionCount ]).addClass("active");
+                this.$(".ZEEGA-notices .active").removeClass("active");
+                $(this.$(".ZEEGA-notices ul.rotating li")[ this.instruction % this.instructionCount ]).addClass("active");
             }.bind( this ), this.instructionDuration );
         },
 
@@ -55549,9 +55561,16 @@ function( app, Backbone, Spinner ) {
         active: true,
         visible: false,
         timer: null,
+        hasPlayed: false,
 
         serialize: function() {
-            return _.extend({ hasAudio: app.hasSoundtrack }, this.model.project.toJSON() );
+            return _.extend(
+                {
+                    userId: app.userId,
+                    profileImage: app.profileImage
+                },
+                this.model.project.toJSON()
+            );
         },
 
         initialize: function() {
@@ -55592,7 +55611,7 @@ function( app, Backbone, Spinner ) {
         // time = false
         show: function( time ) {
             if ( app.hasPlayed && this.active ) {
-                this.$(".chrome-top, .chrome-bottom").show();
+                this.$(".ZEEGA-tab, .ZEEGA-chrome-metablock").show();
                 clearInterval( this.timer );
 
                 if ( time !== false ) {
@@ -55606,18 +55625,19 @@ function( app, Backbone, Spinner ) {
         },
 
         onPlay: function() {
-            this.show();
-            this.$(".ZEEGA-playpause").addClass("pause-zcon").removeClass("play-zcon");
+            if ( this.hasPlayed ) {
+                this.show();
+            }
+            this.hasPlayed = true;
         },
 
         onPause: function() {
             clearInterval( this.timer );
-            this.$(".ZEEGA-playpause").removeClass("pause-zcon").addClass("play-zcon");
         },
 
         hide: function( force ) {
             if ( this.model.state != "paused" || force === true ) {
-                this.$(".chrome-top, .chrome-bottom").fadeOut();
+                this.$(".ZEEGA-tab, .ZEEGA-chrome-metablock").fadeOut();
 
                 this.visible = false;
             }
@@ -55677,7 +55697,9 @@ function( app, Backbone ) {
                 app.metadata,
                 this.model.project.toJSON(),
                 {
-                    tumblr_share: this.getTumblrShareUrl()
+                    tumblr_share: this.getTumblrShareUrl(),
+                    userId: app.userId,
+                    profileImage: app.profileImage
                 }
             );
         },

@@ -18,9 +18,16 @@ function( app, Backbone, Spinner ) {
         active: true,
         visible: false,
         timer: null,
+        hasPlayed: false,
 
         serialize: function() {
-            return _.extend({ hasAudio: app.hasSoundtrack }, this.model.project.toJSON() );
+            return _.extend(
+                {
+                    userId: app.userId,
+                    profileImage: app.profileImage
+                },
+                this.model.project.toJSON()
+            );
         },
 
         initialize: function() {
@@ -61,7 +68,7 @@ function( app, Backbone, Spinner ) {
         // time = false
         show: function( time ) {
             if ( app.hasPlayed && this.active ) {
-                this.$(".chrome-top, .chrome-bottom").show();
+                this.$(".ZEEGA-tab, .ZEEGA-chrome-metablock").show();
                 clearInterval( this.timer );
 
                 if ( time !== false ) {
@@ -75,18 +82,19 @@ function( app, Backbone, Spinner ) {
         },
 
         onPlay: function() {
-            this.show();
-            this.$(".ZEEGA-playpause").addClass("pause-zcon").removeClass("play-zcon");
+            if ( this.hasPlayed ) {
+                this.show();
+            }
+            this.hasPlayed = true;
         },
 
         onPause: function() {
             clearInterval( this.timer );
-            this.$(".ZEEGA-playpause").removeClass("pause-zcon").addClass("play-zcon");
         },
 
         hide: function( force ) {
             if ( this.model.state != "paused" || force === true ) {
-                this.$(".chrome-top, .chrome-bottom").fadeOut();
+                this.$(".ZEEGA-tab, .ZEEGA-chrome-metablock").fadeOut();
 
                 this.visible = false;
             }

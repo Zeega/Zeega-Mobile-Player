@@ -1,4 +1,19 @@
-<div class="chrome-top">
-    <div class="ZEEGA-tab"><img src="assets/img/zeega-logo-white-30.png"/></div>
-    <div class="chrome-title"><%= title %></div>
+<div class="ZEEGA-tab" style="display:none" ><img src="assets/img/zeega-logo-white-30.png"/></div>
+
+<div class="ZEEGA-chrome-metablock" style="display:none" >
+    <div class="meta-inner">
+        <div class="left-col">
+            <a href="http://zeega.com/user/<%= userId %>" target="blank">
+                <div class="profile-token"><img src="<%= profileImage %>"/></div>
+            </a>
+        </div>
+        <div class="right-col">
+            <div class="username">
+                <a href="http://zeega.com/user/<%= userId %>" target="blank">
+                    <div class="profile-name"><%= authors %></div>
+                </a>
+            </div>
+            <div class="caption"><%= title %></div>
+        </div>
+    </div>
 </div>

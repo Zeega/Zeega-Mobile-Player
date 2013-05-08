@@ -39,7 +39,9 @@ function( app, Backbone ) {
                 app.metadata,
                 this.model.project.toJSON(),
                 {
-                    tumblr_share: this.getTumblrShareUrl()
+                    tumblr_share: this.getTumblrShareUrl(),
+                    userId: app.userId,
+                    profileImage: app.profileImage
                 }
             );
         },

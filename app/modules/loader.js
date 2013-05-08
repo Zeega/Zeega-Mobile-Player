@@ -47,7 +47,7 @@ function( app, Backbone, Spinner ) {
                     "background-size": "cover"
                 });
             }
-            this.instructionCount = this.$(".instructions ul li").length;
+            this.instructionCount = this.$(".ZEEGA-notices ul.rotating li").length;
             this.cycleFacts();
             this.swipeJump();
         },
@@ -55,8 +55,8 @@ function( app, Backbone, Spinner ) {
         cycleFacts: function() {
             this.interval = setInterval(function() {
                 this.instruction++;
-                this.$(".instructions .active").removeClass("active");
-                $(this.$(".instructions ul li")[ this.instruction % this.instructionCount ]).addClass("active");
+                this.$(".ZEEGA-notices .active").removeClass("active");
+                $(this.$(".ZEEGA-notices ul.rotating li")[ this.instruction % this.instructionCount ]).addClass("active");
             }.bind( this ), this.instructionDuration );
         },
 
