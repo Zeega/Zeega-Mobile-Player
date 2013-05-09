@@ -55615,15 +55615,12 @@ function( app, Backbone, Spinner ) {
         },
 
         toggleMute: function(){
-            
-            if( this.$(".ZEEGA-mute").hasClass("muted") ){
-                this.$(".ZEEGA-mute").removeClass("muted");
-                if( $("audio")[0] ){
+            if( $("audio")[0] ){
+                if( this.$(".ZEEGA-mute").hasClass("muted") ){
+                    this.$(".ZEEGA-mute").removeClass("muted");
                     $("audio")[0].play();
-                }
-            } else {
-                this.$(".ZEEGA-mute").addClass("muted");
-                if( $("audio")[0] ){
+                } else {
+                    this.$(".ZEEGA-mute").addClass("muted");
                     $("audio")[0].pause();
                 }
             }
