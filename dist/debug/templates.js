@@ -29,11 +29,7 @@ __p+='<div class="ZEEGA-tab"><img src="assets/img/zeega-logo-white-30.png"/></di
 ( item_id )+
 '&text='+
 ( description )+
-' Made w/ @zeega&url='+
-( hostname )+
-''+
-( directory )+
-''+
+' Made w/ @zeega&url=http://zeega.com/'+
 ( item_id )+
 '"\n            target="blank"\n            ><i class="endpage-social endpage-social-twitter"\n            ></i></a></li>\n        <li><a\n            href="http://www.facebook.com/sharer.php?u='+
 ( hostname )+
@@ -103,9 +99,17 @@ __p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="he
 ( authors )+
 '</div>\n            <div class="project-views">\n                <i class="icon-eye-open icon-white"></i> '+
 ( views )+
-' views\n            </div>\n        </li>\n\n        <li><a href="https://mobile.twitter.com/compose/tweet?status=http://www.zeega.com/'+
+' views\n            </div>\n        </li>\n\n        <li><a href="https://twitter.com/intent/tweet?original_referer='+
+( hostname )+
+''+
+( directory )+
+''+
 ( item_id )+
-'" target="blank"><i class="zsocial-twitter"></i>  Share on Twitter</a></li>\n        <li><a href="http://m.facebook.com/sharer.php?u=http://www.zeega.com/'+
+'&text='+
+( description )+
+' Made w/ @zeega&url=http://zeega.com/'+
+( item_id )+
+'"\n            target="blank"><i class="zsocial-twitter"></i>  Share on Twitter</a></li>\n        <li><a href="http://m.facebook.com/sharer.php?u=http://www.zeega.com/'+
 ( item_id )+
 '&t='+
 ( title )+
