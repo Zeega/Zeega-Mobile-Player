@@ -1395,6 +1395,26 @@ a:active {
 .ZEEGA-tab img {
   margin-top: 2px;
 }
+.ZEEGA-mute {
+  background: transparent;
+  background-repeat: no-repeat;
+  background-image: url(../img/mute.png);
+  background-position: 0 5px;
+  display: inline-block;
+  padding: 5px;
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-top: 5px;
+  width: 25px;
+  height: 25px;
+  float: right;
+  border-radius: 0 0 2px 2px;
+  position: relative;
+  z-index: 2;
+}
+.ZEEGA-mute.muted {
+  background-position: -35px 5px;
+}
 .ZEEGA-chrome-metablock {
   color: white;
   position: absolute;
