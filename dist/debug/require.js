@@ -55535,6 +55535,10 @@ function( app, Backbone ) {
         play: function() {
             this.remove();
             this.model.play();
+            //need to build into player, mobile audio does not support volume/mute
+            if( $(".ZEEGA-mute").hasClass("muted") && $("audio")[0] ){
+                $("audio")[0].pause();
+            }
         }
 
   });
@@ -55614,14 +55618,12 @@ function( app, Backbone, Spinner ) {
             if( this.$(".ZEEGA-mute").hasClass("muted") ){
                 this.$(".ZEEGA-mute").removeClass("muted");
                 if( $("audio")[0] ){
-                     $("audio")[0].muted = false;
-                    //$("audio")[0].play();
+                    $("audio")[0].play();
                 }
             } else {
                 this.$(".ZEEGA-mute").addClass("muted");
                 if( $("audio")[0] ){
-                    $("audio")[0].muted = true;
-                    //$("audio")[0].pause();
+                    $("audio")[0].pause();
                 }
             }
             return false;

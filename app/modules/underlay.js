@@ -37,6 +37,10 @@ function( app, Backbone ) {
         play: function() {
             this.remove();
             this.model.play();
+            //need to build into player, mobile audio does not support volume/mute
+            if( $(".ZEEGA-mute").hasClass("muted") && $("audio")[0] ){
+                $("audio")[0].pause();
+            }
         }
 
   });
