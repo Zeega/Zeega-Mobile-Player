@@ -97,11 +97,7 @@ return __p;
 this["JST"]["app/templates/underlay.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="header">\n            <div>'+
-( title )+
-'</div>\n            <div class="coffin-author">A Zeega by '+
-( authors )+
-'</div>\n            <div class="project-views">\n                <i class="icon-eye-open icon-white"></i> '+
+__p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="header">\n            <div class="project-views">\n                <i class="icon-eye-open icon-white"></i> '+
 ( views )+
 ' views\n            </div>\n        </li>\n\n        <li><a href="https://mobile.twitter.com/compose/tweet?status=http://www.zeega.com/'+
 ( item_id )+

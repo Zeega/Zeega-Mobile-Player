@@ -35,7 +35,6 @@ function( app, Backbone ) {
         },
 
         play: function() {
-            console.log("resuming play")
             this.remove();
             this.model.play();
             //need to build into player, mobile audio does not support volume/mute
