@@ -48,7 +48,7 @@ function( app, Backbone ) {
 
         getTumblrShareUrl: function() {
             var html = "<p>" + app.player.project.get("description") + "</p>" + 
-                "<p><a href='" + app.metadata.hostname + app.player.project.get("item_id") + "'>" +
+                "<p><a href='http://zeega.com/" + app.player.project.get("item_id") + "'>" +
                 "<strong>►&nbsp;Play&nbsp;Zeega&nbsp;►</strong></a>" +
                 "</p><p>by&nbsp;<a href='" + app.metadata.hostname + "profile/" + app.player.project.get("user_id") + "'>" + app.player.project.get("authors") + "</a></p>";
 

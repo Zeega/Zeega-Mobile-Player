@@ -341,7 +341,7 @@ var requirejs, require, define;
 this["JST"]["app/templates/chrome.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<div class="ZEEGA-tab" style="display:none" ><img src="assets/img/zeega-logo-white-30.png"/></div>\n\n<div class="ZEEGA-chrome-metablock" style="display:none" >\n    <div class="meta-inner">\n        <div class="left-col">\n            <a href="http://zeega.com/user/'+
+__p+='<div class="ZEEGA-tab" style="display:none" ><img src="assets/img/zeega-logo-white-30.png"/></div>\n<div class="ZEEGA-mute" style="display:none" ></div>\n\n<div class="ZEEGA-chrome-metablock" style="display:none" >\n    <div class="meta-inner">\n        <div class="left-col">\n            <a href="http://zeega.com/user/'+
 ( userId )+
 '" target="blank">\n                <div class="profile-token"><img src="'+
 ( profileImage )+
@@ -431,11 +431,7 @@ return __p;
 this["JST"]["app/templates/underlay.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="header">\n            <div>'+
-( title )+
-'</div>\n            <div class="coffin-author">A Zeega by '+
-( authors )+
-'</div>\n            <div class="project-views">\n                <i class="icon-eye-open icon-white"></i> '+
+__p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="header">\n            <div class="project-views">\n                <i class="icon-eye-open icon-white"></i> '+
 ( views )+
 ' views\n            </div>\n        </li>\n\n        <li><a href="https://twitter.com/intent/tweet?original_referer='+
 ( hostname )+
@@ -55544,6 +55540,10 @@ function( app, Backbone ) {
         play: function() {
             this.remove();
             this.model.play();
+            //need to build into player, mobile audio does not support volume/mute
+            if( $(".ZEEGA-mute").hasClass("muted") && $("audio")[0] ){
+                $("audio")[0].pause();
+            }
         }
 
   });
@@ -55614,13 +55614,30 @@ function( app, Backbone, Spinner ) {
 
         events: {
             "click .playpause-wrapper": "playPause",
-            "click .ZEEGA-tab": "showCoffin"
+            "click .ZEEGA-tab": "showCoffin",
+            "click .ZEEGA-mute": "toggleMute"
+        },
+
+        toggleMute: function(){
+            if( $("audio")[0] ){
+                if( this.$(".ZEEGA-mute").hasClass("muted") ){
+                    this.$(".ZEEGA-mute").removeClass("muted");
+                    $("audio")[0].play();
+                } else {
+                    this.$(".ZEEGA-mute").addClass("muted");
+                    $("audio")[0].pause();
+                }
+            }
+            return false;
         },
 
         // time = false
         show: function( time ) {
             if ( app.hasPlayed && this.active ) {
                 this.$(".ZEEGA-tab, .ZEEGA-chrome-metablock").show();
+                if( app.hasSoundtrack ){
+                    this.$(".ZEEGA-mute").show();
+                }
                 clearInterval( this.timer );
 
                 if ( time !== false ) {
@@ -55646,7 +55663,7 @@ function( app, Backbone, Spinner ) {
 
         hide: function( force ) {
             if ( this.model.state != "paused" || force === true ) {
-                this.$(".ZEEGA-tab, .ZEEGA-chrome-metablock").fadeOut();
+                this.$(".ZEEGA-tab, .ZEEGA-chrome-metablock, .ZEEGA-mute").fadeOut();
 
                 this.visible = false;
             }
@@ -55715,7 +55732,7 @@ function( app, Backbone ) {
 
         getTumblrShareUrl: function() {
             var html = "<p>" + app.player.project.get("description") + "</p>" + 
-                "<p><a href='" + app.metadata.hostname + app.player.project.get("item_id") + "'>" +
+                "<p><a href='http://zeega.com/" + app.player.project.get("item_id") + "'>" +
                 "<strong>►&nbsp;Play&nbsp;Zeega&nbsp;►</strong></a>" +
                 "</p><p>by&nbsp;<a href='" + app.metadata.hostname + "profile/" + app.player.project.get("user_id") + "'>" + app.player.project.get("authors") + "</a></p>";
 
@@ -56748,6 +56765,10 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome, EndPage ) {
                     this.chrome.show();
                     if ( this.preCoffin == "playing" || !app.hasSoundtrack ) {
                         this.model.play();
+                        //need to build into player, mobile audio does not support volume/mute
+                        if( $(".ZEEGA-mute").hasClass("muted") && $("audio")[0] ){
+                            $("audio")[0].pause();
+                        }
                     } 
                 }.bind( this )
             });

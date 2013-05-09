@@ -62,13 +62,30 @@ function( app, Backbone, Spinner ) {
 
         events: {
             "click .playpause-wrapper": "playPause",
-            "click .ZEEGA-tab": "showCoffin"
+            "click .ZEEGA-tab": "showCoffin",
+            "click .ZEEGA-mute": "toggleMute"
+        },
+
+        toggleMute: function(){
+            if( $("audio")[0] ){
+                if( this.$(".ZEEGA-mute").hasClass("muted") ){
+                    this.$(".ZEEGA-mute").removeClass("muted");
+                    $("audio")[0].play();
+                } else {
+                    this.$(".ZEEGA-mute").addClass("muted");
+                    $("audio")[0].pause();
+                }
+            }
+            return false;
         },
 
         // time = false
         show: function( time ) {
             if ( app.hasPlayed && this.active ) {
                 this.$(".ZEEGA-tab, .ZEEGA-chrome-metablock").show();
+                if( app.hasSoundtrack ){
+                    this.$(".ZEEGA-mute").show();
+                }
                 clearInterval( this.timer );
 
                 if ( time !== false ) {
@@ -94,7 +111,7 @@ function( app, Backbone, Spinner ) {
 
         hide: function( force ) {
             if ( this.model.state != "paused" || force === true ) {
-                this.$(".ZEEGA-tab, .ZEEGA-chrome-metablock").fadeOut();
+                this.$(".ZEEGA-tab, .ZEEGA-chrome-metablock, .ZEEGA-mute").fadeOut();
 
                 this.visible = false;
             }
