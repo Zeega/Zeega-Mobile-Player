@@ -55614,12 +55614,14 @@ function( app, Backbone, Spinner ) {
             if( this.$(".ZEEGA-mute").hasClass("muted") ){
                 this.$(".ZEEGA-mute").removeClass("muted");
                 if( $("audio")[0] ){
-                    $("audio")[0].play();
+                     $("audio")[0].muted = false;
+                    //$("audio")[0].play();
                 }
             } else {
                 this.$(".ZEEGA-mute").addClass("muted");
                 if( $("audio")[0] ){
-                    $("audio")[0].pause();
+                    $("audio")[0].muted = true;
+                    //$("audio")[0].pause();
                 }
             }
             return false;
