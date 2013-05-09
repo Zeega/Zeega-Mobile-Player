@@ -70,10 +70,14 @@ function( app, Backbone, Spinner ) {
             
             if( this.$(".ZEEGA-mute").hasClass("muted") ){
                 this.$(".ZEEGA-mute").removeClass("muted");
-                $("audio")[0].volume = 1;
+                if( $("audio")[0] ){
+                    $("audio")[0].play();
+                }
             } else {
                 this.$(".ZEEGA-mute").addClass("muted");
-                $("audio")[0].volume = 0;
+                if( $("audio")[0] ){
+                    $("audio")[0].pause();
+                }
             }
             return false;
         },
