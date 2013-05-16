@@ -24,12 +24,6 @@ function( $, _, Backbone, State ) {
 
         metadata: $("meta[name=zeega]").data(),
 
-        hostname: meta.data("hostname"),
-        directory: meta.data("directory"),
-        views: meta.data("views"),
-        userId: meta.data("userId"),
-        profileImage: meta.data("userThumbnail"),
-
       /*
         app.state stores information on the current state of the application
       */

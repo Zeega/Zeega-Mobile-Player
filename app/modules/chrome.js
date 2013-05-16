@@ -22,10 +22,7 @@ function( app, Backbone, Spinner ) {
 
         serialize: function() {
             return _.extend(
-                {
-                    userId: app.userId,
-                    profileImage: app.profileImage
-                },
+                app.metadata,
                 this.model.project.toJSON()
             );
         },

@@ -6,7 +6,7 @@ with(obj||{}){
 __p+='<div class="ZEEGA-tab" style="display:none" ><img src="assets/img/zeega-logo-white-30.png"/></div>\n<div class="ZEEGA-mute" style="display:none" ></div>\n\n<div class="ZEEGA-chrome-metablock" style="display:none" >\n    <div class="meta-inner">\n        <div class="left-col">\n            <a href="http://zeega.com/user/'+
 ( userId )+
 '" target="blank">\n                <div class="profile-token"><img src="'+
-( profileImage )+
+( userThumbnail )+
 '"/></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a href="http://zeega.com/user/'+
 ( userId )+
 '" target="blank">\n                    <div class="profile-name">'+
@@ -42,7 +42,7 @@ __p+='<div class="ZEEGA-tab"><img src="assets/img/zeega-logo-white-30.png"/></di
 '"\n            target="blank"\n            ><i class="endpage-social endpage-social-tumblr"></i></a></li>\n    </ul>\n</div>\n\n<div class="endpage-actions">\n    <a href="http://www.zeega.com/" class="btnz btnz-action" >Explore More Zeegas</a>\n</div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a href="http://zeega.com/user/'+
 ( userId )+
 '" target="blank">\n                <div class="profile-token"><img src="'+
-( profileImage )+
+( userThumbnail )+
 '"/></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a href="http://zeega.com/user/'+
 ( userId )+
 '" target="blank">\n                    <div class="profile-name">'+
@@ -60,7 +60,7 @@ with(obj||{}){
 __p+='<div class="ZEEGA-tab"><img src="assets/img/zeega-logo-white-30.png"/></div>\n\n<div class="ZEEGA-notices">\n    <ul class="sticky">\n        <li><i class="icon-headphones icon-white"></i> turn up volume</li>\n    </ul>\n    <ul class="rotating">\n        <li class="active">swipe to start</li>\n        <li class="">swipe to explore</li>\n    </ul>\n</div>\n\n<div class="swipe-left"><img src="assets/img/swipe-left.png"/></div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a href="http://zeega.com/user/'+
 ( userId )+
 '" target="blank">\n                <div class="profile-token"><img src="'+
-( profileImage )+
+( userThumbnail )+
 '"/></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a href="http://zeega.com/user/'+
 ( userId )+
 '" target="blank">\n                    <div class="profile-name">'+

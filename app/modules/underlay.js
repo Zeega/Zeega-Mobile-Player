@@ -14,15 +14,12 @@ function( app, Backbone ) {
         myScroll: null,
 
         serialize: function() {
+
             return _.extend({},
                 app.metadata,
                 this.model.project.toJSON(),
                 {
-                    // tumblr_share: this.getTumblrShareUrl(),
-                    views: app.views,
-                    layers: this.model.getProjectData().layers,
-                    userId: app.userId,
-                    profileImage: app.profileImage
+                    layers: this.model.getProjectData().layers
                 }
             );
         },

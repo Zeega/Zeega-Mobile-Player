@@ -16,9 +16,13 @@ html {
 	font-family: 'Helvetica', sans-serif;
 }
 
+#main {
+    height: 100%;
+}
+
 /* Portrait */
 @media screen and (orientation:portrait) {
-    #main {
+    #main.iphone-webview {
         height: -webkit-calc(~"100% + 60px");
     }
 
@@ -26,7 +30,7 @@ html {
 
 /* Landscape */
 @media screen and (orientation:landscape) {
-    #main {
+    #main.iphone-webview {
         height: 100%;
     }
 }

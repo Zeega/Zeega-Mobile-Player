@@ -42,6 +42,18 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome, EndPage ) {
             this.render();
 
             this.listenForOrientationChange();
+
+            this.detectUserAgent();
+        },
+
+        detectUserAgent: function() {
+            var is_safari_or_uiwebview = /(iPhone|iPod|iPad).*AppleWebKit/i.test(navigator.userAgent),
+                is_uiwebview = /(iPhone|iPod|iPad).*AppleWebKit(?!.*Safari)/i.test(navigator.userAgent);
+            
+            if ( !is_uiwebview ) {
+                $("#main").addClass("iphone-webview");
+                window.scrollTo(0, 1);
+            }
         },
 
         listenForOrientationChange: function() {

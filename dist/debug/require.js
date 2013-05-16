@@ -344,7 +344,7 @@ with(obj||{}){
 __p+='<div class="ZEEGA-tab" style="display:none" ><img src="assets/img/zeega-logo-white-30.png"/></div>\n<div class="ZEEGA-mute" style="display:none" ></div>\n\n<div class="ZEEGA-chrome-metablock" style="display:none" >\n    <div class="meta-inner">\n        <div class="left-col">\n            <a href="http://zeega.com/user/'+
 ( userId )+
 '" target="blank">\n                <div class="profile-token"><img src="'+
-( profileImage )+
+( userThumbnail )+
 '"/></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a href="http://zeega.com/user/'+
 ( userId )+
 '" target="blank">\n                    <div class="profile-name">'+
@@ -380,7 +380,7 @@ __p+='<div class="ZEEGA-tab"><img src="assets/img/zeega-logo-white-30.png"/></di
 '"\n            target="blank"\n            ><i class="endpage-social endpage-social-tumblr"></i></a></li>\n    </ul>\n</div>\n\n<div class="endpage-actions">\n    <a href="http://www.zeega.com/" class="btnz btnz-action" >Explore More Zeegas</a>\n</div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a href="http://zeega.com/user/'+
 ( userId )+
 '" target="blank">\n                <div class="profile-token"><img src="'+
-( profileImage )+
+( userThumbnail )+
 '"/></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a href="http://zeega.com/user/'+
 ( userId )+
 '" target="blank">\n                    <div class="profile-name">'+
@@ -398,7 +398,7 @@ with(obj||{}){
 __p+='<div class="ZEEGA-tab"><img src="assets/img/zeega-logo-white-30.png"/></div>\n\n<div class="ZEEGA-notices">\n    <ul class="sticky">\n        <li><i class="icon-headphones icon-white"></i> turn up volume</li>\n    </ul>\n    <ul class="rotating">\n        <li class="active">swipe to start</li>\n        <li class="">swipe to explore</li>\n    </ul>\n</div>\n\n<div class="swipe-left"><img src="assets/img/swipe-left.png"/></div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a href="http://zeega.com/user/'+
 ( userId )+
 '" target="blank">\n                <div class="profile-token"><img src="'+
-( profileImage )+
+( userThumbnail )+
 '"/></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a href="http://zeega.com/user/'+
 ( userId )+
 '" target="blank">\n                    <div class="profile-name">'+
@@ -54354,12 +54354,6 @@ function( $, _, Backbone, State ) {
 
         metadata: $("meta[name=zeega]").data(),
 
-        hostname: meta.data("hostname"),
-        directory: meta.data("directory"),
-        views: meta.data("views"),
-        userId: meta.data("userId"),
-        profileImage: meta.data("userThumbnail"),
-
       /*
         app.state stores information on the current state of the application
       */
@@ -54790,10 +54784,7 @@ function( app, Backbone, Spinner ) {
 
         serialize: function() {
             return _.extend(
-                {
-                    userId: app.userId,
-                    profileImage: app.profileImage
-                },
+                app.metadata,
                 this.model.project.toJSON()
             );
         },
@@ -55537,15 +55528,12 @@ function( app, Backbone ) {
         myScroll: null,
 
         serialize: function() {
+
             return _.extend({},
                 app.metadata,
                 this.model.project.toJSON(),
                 {
-                    // tumblr_share: this.getTumblrShareUrl(),
-                    views: app.views,
-                    layers: this.model.getProjectData().layers,
-                    userId: app.userId,
-                    profileImage: app.profileImage
+                    layers: this.model.getProjectData().layers
                 }
             );
         },
@@ -55599,10 +55587,7 @@ function( app, Backbone, Spinner ) {
 
         serialize: function() {
             return _.extend(
-                {
-                    userId: app.userId,
-                    profileImage: app.profileImage
-                },
+                app.metadata,
                 this.model.project.toJSON()
             );
         },
@@ -56676,6 +56661,18 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome, EndPage ) {
             this.render();
 
             this.listenForOrientationChange();
+
+            this.detectUserAgent();
+        },
+
+        detectUserAgent: function() {
+            var is_safari_or_uiwebview = /(iPhone|iPod|iPad).*AppleWebKit/i.test(navigator.userAgent),
+                is_uiwebview = /(iPhone|iPod|iPad).*AppleWebKit(?!.*Safari)/i.test(navigator.userAgent);
+            
+            if ( !is_uiwebview ) {
+                $("#main").addClass("iphone-webview");
+                window.scrollTo(0, 1);
+            }
         },
 
         listenForOrientationChange: function() {
