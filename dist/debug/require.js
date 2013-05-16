@@ -32522,7 +32522,6 @@ function( Zeega, ControlView ) {
 
             makeDraggable: function() {
                 
-
                 if ( this.model.editorProperties.draggable ) {
 
                     this.$visualContainer.draggable({
@@ -32713,6 +32712,7 @@ function( Zeega, ControlView ) {
 
             makeResizable: function() {
                 var args = {
+                    handles: "ne, nw, se, sw",
                     start: function( e, ui ) {
                         this.model.visual.transforming = true;
                         Zeega.status.setCurrentLayer( this.model );
@@ -32725,6 +32725,9 @@ function( Zeega, ControlView ) {
                         if ( this.options.options != "e" ) {
                             attr.height = this.$visualContainer.height() / this.$workspace.height() * 100;
                         }
+
+                        attr.top = ui.position.top / this.$workspace.height() * 100;
+                        attr.left = ui.position.left / this.$workspace.width() * 100;
                        
                         this.update( attr );
                         this.updateCSS( attr );
@@ -34734,7 +34737,7 @@ function( app, LayerModel, Visual ) {
         layerType: "Rectangle",
 
         attr: {
-            backgroundColor: "#FF00FF",
+            backgroundColor: "#FFFFFF",
             citation: false,
             height: 100,
             left: 0,
@@ -35386,8 +35389,6 @@ function( app, _Layer, Visual, TextModal ) {
             this.$(".visual-target")
                 .css( css )
                 .text( this.model.getAttr("content") );
-
-            this.$el.css( css );
         },
 
         afterEditorRender: function() {
@@ -35433,7 +35434,17 @@ function( app, _Layer, Visual, TextModal ) {
         }, 500 ),
 
         beforePlayerRender: function() {
-            this.updateStyle();
+            var css = {
+                color: this.model.get("attr").color,
+                fontWeight: this.model.getAttr("bold") ? "bold" : "normal",
+                fontStyle: this.model.getAttr("italic") ? "italic" : "normal",
+                fontFamily: this.model.getAttr("fontFamily"),
+                fontSize: this.model.getAttr("fontSize") + "%",
+                textAlign: this.model.getAttr("textAlign"),
+                lineHeight: this.model.getAttr("lineHeight") + "em"
+            };
+
+            this.$el.css( css );
         }
   });
 
@@ -35638,15 +35649,6 @@ function( app, Layer, Visual ){
             "width",
             "opacity"
         ],
-
-        // serialize: function() {
-
-        //     return _.extend({},
-        //         this.model.toJSON(),
-        //         app.status.get("project").project.toJSON(),
-        //         app.metadata
-        //     );
-        // },
 
         onPlay: function() {
             app.status.emit("endpage_enter");
@@ -35869,7 +35871,9 @@ function( app, Backbone, Layers, ThumbWorker ) {
 
         defaults: {
             _order: 0,
-            attr: {},
+            attr: {
+                advance: true
+            },
             // ids of frames and their common layers for loading
             common_layers: {},
             _connections: "none",
@@ -35910,6 +35914,10 @@ function( app, Backbone, Layers, ThumbWorker ) {
                 this.save();
             }.bind( this ), 1000 );
 
+            if ( _.isArray( this.get("attr") ) ) {
+                this.set("attr", this.defaults.attr );
+            }
+
             this.startThumbWorker = _.debounce(function() {
                 var worker = new Worker( app.webRoot + "js/helpers/thumbworker.js" );
                 
@@ -35940,24 +35948,39 @@ function( app, Backbone, Layers, ThumbWorker ) {
         },
 
         onLayerAddRemove: function() {
-            this.updateThumb();
             this.onLayerSort();
+            this.once("sync", function() {
+                this.updateThumb();
+            }.bind( this ));
         },
 
         onLayerSort: function() {
             this.set("layers", this.layers.pluck("id") );
             this.lazySave();
-            this.updateThumb();
+            this.once("sync", function() {
+                this.updateThumb();
+            }.bind( this ));
         },
 
         addLayerType: function( type ) {
             var newLayer = new Layers[ type ]({ type: type });
+
+            // turn off advance if the type is a link
+            /*
+            if ( type == "Link") {
+                var attr = this.get("attr");
+
+                attr.advance = false;
+                this.set("attr", attr );
+                this.trigger("no_advance")
+            }
+            */
+
             newLayer.order[ this.id ] = this.layers.length;
             newLayer.save().success(function( response ) {
                 this.layers.add( newLayer );
                 app.status.setCurrentLayer( newLayer );
             }.bind( this ));
-            
         },
 
         addLayerByItem: function( item ) {
@@ -36513,6 +36536,8 @@ function( app, SequenceCollection ) {
                 if ( frames.length > 1 ) {
                     frames.each(function( frame, j ) {
                         frame.put({
+                            // for the new advance logic
+                            // _next: frame.get("attr").advance && frames.at( j + 1 ) ? frames.at( j + 1 ).id : null,
                             _next: frames.at( j + 1 ) ? frames.at( j + 1 ).id : null,
                             _last: frames.at( j - 1 ) ? frames.at( j - 1 ).id : null
                         });
@@ -36594,9 +36619,12 @@ function( app, SequenceCollection ) {
             next = frame.get("_next");
 
             frame.put( "_connections",
-                prev & next ? "lr" :
-                prev ? "l" :
-                next ? "r" : "none"
+                frame.get("attr").advance && prev && next ? "lr" :
+                frame.get("attr").advance && !prev && next ? "r" :
+                !frame.get("attr").advance && prev && next ? "l" :
+                !frame.get("attr").advance && !prev && next ? "none" :
+                !frame.get("attr").advance && prev && !next ? "l" :
+                "none"
             );
         },
 
@@ -36644,7 +36672,7 @@ function( app, SequenceCollection ) {
                     layers = layers.concat( [ sequence.soundtrackModel.toJSON() ] );
                 }
             });
-console.log("layers", layers, this.sequences.toJSON())
+
             return _.extend({}, this.toJSON(), {
                 sequences: this.sequences.toJSON(),
                 frames: frames,
@@ -36794,7 +36822,6 @@ function() {
             endPage.id = endId;
             response.frames.push( endPage );
             response.sequences[0].frames.push( endId )
-            console.log( endPage );
         }
 
         return response;
@@ -38365,6 +38392,10 @@ function( app, ZeegaParser, Relay, Status, PlayerLayout ) {
             return this.project.getProjectJSON();
         },
 
+        getSoundtrack: function() {
+            return app.soundtrack;
+        },
+
         getFrameData: function() {
             if ( this.status.get("current_frame") ) {
                 return _.extend({},
@@ -38373,12 +38404,6 @@ function( app, ZeegaParser, Relay, Status, PlayerLayout ) {
                 );
             }
 
-            return false;
-        },
-
-        // TODO
-        // returns the frame structure for the project
-        getProjectTree: function() {
             return false;
         },
 
