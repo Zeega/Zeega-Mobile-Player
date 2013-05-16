@@ -56737,7 +56737,6 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome, EndPage ) {
                 prevent_default: false
             });
             this.hammer.onswipe = function( e ) {
-                console.log('hammer swipe');
                 this.onSwipe( e );
             }.bind( this );
         },
