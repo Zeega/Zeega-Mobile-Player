@@ -341,7 +341,7 @@ var requirejs, require, define;
 this["JST"]["app/templates/chrome.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<div class="ZEEGA-tab" style="display:none" ><img src="assets/img/zeega-logo-white-30.png"/></div>\n<div class="ZEEGA-mute" style="display:none" ></div>\n\n<div class="ZEEGA-chrome-metablock" style="display:none" >\n    <div class="meta-inner">\n        <div class="left-col">\n            <a href="http://zeega.com/user/'+
+__p+='<a href="http://www.zeega.com" class="ZEEGA-tab">\n    <span class="ZTab-logo"></span>\n</a>\n<div class="ZEEGA-sound-state" style="display:none" ></div>\n\n<div class="ZEEGA-chrome-metablock" style="display:none" >\n    <div class="meta-inner">\n        <div class="left-col">\n            <a href="http://zeega.com/user/'+
 ( userId )+
 '" target="blank">\n                <div class="profile-token"><img src="'+
 ( userThumbnail )+
@@ -359,7 +359,7 @@ return __p;
 this["JST"]["app/templates/endpage.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<div class="ZEEGA-tab"><img src="assets/img/zeega-logo-white-30.png"/></div>\n\n\n<div class="share-block">\n    <ul class="share-sites">\n        <li><a\n            href="https://twitter.com/intent/tweet?original_referer='+
+__p+='<a href="http://www.zeega.com" class="ZEEGA-tab">\n    <span class="ZTab-logo"></span>\n</a>\n\n<div class="share-block">\n    <ul class="share-sites">\n        <li><a\n            href="https://twitter.com/intent/tweet?original_referer='+
 ( hostname )+
 ''+
 ( directory )+
@@ -395,7 +395,7 @@ return __p;
 this["JST"]["app/templates/loader.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<div class="ZEEGA-tab"><img src="assets/img/zeega-logo-white-30.png"/></div>\n\n<div class="ZEEGA-notices">\n    <ul class="sticky">\n        <li><i class="icon-headphones icon-white"></i> turn up volume</li>\n    </ul>\n    <ul class="rotating">\n        <li class="active">swipe to start</li>\n        <li class="">swipe to explore</li>\n    </ul>\n</div>\n\n<div class="swipe-left"><img src="assets/img/swipe-left.png"/></div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a href="http://zeega.com/user/'+
+__p+='<a href="http://www.zeega.com" class="ZEEGA-tab">\n    <span class="ZTab-logo"></span>\n</a>\n\n<div class="ZEEGA-notices">\n    <ul class="sticky">\n        <li><i class="icon-headphones icon-white"></i> turn up volume</li>\n    </ul>\n    <ul class="rotating">\n        <li class="active">swipe to start</li>\n        <li class="">swipe to explore</li>\n    </ul>\n</div>\n\n<div class="swipe-left"><img src="assets/img/swipe-left.png"/></div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a href="http://zeega.com/user/'+
 ( userId )+
 '" target="blank">\n                <div class="profile-token"><img src="'+
 ( userThumbnail )+
@@ -34495,6 +34495,7 @@ function( app, _Layer, Visual ){
                         this.listen();
                     }
                     this.model.trigger( "visual_ready", this.model.id );
+                    this.model.status.emit("audio_play", this.model );
                 });
             },
 
@@ -38318,6 +38319,8 @@ function( app, ZeegaParser, Relay, Status, PlayerLayout ) {
                             var audio = document.getElementById("audio-el-" + layer.id );
                             
                             audio.load();
+                            
+                            return audio;
                         }
                     });
                 });
@@ -55597,12 +55600,39 @@ function( app, Backbone, Spinner ) {
         },
 
         onCanplay: _.once(function() {
+            this.showLoadingSoundtrack();
+
             this.model.on("play", this.onPlay, this );
             this.model.on("pause", this.onPause, this );
 
             this.model.on("endpage_enter", this.onEndpageEnter, this );
             this.model.on("endpage_exit", this.onEndpageExit, this );
         }),
+
+        showLoadingSoundtrack: function() {
+            var soundtrack = this.model.getSoundtrack();
+
+            if ( soundtrack ) {
+                var timer, counter = 0;
+
+                this.$(".ZEEGA-sound-state").show().addClass("loading-0");
+
+                timer = setInterval(function() {
+                    this.$(".ZEEGA-sound-state")
+                        .show()
+                        .removeClass("loading-0 loading-1 loading-2")
+                        .addClass("loading-" + (counter % 3) );
+                    counter++;
+                }.bind( this ), 150 );
+
+                this.model.on("audio_play", function( model ) {
+                    clearInterval( timer );
+                    this.$(".ZEEGA-sound-state")
+                        .removeClass("loading-0 loading-1 loading-2")
+                        .fadeOut();
+                }.bind( this ));
+            }
+        },
 
         onEndpageEnter: function() {
             this.hide();
@@ -55625,16 +55655,16 @@ function( app, Backbone, Spinner ) {
         events: {
             "click .playpause-wrapper": "playPause",
             "click .ZEEGA-tab": "showCoffin",
-            "click .ZEEGA-mute": "toggleMute"
+            "click .ZEEGA-sound-state": "toggleMute"
         },
 
         toggleMute: function(){
             if( $("audio")[0] ){
-                if( this.$(".ZEEGA-mute").hasClass("muted") ){
-                    this.$(".ZEEGA-mute").removeClass("muted");
+                if( this.$(".ZEEGA-sound-state").hasClass("muted") ){
+                    this.$(".ZEEGA-sound-state").removeClass("muted");
                     $("audio")[0].play();
                 } else {
-                    this.$(".ZEEGA-mute").addClass("muted");
+                    this.$(".ZEEGA-sound-state").addClass("muted");
                     $("audio")[0].pause();
                 }
             }
@@ -55646,7 +55676,7 @@ function( app, Backbone, Spinner ) {
             if ( app.hasPlayed && this.active ) {
                 this.$(".ZEEGA-tab, .ZEEGA-chrome-metablock").show();
                 if( app.hasSoundtrack ){
-                    this.$(".ZEEGA-mute").show();
+                    this.$(".ZEEGA-sound-state").show();
                 }
                 clearInterval( this.timer );
 
@@ -55673,7 +55703,7 @@ function( app, Backbone, Spinner ) {
 
         hide: function( force ) {
             if ( this.model.state != "paused" || force === true ) {
-                this.$(".ZEEGA-tab, .ZEEGA-chrome-metablock, .ZEEGA-mute").fadeOut();
+                this.$(".ZEEGA-tab, .ZEEGA-chrome-metablock, .ZEEGA-sound-state").fadeOut();
 
                 this.visible = false;
             }

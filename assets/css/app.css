@@ -1383,40 +1383,58 @@ a:active {
   color: white;
 }
 .ZEEGA-tab {
-  background: red;
-  display: inline-block;
+  background: orangered;
+  display: block;
   padding: 5px;
-  margin-left: 20px;
   width: 30px;
   height: 35px;
-  float: left;
-  margin-right: 20px;
   border-radius: 0 0 2px 2px;
-  position: relative;
+  position: fixed;
   z-index: 2;
+  top: 0;
+  left: 20px;
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
 }
-.ZEEGA-tab img {
+.ZEEGA-tab .ZTab-logo {
+  display: block;
+  height: 30px;
+  width: 30px;
+  background-image: url(../img/zeega-logo-white.png);
+  background-size: 30px 30px;
   margin-top: 2px;
 }
-.ZEEGA-mute {
+.ZEEGA-tab:hover {
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  padding-top: 10px;
+}
+.ZEEGA-sound-state {
   background: transparent;
   background-repeat: no-repeat;
-  background-image: url(../img/mute.png);
-  background-position: 0 5px;
-  display: inline-block;
-  padding: 5px;
-  margin-right: 20px;
-  margin-left: 20px;
-  margin-top: 5px;
-  width: 25px;
-  height: 25px;
-  float: right;
+  background-image: url(../img/sounds-sprite.png);
+  background-position: 0 0px;
+  display: block;
+  width: 30px;
+  height: 30px;
   border-radius: 0 0 2px 2px;
-  position: relative;
+  position: absolute;
   z-index: 2;
+  background-size: 30px 150px;
+  right: 20px;
+  top: 20px;
 }
-.ZEEGA-mute.muted {
-  background-position: -35px 5px;
+.ZEEGA-sound-state.muted {
+  background-position: 0px -30px;
+}
+.ZEEGA-sound-state.loading-0 {
+  background-position: 0px -60px;
+}
+.ZEEGA-sound-state.loading-1 {
+  background-position: 0px -90px;
+}
+.ZEEGA-sound-state.loading-2 {
+  background-position: 0px -120px;
 }
 .ZEEGA-chrome-metablock {
   color: white;
@@ -1566,6 +1584,8 @@ a:active {
   width: 50px;
   display: inline-block;
   background: url(../img/endpage-share-sprite.png);
+  background-size: 150px 50px;
+  background-repeat: no-repeat;
 }
 .ZEEGA-endpage .endpage-social.endpage-social-facebook {
   background-position: -50px 0;

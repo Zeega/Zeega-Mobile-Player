@@ -32,12 +32,39 @@ function( app, Backbone, Spinner ) {
         },
 
         onCanplay: _.once(function() {
+            this.showLoadingSoundtrack();
+
             this.model.on("play", this.onPlay, this );
             this.model.on("pause", this.onPause, this );
 
             this.model.on("endpage_enter", this.onEndpageEnter, this );
             this.model.on("endpage_exit", this.onEndpageExit, this );
         }),
+
+        showLoadingSoundtrack: function() {
+            var soundtrack = this.model.getSoundtrack();
+
+            if ( soundtrack ) {
+                var timer, counter = 0;
+
+                this.$(".ZEEGA-sound-state").show().addClass("loading-0");
+
+                timer = setInterval(function() {
+                    this.$(".ZEEGA-sound-state")
+                        .show()
+                        .removeClass("loading-0 loading-1 loading-2")
+                        .addClass("loading-" + (counter % 3) );
+                    counter++;
+                }.bind( this ), 150 );
+
+                this.model.on("audio_play", function( model ) {
+                    clearInterval( timer );
+                    this.$(".ZEEGA-sound-state")
+                        .removeClass("loading-0 loading-1 loading-2")
+                        .fadeOut();
+                }.bind( this ));
+            }
+        },
 
         onEndpageEnter: function() {
             this.hide();
@@ -60,16 +87,16 @@ function( app, Backbone, Spinner ) {
         events: {
             "click .playpause-wrapper": "playPause",
             "click .ZEEGA-tab": "showCoffin",
-            "click .ZEEGA-mute": "toggleMute"
+            "click .ZEEGA-sound-state": "toggleMute"
         },
 
         toggleMute: function(){
             if( $("audio")[0] ){
-                if( this.$(".ZEEGA-mute").hasClass("muted") ){
-                    this.$(".ZEEGA-mute").removeClass("muted");
+                if( this.$(".ZEEGA-sound-state").hasClass("muted") ){
+                    this.$(".ZEEGA-sound-state").removeClass("muted");
                     $("audio")[0].play();
                 } else {
-                    this.$(".ZEEGA-mute").addClass("muted");
+                    this.$(".ZEEGA-sound-state").addClass("muted");
                     $("audio")[0].pause();
                 }
             }
@@ -81,7 +108,7 @@ function( app, Backbone, Spinner ) {
             if ( app.hasPlayed && this.active ) {
                 this.$(".ZEEGA-tab, .ZEEGA-chrome-metablock").show();
                 if( app.hasSoundtrack ){
-                    this.$(".ZEEGA-mute").show();
+                    this.$(".ZEEGA-sound-state").show();
                 }
                 clearInterval( this.timer );
 
@@ -108,7 +135,7 @@ function( app, Backbone, Spinner ) {
 
         hide: function( force ) {
             if ( this.model.state != "paused" || force === true ) {
-                this.$(".ZEEGA-tab, .ZEEGA-chrome-metablock, .ZEEGA-mute").fadeOut();
+                this.$(".ZEEGA-tab, .ZEEGA-chrome-metablock, .ZEEGA-sound-state").fadeOut();
 
                 this.visible = false;
             }
