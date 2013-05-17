@@ -464,8 +464,6 @@ __p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="he
 ;__p+='[untitled]';
  } else { 
 ;__p+=''+
-( layer.type )+
-' '+
 ( layer.attr.title )+
 '';
  } 
