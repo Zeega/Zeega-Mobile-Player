@@ -1,29 +1,30 @@
-<a href="http://www.zeega.com" class="ZEEGA-tab">
+<div href="http://www.zeega.com" class="ZEEGA-tab">
     <span class="ZTab-logo"></span>
-</a>
-
-<div class="ZEEGA-notices">
-    <ul class="sticky">
-        <li><i class="icon-headphones icon-white"></i> turn up volume</li>
-    </ul>
-    <ul class="rotating">
-        <li class="active">swipe to start</li>
-        <li class="">swipe to explore</li>
-    </ul>
 </div>
 
-<div class="swipe-left"><img src="assets/img/swipe-left.png"/></div>
+<div class="swipe-left">
+    <div class="ZEEGA-notices">
+        <ul class="sticky">
+            <li><i class="icon-headphones icon-white"></i> turn up volume</li>
+        </ul>
+        <ul class="rotating">
+            <li class="active">swipe to start</li>
+            <li class="">swipe to explore</li>
+        </ul>
+    </div>
+    <img src="assets/img/swipe-left.png"/>
+</div>
 
 <div class="ZEEGA-chrome-metablock">
     <div class="meta-inner">
         <div class="left-col">
-            <a href="http://zeega.com/user/<%= userId %>" target="blank">
+            <a href="http://zeega.com/user/<%= userId %>">
                 <div class="profile-token"><img src="<%= userThumbnail %>"/></div>
             </a>
         </div>
         <div class="right-col">
             <div class="username">
-                <a href="http://zeega.com/user/<%= userId %>" target="blank">
+                <a href="http://zeega.com/user/<%= userId %>">
                     <div class="profile-name"><%= authors %></div>
                 </a>
             </div>

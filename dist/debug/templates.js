@@ -3,13 +3,13 @@ this["JST"] = this["JST"] || {};
 this["JST"]["app/templates/chrome.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<a href="http://www.zeega.com" class="ZEEGA-tab">\n    <span class="ZTab-logo"></span>\n</a>\n<div class="ZEEGA-sound-state" style="display:none" ></div>\n\n<div class="ZEEGA-chrome-metablock" style="display:none" >\n    <div class="meta-inner">\n        <div class="left-col">\n            <a href="http://zeega.com/user/'+
+__p+='<div href="http://www.zeega.com" class="ZEEGA-tab">\n    <span class="ZTab-logo"></span>\n</div>\n<div class="ZEEGA-sound-state" style="display:none" ></div>\n\n<div class="ZEEGA-chrome-metablock" style="display:none" >\n    <div class="meta-inner">\n        <div class="left-col">\n            <a href="http://zeega.com/user/'+
 ( userId )+
-'" target="blank">\n                <div class="profile-token"><img src="'+
+'">\n                <div class="profile-token"><img src="'+
 ( userThumbnail )+
 '"/></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a href="http://zeega.com/user/'+
 ( userId )+
-'" target="blank">\n                    <div class="profile-name">'+
+'">\n                    <div class="profile-name">'+
 ( authors )+
 '</div>\n                </a>\n            </div>\n            <div class="caption">'+
 ( title )+
@@ -21,7 +21,7 @@ return __p;
 this["JST"]["app/templates/endpage.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<a href="http://www.zeega.com" class="ZEEGA-tab">\n    <span class="ZTab-logo"></span>\n</a>\n\n<div class="share-block">\n    <ul class="share-sites">\n        <li><a\n            href="https://twitter.com/intent/tweet?original_referer='+
+__p+='<div href="http://www.zeega.com" class="ZEEGA-tab">\n    <span class="ZTab-logo"></span>\n</div>\n\n<div class="share-block">\n    <ul class="share-sites">\n        <li><a\n            href="https://twitter.com/intent/tweet?original_referer='+
 ( hostname )+
 ''+
 ( directory )+
@@ -41,11 +41,11 @@ __p+='<a href="http://www.zeega.com" class="ZEEGA-tab">\n    <span class="ZTab-l
 ( tumblr_share )+
 '"\n            target="blank"\n            ><i class="endpage-social endpage-social-tumblr"></i></a></li>\n    </ul>\n</div>\n\n<div class="endpage-actions">\n    <a href="http://www.zeega.com/" class="btnz btnz-action" >Explore More Zeegas</a>\n</div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a href="http://zeega.com/user/'+
 ( userId )+
-'" target="blank">\n                <div class="profile-token"><img src="'+
+'">\n                <div class="profile-token"><img src="'+
 ( userThumbnail )+
 '"/></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a href="http://zeega.com/user/'+
 ( userId )+
-'" target="blank">\n                    <div class="profile-name">'+
+'">\n                    <div class="profile-name">'+
 ( authors )+
 '</div>\n                </a>\n            </div>\n            <div class="caption">'+
 ( title )+
@@ -57,13 +57,13 @@ return __p;
 this["JST"]["app/templates/loader.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<a href="http://www.zeega.com" class="ZEEGA-tab">\n    <span class="ZTab-logo"></span>\n</a>\n\n<div class="ZEEGA-notices">\n    <ul class="sticky">\n        <li><i class="icon-headphones icon-white"></i> turn up volume</li>\n    </ul>\n    <ul class="rotating">\n        <li class="active">swipe to start</li>\n        <li class="">swipe to explore</li>\n    </ul>\n</div>\n\n<div class="swipe-left"><img src="assets/img/swipe-left.png"/></div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a href="http://zeega.com/user/'+
+__p+='<div href="http://www.zeega.com" class="ZEEGA-tab">\n    <span class="ZTab-logo"></span>\n</div>\n\n<div class="swipe-left">\n    <div class="ZEEGA-notices">\n        <ul class="sticky">\n            <li><i class="icon-headphones icon-white"></i> turn up volume</li>\n        </ul>\n        <ul class="rotating">\n            <li class="active">swipe to start</li>\n            <li class="">swipe to explore</li>\n        </ul>\n    </div>\n    <img src="assets/img/swipe-left.png"/>\n</div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a href="http://zeega.com/user/'+
 ( userId )+
-'" target="blank">\n                <div class="profile-token"><img src="'+
+'">\n                <div class="profile-token"><img src="'+
 ( userThumbnail )+
 '"/></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a href="http://zeega.com/user/'+
 ( userId )+
-'" target="blank">\n                    <div class="profile-name">'+
+'">\n                    <div class="profile-name">'+
 ( authors )+
 '</div>\n                </a>\n            </div>\n            <div class="caption">'+
 ( title )+
@@ -113,10 +113,10 @@ __p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="he
 ( authors )+
 '" target="blank"><i class="zsocial-facebook"></i>  Share on Facebook</a></li>\n        <li><a href="mailto:?subject=Check out this Zeega!&body=http://www.zeega.com/'+
 ( item_id )+
-'"><i class="zsocial-email"></i>  Share on Email</a></li>\n        <li class="spacer"></li>\n        <li class="highlight"><a href="http://www.zeega.com/" target="blank"><i class="icon-home icon-white"></i> Zeega Home</a></li>\n        <li class="spacer"></li>\n        <li class="header">Credits</li>\n        ';
+'"><i class="zsocial-email"></i>  Share on Email</a></li>\n        <li class="spacer"></li>\n        <li class="highlight"><a href="http://www.zeega.com/"><i class="icon-home icon-white"></i> Zeega Home</a></li>\n        <li class="spacer"></li>\n        <li class="header">Credits</li>\n        ';
  _.each( layers, function( layer ) { 
 ;__p+='\n                ';
- if (layer.type != "Link") { 
+ if ( !_.contains(["Link","EndPageLayer","Text","TextV2","Rectangle"], layer.type )) { 
 ;__p+='\n                    <li class="underlay-citation">\n                        <a href="'+
 ( layer.attr.attribution_uri )+
 '" target="blank">\n                            <i class="icon-'+
@@ -126,6 +126,8 @@ __p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="he
 ;__p+='[untitled]';
  } else { 
 ;__p+=''+
+( layer.type )+
+' '+
 ( layer.attr.title )+
 '';
  } 
