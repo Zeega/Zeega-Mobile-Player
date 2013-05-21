@@ -341,11 +341,11 @@ var requirejs, require, define;
 this["JST"]["app/templates/chrome.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<div href="http://www.zeega.com" class="ZEEGA-tab">\n    <span class="ZTab-logo"></span>\n</div>\n<div class="ZEEGA-sound-state" style="display:none" ></div>\n\n<div class="ZEEGA-chrome-metablock" style="display:none" >\n    <div class="meta-inner">\n        <div class="left-col">\n            <a href="http://zeega.com/user/'+
+__p+='<div href="http://www.zeega.com" class="ZEEGA-tab">\n    <span class="ZTab-logo"></span>\n</div>\n<div class="ZEEGA-sound-state" style="display:none" ></div>\n\n<div class="ZEEGA-chrome-metablock" style="display:none" >\n    <div class="meta-inner">\n        <div class="left-col">\n            <a data-bypass="true" href="http://zeega.com/profile/'+
 ( userId )+
 '">\n                <div class="profile-token"><img src="'+
 ( userThumbnail )+
-'"/></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a href="http://zeega.com/user/'+
+'"/></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a data-bypass="true" href="http://zeega.com/profile/'+
 ( userId )+
 '">\n                    <div class="profile-name">'+
 ( authors )+
