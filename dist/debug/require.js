@@ -395,11 +395,11 @@ return __p;
 this["JST"]["app/templates/loader.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<div href="http://www.zeega.com" class="ZEEGA-tab">\n    <span class="ZTab-logo"></span>\n</div>\n\n<div class="swipe-left">\n    <div class="ZEEGA-notices">\n        <ul class="sticky">\n            <li><i class="icon-headphones icon-white"></i> turn up volume</li>\n        </ul>\n        <ul class="rotating">\n            <li class="active">swipe to start</li>\n            <li class="">swipe to explore</li>\n        </ul>\n    </div>\n    <img src="assets/img/swipe-left.png"/>\n</div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a href="http://zeega.com/user/'+
+__p+='<div href="http://www.zeega.com" class="ZEEGA-tab">\n    <span class="ZTab-logo"></span>\n</div>\n\n<div class="swipe-left">\n    <div class="ZEEGA-notices">\n        <ul class="sticky">\n            <li><i class="icon-headphones icon-white"></i> turn up volume</li>\n        </ul>\n        <ul class="rotating">\n            <li class="active">swipe to start</li>\n            <li class="">swipe to explore</li>\n        </ul>\n    </div>\n    <img src="assets/img/swipe-left.png"/>\n</div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a data-bypass="true"  href="http://zeega.com/profile/'+
 ( userId )+
 '">\n                <div class="profile-token"><img src="'+
 ( userThumbnail )+
-'"/></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a href="http://zeega.com/user/'+
+'"/></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a data-bypass="true" href="http://zeega.com/profile/'+
 ( userId )+
 '">\n                    <div class="profile-name">'+
 ( authors )+
