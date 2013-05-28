@@ -39,11 +39,11 @@ __p+='<div href="http://www.zeega.com" class="ZEEGA-tab">\n    <span class="ZTab
 ( item_id )+
 '"><i class="endpage-social endpage-social-facebook"\n            target="blank"\n            ></i></a></li>\n        <li><a\n            href="http://www.tumblr.com/share/photo?'+
 ( tumblr_share )+
-'"\n            target="blank"\n            ><i class="endpage-social endpage-social-tumblr"></i></a></li>\n    </ul>\n</div>\n\n<div class="endpage-actions">\n    <a href="http://www.zeega.com/" class="btnz btnz-action" >Explore More Zeegas</a>\n</div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a href="http://zeega.com/user/'+
+'"\n            target="blank"\n            ><i class="endpage-social endpage-social-tumblr"></i></a></li>\n    </ul>\n</div>\n\n<div class="endpage-actions">\n    <a href="http://www.zeega.com/" class="btnz btnz-action" >Explore More Zeegas</a>\n</div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a data-bypass="true" href="http://zeega.com/profile/'+
 ( userId )+
 '">\n                <div class="profile-token"><img src="'+
 ( userThumbnail )+
-'"/></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a href="http://zeega.com/user/'+
+'"/></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a data-bypass="true" href="http://zeega.com/profile/'+
 ( userId )+
 '">\n                    <div class="profile-name">'+
 ( authors )+
