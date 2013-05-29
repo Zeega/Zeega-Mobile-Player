@@ -15,7 +15,9 @@ function( app, Backbone ) {
 
         serialize: function() {
 
-            return _.extend({},
+            return _.extend({
+                path: "http:" + app.metadata.hostname + app.metadata.directory
+                },
                 app.metadata,
                 this.model.project.toJSON(),
                 {
@@ -26,9 +28,9 @@ function( app, Backbone ) {
 
         show: function() {
             if ( this.myScroll === null ) {
-                setTimeout(function () { 
+                setTimeout(function () {
                     this.myScroll = new iScroll('scroller');
-                }.bind( this ), 0); 
+                }.bind( this ), 0);
             }
         },
 

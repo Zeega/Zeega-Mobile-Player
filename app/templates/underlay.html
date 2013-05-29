@@ -6,12 +6,12 @@
             </div>
         </li>
 
-        <li><a href="https://twitter.com/intent/tweet?original_referer=<%= hostname %><%= directory %><%= item_id %>&text=<%= description %> Made w/ @zeega&url=http://zeega.com/<%= item_id %>"
+        <li><a href="https://twitter.com/intent/tweet?original_referer=<%= path %><%= item_id %>&text=<%= description %> Made w/ @zeega&url=<%= path %><%= item_id %>"
             target="blank"><i class="zsocial-twitter"></i>  Share on Twitter</a></li>
-        <li><a href="http://m.facebook.com/sharer.php?u=http://www.zeega.com/<%= item_id %>&t=<%= title %> by <%= authors %>" target="blank"><i class="zsocial-facebook"></i>  Share on Facebook</a></li>
-        <li><a href="mailto:?subject=Check out this Zeega!&body=http://www.zeega.com/<%= item_id %>"><i class="zsocial-email"></i>  Share on Email</a></li>
+        <li><a href="http://m.facebook.com/sharer.php?u=<%= path %><%= item_id %>&t=<%= title %> by <%= authors %>" target="blank"><i class="zsocial-facebook"></i>  Share on Facebook</a></li>
+        <li><a href="mailto:?subject=Check out this Zeega!&body=<%= path %><%= item_id %>"><i class="zsocial-email"></i>  Share on Email</a></li>
         <li class="spacer"></li>
-        <li class="highlight"><a href="http://www.zeega.com/"><i class="icon-home icon-white"></i> Zeega Home</a></li>
+        <li class="highlight"><a href="<%= path %>"><i class="icon-home icon-white"></i> Zeega Home</a></li>
         <li class="spacer"></li>
         <li class="header">Credits</li>
         <% _.each( layers, function( layer ) { %>

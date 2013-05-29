@@ -1,16 +1,16 @@
-<div href="http://www.zeega.com" class="ZEEGA-tab">
+<div href="<%= path %>" class="ZEEGA-tab">
     <span class="ZTab-logo"></span>
 </div>
 
 <div class="share-block">
     <ul class="share-sites">
         <li><a
-            href="https://twitter.com/intent/tweet?original_referer=<%= hostname %><%= directory %><%= item_id %>&text=<%= description %> Made w/ @zeega&url=http://zeega.com/<%= item_id %>"
+            href="https://twitter.com/intent/tweet?original_referer=<%= path %><%= item_id %>&text=<%= description %> Made w/ @zeega&url=<%= path %><%= item_id %>"
             target="blank"
             ><i class="endpage-social endpage-social-twitter"
             ></i></a></li>
         <li><a
-            href="http://www.facebook.com/sharer.php?u=<%= hostname %><%= directory %><%= item_id %>"><i class="endpage-social endpage-social-facebook"
+            href="http://www.facebook.com/sharer.php?u=<%= path %><%= item_id %>"><i class="endpage-social endpage-social-facebook"
             target="blank"
             ></i></a></li>
         <li><a
@@ -21,19 +21,19 @@
 </div>
 
 <div class="endpage-actions">
-    <a href="http://www.zeega.com/" class="btnz btnz-action" >Explore More Zeegas</a>
+    <a href="<%= path %>" class="btnz btnz-action" >Explore More Zeegas</a>
 </div>
 
 <div class="ZEEGA-chrome-metablock">
     <div class="meta-inner">
         <div class="left-col">
-            <a data-bypass="true" href="http://zeega.com/profile/<%= userId %>">
+            <a data-bypass="true" href="<%= path %>profile/<%= userId %>">
                 <div class="profile-token"><img src="<%= userThumbnail %>"/></div>
             </a>
         </div>
         <div class="right-col">
             <div class="username">
-                <a data-bypass="true" href="http://zeega.com/profile/<%= userId %>">
+                <a data-bypass="true" href="<%= path %>profile/<%= userId %>">
                     <div class="profile-name"><%= authors %></div>
                 </a>
             </div>

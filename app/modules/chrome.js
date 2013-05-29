@@ -22,6 +22,9 @@ function( app, Backbone, Spinner ) {
 
         serialize: function() {
             return _.extend(
+                {
+                    path: "http:" + app.metadata.hostname + app.metadata.directory
+                },
                 app.metadata,
                 this.model.project.toJSON()
             );

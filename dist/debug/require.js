@@ -341,11 +341,17 @@ var requirejs, require, define;
 this["JST"]["app/templates/chrome.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<div href="http://www.zeega.com" class="ZEEGA-tab">\n    <span class="ZTab-logo"></span>\n</div>\n<div class="ZEEGA-sound-state" style="display:none" ></div>\n\n<div class="ZEEGA-chrome-metablock" style="display:none" >\n    <div class="meta-inner">\n        <div class="left-col">\n            <a data-bypass="true" href="http://zeega.com/profile/'+
+__p+='<div href="'+
+( path )+
+'" class="ZEEGA-tab">\n    <span class="ZTab-logo"></span>\n</div>\n<div class="ZEEGA-sound-state" style="display:none" ></div>\n\n<div class="ZEEGA-chrome-metablock" style="display:none" >\n    <div class="meta-inner">\n        <div class="left-col">\n            <a data-bypass="true" href="'+
+( path )+
+'profile/'+
 ( userId )+
 '">\n                <div class="profile-token"><img src="'+
 ( userThumbnail )+
-'"/></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a data-bypass="true" href="http://zeega.com/profile/'+
+'"/></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a data-bypass="true" href="'+
+( path )+
+'profile/'+
 ( userId )+
 '">\n                    <div class="profile-name">'+
 ( authors )+
@@ -359,29 +365,35 @@ return __p;
 this["JST"]["app/templates/endpage.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<div href="http://www.zeega.com" class="ZEEGA-tab">\n    <span class="ZTab-logo"></span>\n</div>\n\n<div class="share-block">\n    <ul class="share-sites">\n        <li><a\n            href="https://twitter.com/intent/tweet?original_referer='+
-( hostname )+
-''+
-( directory )+
+__p+='<div href="'+
+( path )+
+'" class="ZEEGA-tab">\n    <span class="ZTab-logo"></span>\n</div>\n\n<div class="share-block">\n    <ul class="share-sites">\n        <li><a\n            href="https://twitter.com/intent/tweet?original_referer='+
+( path )+
 ''+
 ( item_id )+
 '&text='+
 ( description )+
-' Made w/ @zeega&url=http://zeega.com/'+
+' Made w/ @zeega&url='+
+( path )+
+''+
 ( item_id )+
 '"\n            target="blank"\n            ><i class="endpage-social endpage-social-twitter"\n            ></i></a></li>\n        <li><a\n            href="http://www.facebook.com/sharer.php?u='+
-( hostname )+
-''+
-( directory )+
+( path )+
 ''+
 ( item_id )+
 '"><i class="endpage-social endpage-social-facebook"\n            target="blank"\n            ></i></a></li>\n        <li><a\n            href="http://www.tumblr.com/share/photo?'+
 ( tumblr_share )+
-'"\n            target="blank"\n            ><i class="endpage-social endpage-social-tumblr"></i></a></li>\n    </ul>\n</div>\n\n<div class="endpage-actions">\n    <a href="http://www.zeega.com/" class="btnz btnz-action" >Explore More Zeegas</a>\n</div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a href="http://zeega.com/user/'+
+'"\n            target="blank"\n            ><i class="endpage-social endpage-social-tumblr"></i></a></li>\n    </ul>\n</div>\n\n<div class="endpage-actions">\n    <a href="'+
+( path )+
+'" class="btnz btnz-action" >Explore More Zeegas</a>\n</div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a data-bypass="true" href="'+
+( path )+
+'profile/'+
 ( userId )+
 '">\n                <div class="profile-token"><img src="'+
 ( userThumbnail )+
-'"/></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a href="http://zeega.com/user/'+
+'"/></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a data-bypass="true" href="'+
+( path )+
+'profile/'+
 ( userId )+
 '">\n                    <div class="profile-name">'+
 ( authors )+
@@ -395,11 +407,17 @@ return __p;
 this["JST"]["app/templates/loader.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<div href="http://www.zeega.com" class="ZEEGA-tab">\n    <span class="ZTab-logo"></span>\n</div>\n\n<div class="swipe-left">\n    <div class="ZEEGA-notices">\n        <ul class="sticky">\n            <li><i class="icon-headphones icon-white"></i> turn up volume</li>\n        </ul>\n        <ul class="rotating">\n            <li class="active">swipe to start</li>\n            <li class="">swipe to explore</li>\n        </ul>\n    </div>\n    <img src="assets/img/swipe-left.png"/>\n</div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a data-bypass="true"  href="http://zeega.com/profile/'+
+__p+='<div href="'+
+( path )+
+'" class="ZEEGA-tab">\n    <span class="ZTab-logo"></span>\n</div>\n\n<div class="swipe-left">\n    <div class="ZEEGA-notices">\n        <ul class="sticky">\n            <li><i class="icon-headphones icon-white"></i> turn up volume</li>\n        </ul>\n        <ul class="rotating">\n            <li class="active">swipe to start</li>\n            <li class="">swipe to explore</li>\n        </ul>\n    </div>\n    <img src="assets/img/swipe-left.png"/>\n</div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a data-bypass="true"  href="'+
+( path )+
+'profile/'+
 ( userId )+
 '">\n                <div class="profile-token"><img src="'+
 ( userThumbnail )+
-'"/></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a data-bypass="true" href="http://zeega.com/profile/'+
+'"/></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a data-bypass="true" href="'+
+( path )+
+'profile/'+
 ( userId )+
 '">\n                    <div class="profile-name">'+
 ( authors )+
@@ -434,24 +452,30 @@ with(obj||{}){
 __p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="header">\n            <div class="project-views">\n                <i class="icon-eye-open icon-white"></i> '+
 ( views )+
 ' views\n            </div>\n        </li>\n\n        <li><a href="https://twitter.com/intent/tweet?original_referer='+
-( hostname )+
-''+
-( directory )+
+( path )+
 ''+
 ( item_id )+
 '&text='+
 ( description )+
-' Made w/ @zeega&url=http://zeega.com/'+
+' Made w/ @zeega&url='+
+( path )+
+''+
 ( item_id )+
-'"\n            target="blank"><i class="zsocial-twitter"></i>  Share on Twitter</a></li>\n        <li><a href="http://m.facebook.com/sharer.php?u=http://www.zeega.com/'+
+'"\n            target="blank"><i class="zsocial-twitter"></i>  Share on Twitter</a></li>\n        <li><a href="http://m.facebook.com/sharer.php?u='+
+( path )+
+''+
 ( item_id )+
 '&t='+
 ( title )+
 ' by '+
 ( authors )+
-'" target="blank"><i class="zsocial-facebook"></i>  Share on Facebook</a></li>\n        <li><a href="mailto:?subject=Check out this Zeega!&body=http://www.zeega.com/'+
+'" target="blank"><i class="zsocial-facebook"></i>  Share on Facebook</a></li>\n        <li><a href="mailto:?subject=Check out this Zeega!&body='+
+( path )+
+''+
 ( item_id )+
-'"><i class="zsocial-email"></i>  Share on Email</a></li>\n        <li class="spacer"></li>\n        <li class="highlight"><a href="http://www.zeega.com/"><i class="icon-home icon-white"></i> Zeega Home</a></li>\n        <li class="spacer"></li>\n        <li class="header">Credits</li>\n        ';
+'"><i class="zsocial-email"></i>  Share on Email</a></li>\n        <li class="spacer"></li>\n        <li class="highlight"><a href="'+
+( path )+
+'"><i class="icon-home icon-white"></i> Zeega Home</a></li>\n        <li class="spacer"></li>\n        <li class="header">Credits</li>\n        ';
  _.each( layers, function( layer ) { 
 ;__p+='\n                ';
  if ( !_.contains(["Link","EndPageLayer","Text","TextV2","Rectangle"], layer.type )) { 
@@ -54786,7 +54810,9 @@ function( app, Backbone, Spinner ) {
         },
 
         serialize: function() {
-            return _.extend(
+            return _.extend({
+                path: "http:" + app.metadata.hostname + app.metadata.directory
+                },
                 app.metadata,
                 this.model.project.toJSON()
             );
@@ -55532,7 +55558,9 @@ function( app, Backbone ) {
 
         serialize: function() {
 
-            return _.extend({},
+            return _.extend({
+                path: "http:" + app.metadata.hostname + app.metadata.directory
+                },
                 app.metadata,
                 this.model.project.toJSON(),
                 {
@@ -55543,9 +55571,9 @@ function( app, Backbone ) {
 
         show: function() {
             if ( this.myScroll === null ) {
-                setTimeout(function () { 
+                setTimeout(function () {
                     this.myScroll = new iScroll('scroller');
-                }.bind( this ), 0); 
+                }.bind( this ), 0);
             }
         },
 
@@ -55590,6 +55618,9 @@ function( app, Backbone, Spinner ) {
 
         serialize: function() {
             return _.extend(
+                {
+                    path: "http:" + app.metadata.hostname + app.metadata.directory
+                },
                 app.metadata,
                 this.model.project.toJSON()
             );
@@ -55759,7 +55790,9 @@ function( app, Backbone ) {
 
         serialize: function() {
 
-            return _.extend({},
+            return _.extend({
+                    path: "http:" + app.metadata.hostname + app.metadata.directory
+                },
                 app.metadata,
                 this.model.project.toJSON(),
                 {
@@ -55769,8 +55802,8 @@ function( app, Backbone ) {
         },
 
         getTumblrShareUrl: function() {
-            var html = "<p>" + app.player.project.get("description") + "</p>" + 
-                "<p><a href='http://zeega.com/" + app.player.project.get("item_id") + "'>" +
+            var html = "<p>" + app.player.project.get("description") + "</p>" +
+                "<p><a href='http:" + app.metadata.hostname + app.metadata.directory + app.player.project.get("item_id") + "'>" +
                 "<strong>►&nbsp;Play&nbsp;Zeega&nbsp;►</strong></a>" +
                 "</p><p>by&nbsp;<a href='" + app.metadata.hostname + "profile/" + app.player.project.get("user_id") + "'>" + app.player.project.get("authors") + "</a></p>";
 

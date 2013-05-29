@@ -35,7 +35,9 @@ function( app, Backbone ) {
 
         serialize: function() {
 
-            return _.extend({},
+            return _.extend({
+                    path: "http:" + app.metadata.hostname + app.metadata.directory
+                },
                 app.metadata,
                 this.model.project.toJSON(),
                 {
@@ -45,8 +47,8 @@ function( app, Backbone ) {
         },
 
         getTumblrShareUrl: function() {
-            var html = "<p>" + app.player.project.get("description") + "</p>" + 
-                "<p><a href='http://zeega.com/" + app.player.project.get("item_id") + "'>" +
+            var html = "<p>" + app.player.project.get("description") + "</p>" +
+                "<p><a href='http:" + app.metadata.hostname + app.metadata.directory + app.player.project.get("item_id") + "'>" +
                 "<strong>►&nbsp;Play&nbsp;Zeega&nbsp;►</strong></a>" +
                 "</p><p>by&nbsp;<a href='" + app.metadata.hostname + "profile/" + app.player.project.get("user_id") + "'>" + app.player.project.get("authors") + "</a></p>";
 

@@ -1,4 +1,4 @@
-<div href="http://www.zeega.com" class="ZEEGA-tab">
+<div href="<%= path %>" class="ZEEGA-tab">
     <span class="ZTab-logo"></span>
 </div>
 
@@ -18,13 +18,13 @@
 <div class="ZEEGA-chrome-metablock">
     <div class="meta-inner">
         <div class="left-col">
-            <a data-bypass="true"  href="http://zeega.com/profile/<%= userId %>">
+            <a data-bypass="true"  href="<%= path %>profile/<%= userId %>">
                 <div class="profile-token"><img src="<%= userThumbnail %>"/></div>
             </a>
         </div>
         <div class="right-col">
             <div class="username">
-                <a data-bypass="true" href="http://zeega.com/profile/<%= userId %>">
+                <a data-bypass="true" href="<%= path %>profile/<%= userId %>">
                     <div class="profile-name"><%= authors %></div>
                 </a>
             </div>
