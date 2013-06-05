@@ -116,17 +116,17 @@ __p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="he
 ' views\n            </div>\n        </li>\n\n        <li><a href="https://twitter.com/intent/tweet?original_referer='+
 ( path )+
 ''+
-( item_id )+
+( id )+
 '&text='+
 ( description )+
 ' Made w/ @zeega&url='+
 ( path )+
 ''+
-( item_id )+
+( id )+
 '"\n            target="blank"><i class="zsocial-twitter"></i>  Share on Twitter</a></li>\n        <li><a href="http://m.facebook.com/sharer.php?u='+
 ( path )+
 ''+
-( item_id )+
+( id )+
 '&t='+
 ( title )+
 ' by '+
@@ -134,8 +134,8 @@ __p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="he
 '" target="blank"><i class="zsocial-facebook"></i>  Share on Facebook</a></li>\n        <li><a href="mailto:?subject=Check out this Zeega!&body='+
 ( path )+
 ''+
-( item_id )+
-'"><i class="zsocial-email"></i>  Share on Email</a></li>\n        <li class="spacer"></li>\n        <li class="highlight"><a href="'+
+( id )+
+'"><i class="zsocial-email"></i>  Share on Email</a></li>\n        <li class="spacer"></li>\n        <li class="highlight"><a data-bypass=\'true\' href="'+
 ( path )+
 '"><i class="icon-home icon-white"></i> Zeega Home</a></li>\n        <li class="spacer"></li>\n        <li class="header">Credits</li>\n        ';
  _.each( layers, function( layer ) { 
