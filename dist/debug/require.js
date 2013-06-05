@@ -370,17 +370,17 @@ __p+='<div href="'+
 '" class="ZEEGA-tab">\n    <span class="ZTab-logo"></span>\n</div>\n\n<div class="share-block">\n    <ul class="share-sites">\n        <li><a\n            href="https://twitter.com/intent/tweet?original_referer='+
 ( path )+
 ''+
-( item_id )+
+( id )+
 '&text='+
 ( description )+
 ' Made w/ @zeega&url='+
 ( path )+
 ''+
-( item_id )+
+( id )+
 '"\n            target="blank"\n            ><i class="endpage-social endpage-social-twitter"\n            ></i></a></li>\n        <li><a\n            href="http://www.facebook.com/sharer.php?u='+
 ( path )+
 ''+
-( item_id )+
+( id )+
 '"><i class="endpage-social endpage-social-facebook"\n            target="blank"\n            ></i></a></li>\n        <li><a\n            href="http://www.tumblr.com/share/photo?'+
 ( tumblr_share )+
 '"\n            target="blank"\n            ><i class="endpage-social endpage-social-tumblr"></i></a></li>\n    </ul>\n</div>\n\n<div class="endpage-actions">\n    <a href="'+
