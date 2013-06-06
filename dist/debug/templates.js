@@ -45,7 +45,7 @@ __p+='<div href="'+
 ( id )+
 '"><i class="endpage-social endpage-social-facebook"\n            target="blank"\n            ></i></a></li>\n        <li><a\n            href="http://www.tumblr.com/share/photo?'+
 ( tumblr_share )+
-'"\n            target="blank"\n            ><i class="endpage-social endpage-social-tumblr"></i></a></li>\n    </ul>\n</div>\n\n<div class="endpage-actions">\n    <a href="'+
+'"\n            target="blank"\n            ><i class="endpage-social endpage-social-tumblr"></i></a></li>\n    </ul>\n</div>\n\n<div class="endpage-actions">\n    <a data-bypass="true" href="'+
 ( path )+
 '" class="btnz btnz-action" >Explore More Zeegas</a>\n</div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a data-bypass="true" href="'+
 ( path )+
@@ -135,7 +135,7 @@ __p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="he
 ( path )+
 ''+
 ( id )+
-'"><i class="zsocial-email"></i>  Share on Email</a></li>\n        <li class="spacer"></li>\n        <li class="highlight"><a data-bypass=\'true\' href="'+
+'"><i class="zsocial-email"></i>  Share on Email</a></li>\n        <li class="spacer"></li>\n        <li class="highlight"><a data-bypass="true" href="'+
 ( path )+
 '"><i class="icon-home icon-white"></i> Zeega Home</a></li>\n        <li class="spacer"></li>\n        <li class="header">Credits</li>\n        ';
  _.each( layers, function( layer ) { 
