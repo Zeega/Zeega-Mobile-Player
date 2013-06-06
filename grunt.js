@@ -49,7 +49,7 @@ module.exports = function(grunt) {
             "dist/debug/templates.js": [
                 "app/templates/**/*.html",
                 "app/engine/plugins/**/*.html",
-                "app/player/templates/*.html"
+                "app/player/templates/**/*.html"
             ]
         },
 
@@ -200,11 +200,11 @@ module.exports = function(grunt) {
                 }
             },
 
-            app: {
-                files: {
-                    "assets/css/app.less" : "assets/css/less/_all.less"
-                }
-            },
+            // app: {
+            //     files: {
+            //         "assets/css/app.less" : "assets/css/less/_all.less"
+            //     }
+            // },
 
             main: {
                 files: {
@@ -213,7 +213,8 @@ module.exports = function(grunt) {
                         "assets/css/layers.less",
                         "assets/css/controls.less",
                         "assets/css/player.less",
-                        "assets/css/app.less"
+                        //"assets/css/app.less",
+                        "assets/css/less/_all.less"
                     ]
                 }
             }

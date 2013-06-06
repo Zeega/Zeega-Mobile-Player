@@ -720,6 +720,38 @@ __p+='<div   class="youtube-player"  class="visual-target">\n    \n\n    <iframe
 ;__p+='&modestbranding=1&disablekb=1&rel=0&wmode=opaque"\n        frameborder="0">\n    </iframe>\n</div>\n<div class="play-button"></div>\n<div class="ipad-cover"> pause video to return to Zeega </div>\n<div class="controls-inline"></div>\n\n';
 }
 return __p;
+};
+
+this["JST"]["app/player/templates/controls/arrows.html"] = function(obj){
+var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+with(obj||{}){
+__p+='<a href="#" class="ZEEGA-prev controls-arrow arrow-left disabled"></a>\n<a href="#" class="ZEEGA-next controls-arrow arrow-right disabled"></a>';
+}
+return __p;
+};
+
+this["JST"]["app/player/templates/controls/close.html"] = function(obj){
+var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+with(obj||{}){
+__p+='<a href="#" class="ZEEGA-close">&times;</a>';
+}
+return __p;
+};
+
+this["JST"]["app/player/templates/controls/playpause.html"] = function(obj){
+var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+with(obj||{}){
+__p+='<a href="#" class="ZEEGA-playpause pause-zcon"></a>';
+}
+return __p;
+};
+
+this["JST"]["app/player/templates/layouts/player-layout.html"] = function(obj){
+var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+with(obj||{}){
+__p+='<div class=\'ZEEGA-player-window\'></div>';
+}
+return __p;
 };;
 /*!
  * jQuery JavaScript Library v1.8.0

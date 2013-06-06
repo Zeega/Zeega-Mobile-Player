@@ -2388,7 +2388,8 @@ html {
 /* Portrait */
 @media screen and (orientation: portrait) {
   #main.iphone-webview {
-    height: -webkit-calc(160%);
+    height: -webkit-calc( 100% + 60px );
+    height: calc( 100% + 60px );
   }
 }
 /* Landscape */
@@ -2919,7 +2920,7 @@ a:active {
 }
 .ZEEGA-chrome-metablock .right-col {
   float: right;
-  width: -webkit-calc(34%);
+  width: -webkit-calc(100% - 66px);
 }
 .ZEEGA-chrome-metablock .right-col .username {
   font-size: 11px;
