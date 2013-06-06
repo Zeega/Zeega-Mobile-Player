@@ -2,7 +2,7 @@ define([
     "app",
     // Libs
     "backbone",
-    "libs/spin"
+    "engineVendor/spin"
 ],
 
 function( app, Backbone, Spinner ) {
@@ -10,7 +10,7 @@ function( app, Backbone, Spinner ) {
     return Backbone.View.extend({
 
         className: "ZEEGA-loader-overlay",
-        template: "loader",
+        template: "app/templates/loader",
 
         instruction: 0,
         instructionCount: 0,

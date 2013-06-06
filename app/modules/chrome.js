@@ -2,7 +2,7 @@ define([
     "app",
     // Libs
     "backbone",
-    "libs/spin"
+    "engineVendor/spin"
 ],
 
 function( app, Backbone, Spinner ) {
@@ -13,7 +13,7 @@ function( app, Backbone, Spinner ) {
         FADE_TIMER: 5000,
 
         className: "ZEEGA-chrome",
-        template: "chrome",
+        template: "app/templates/chrome",
 
         active: true,
         visible: false,

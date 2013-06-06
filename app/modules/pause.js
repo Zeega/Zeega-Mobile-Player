@@ -8,7 +8,7 @@ function( app, Backbone ) {
     return Backbone.View.extend({
 
         className: "ZEEGA-pause-overlay",
-        template: "pause",
+        template: "app/templates/pause",
 
         serialize: function() {
             return this.model.project.toJSON();

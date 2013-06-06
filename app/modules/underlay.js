@@ -10,7 +10,7 @@ function( app, Backbone ) {
 
         id: "ZEEGA-underlay",
         className: "ZEEGA-underlay",
-        template: "underlay",
+        template: "app/templates/underlay",
         myScroll: null,
 
         serialize: function() {

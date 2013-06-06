@@ -10,10 +10,10 @@ define([
 
     "modules/ui",
      // Plugins
-    'zeegaplayer'
+    "player/modules/player"
 ],
 
-function(app, Backbone, UI) {
+function(app, Backbone, UI, Player) {
 
     return Backbone.Model.extend({
 
@@ -32,7 +32,7 @@ function(app, Backbone, UI) {
         },
 
         initPlayer: function() {
-            app.player = new Zeega.player({
+            app.player = new Player.player({
                 // debugEvents: true,
                 endPage: true,
                 mobile: true,

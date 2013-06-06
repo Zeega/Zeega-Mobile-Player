@@ -9,7 +9,7 @@ function( app, Backbone ) {
     return Backbone.View.extend({
 
         className: "ZEEGA-endpage",
-        template: "endpage",
+        template: "app/templates/endpage",
 
         initialize: function() {
             this.model.on("endpage_enter", this.endPageEnter, this );
