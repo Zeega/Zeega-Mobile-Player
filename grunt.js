@@ -222,6 +222,12 @@ module.exports = function(grunt) {
         
         copy: {
 
+            style: {
+                files: {
+                    "dist/debug/index.css": "assets/css/style.css"
+                }
+            },
+
             pre: {
                 options: {
                     cwd: "/",
@@ -230,18 +236,18 @@ module.exports = function(grunt) {
                 files: {
                     "assets/img/zeegaplayer/": "assets/vendor/zeegaplayer/dist/release/img/**/*"
                 }
-            },
-
-            dist: {
-                options: {
-                    cwd: "/",
-                    flatten : true
-                },
-                files: {
-                    "dist/img/": [ "assets/img/*", "assets/img/zeegaplayer/*" ],
-                    "dist/img/layers/": "assets/img/zeegaplayer/layers/*"
-                }
             }
+
+            // dist: {
+            //     options: {
+            //         cwd: "/",
+            //         flatten : true
+            //     },
+            //     files: {
+            //         "dist/img/": [ "assets/img/*", "assets/img/zeegaplayer/*" ],
+            //         "dist/img/layers/": "assets/img/zeegaplayer/layers/*"
+            //     }
+            // }
 
         }
 
