@@ -1552,6 +1552,7 @@ a:active {
   text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.5);
 }
 .ZEEGA-endpage .ZEEGA-loader-inner {
+  text-align: left;
   left: 70px;
   background: transparent;
   position: absolute;
@@ -1687,6 +1688,7 @@ a:active {
   font-size: 0.7em;
   line-height: .85em;
   margin: 0;
+  width: 170px;
 }
 .ZEEGA-endpage article .mobile-play {
   opacity: 0.8;
