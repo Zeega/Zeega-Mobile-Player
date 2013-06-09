@@ -2482,7 +2482,7 @@ a:active {
   z-index: 1;
 }
 .ZEEGA-chrome-metablock .meta-inner {
-  padding: 20px;
+  padding: 10px;
   padding-top: 10px;
 }
 .ZEEGA-chrome-metablock .meta-inner:after {
@@ -2569,7 +2569,6 @@ a:active {
   border-radius: 0 0 2px 2px;
 }
 .ZEEGA-endpage {
-  display: none;
   z-index: 1000;
   position: absolute;
   height: 100%;
@@ -2611,28 +2610,138 @@ a:active {
   padding: 0;
   list-style: none;
   text-align: center;
-  margin: 40px 0;
-  margin-top: 70px;
+  margin-top: 8px;
 }
 .ZEEGA-endpage .share-sites li {
   display: inline-block;
   margin-right: 10px;
   opacity: 0.9;
 }
+.ZEEGA-endpage .share-sites .favorite {
+  font-size: 2em;
+  padding-top: -5px;
+  padding-bottom: 5px;
+  position: absolute;
+  left: -20px;
+  top: 5px;
+}
+.ZEEGA-endpage .share-sites .favorite.favorited {
+  color: orangered;
+}
+.ZEEGA-endpage .share-block {
+  top: 0;
+  right: 0;
+  position: absolute;
+}
 .ZEEGA-endpage .endpage-social {
-  height: 50px;
-  width: 50px;
+  height: 25px;
+  width: 25px;
   display: inline-block;
   background: url(../img/endpage-share-sprite.png);
-  background-size: 150px 50px;
+  background-size: 75px 25px;
   background-repeat: no-repeat;
 }
 .ZEEGA-endpage .endpage-social.endpage-social-facebook {
-  background-position: -50px 0;
+  background-position: -25px 0;
 }
 .ZEEGA-endpage .endpage-social.endpage-social-tumblr {
-  background-position: -100px 0;
+  background-position: -50px 0;
 }
 .ZEEGA-endpage .endpage-actions {
   text-align: center;
+  margin-top: 70px;
+  width: 240px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.ZEEGA-endpage .endpage-actions h2 {
+  opacity: 1;
+  font-size: 1.5em;
+}
+.ZEEGA-endpage article {
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  background-color: white;
+  background-image: url(../img/default_project_cover.png);
+  width: 240px;
+  height: 160px;
+  margin-top: 10px;
+  outline: 1px solid rgba(255, 255, 255, 0.6);
+  position: relative;
+}
+.ZEEGA-endpage article .info-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5);
+  overflow-x: hidden;
+  padding: 5px;
+  border-radius: 0 0 2px 2px;
+  color: white;
+  text-shadow: rgba(0, 0, 0, 0.498039) 2px 2px 12px;
+}
+.ZEEGA-endpage article .info-overlay .left-column {
+  float: left;
+  margin-right: 10px;
+}
+.ZEEGA-endpage article .info-overlay .left-column .profile-token {
+  background-position: center;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  border-radius: 28px;
+  height: 40px;
+  width: 40px;
+  overflow: hidden;
+  float: left;
+  border: 3px solid orangered;
+}
+.ZEEGA-endpage article .info-overlay .right-column {
+  height: 45px;
+  position: relative;
+  float: left;
+}
+.ZEEGA-endpage article .info-overlay .right-column .profile-name {
+  font-size: 0.7em;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+.ZEEGA-endpage article .info-overlay .right-column .profile-name a {
+  text-decoration: none;
+  color: orangered;
+}
+.ZEEGA-endpage article .info-overlay .right-column .profile-name .zeega-views {
+  padding-left: 10px;
+  display: none;
+}
+.ZEEGA-endpage article .info-overlay .right-column h1 {
+  font-size: 0.7em;
+  line-height: .85em;
+  margin: 0;
+}
+.ZEEGA-endpage article .mobile-play {
+  opacity: 0.8;
+  width: 80px;
+  height: 44px;
+  display: block;
+  top: 40px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50px;
+  padding: 5px 5px 5px 5px;
+  background-image: url(../img/start-button.png);
+  background-position: center;
+  background-size: 93%;
+  background-repeat: no-repeat;
+}
+.ZEEGA-endpage article .mobile-play:hover {
+  opacity: 1;
 }

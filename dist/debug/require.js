@@ -367,7 +367,13 @@ var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
 __p+='<div href="'+
 ( path )+
-'" class="ZEEGA-tab">\n    <span class="ZTab-logo"></span>\n</div>\n\n<div class="share-block">\n    <ul class="share-sites">\n        <li><a\n            href="https://twitter.com/intent/tweet?original_referer='+
+'" class="ZEEGA-tab">\n    <span class="ZTab-logo"></span>\n</div>\n\n<div class="share-block">\n    <ul class="share-sites">\n        <li>\n             ';
+ if ( favorite === true ) {  
+;__p+=' \n                <a href="#" class="favorite favorited">♥</a>\n            ';
+ } else {
+;__p+='\n                <a href="#" class="favorite">♥</a>\n            ';
+ } 
+;__p+='\n        </li>\n        <li><a\n            href="https://twitter.com/intent/tweet?original_referer='+
 ( path )+
 ''+
 ( id )+
@@ -383,9 +389,27 @@ __p+='<div href="'+
 ( id )+
 '"><i class="endpage-social endpage-social-facebook"\n            target="blank"\n            ></i></a></li>\n        <li><a\n            href="http://www.tumblr.com/share/photo?'+
 ( tumblr_share )+
-'"\n            target="blank"\n            ><i class="endpage-social endpage-social-tumblr"></i></a></li>\n    </ul>\n</div>\n\n<div class="endpage-actions">\n    <a data-bypass="true" href="'+
-( path )+
-'" class="btnz btnz-action" >Explore More Zeegas</a>\n</div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a data-bypass="true" href="'+
+'"\n            target="blank"\n            ><i class="endpage-social endpage-social-tumblr"></i></a></li>\n    </ul>\n</div>\n\n<div class="endpage-actions">\n    <h2>Explore More Zeegas</h2>\n     <article style="background-image: url('+
+(project.cover_image )+
+');" >\n            <div class="info-overlay">\n                <div class="left-column">\n                  <a data-bypass="true" href="'+
+(path )+
+'profile/'+
+(project.user.id )+
+'" >\n                    <div class="profile-token" style="background-image: url('+
+( project.user.thumbnail_url )+
+');"></div>\n                   </a>\n                </div>\n                <div class="right-column">\n                  <h1 class = "caption">'+
+( project.title )+
+'</h1>\n                  \n                  <div class="profile-name">\n                    <a data-bypass="true" href="'+
+(path )+
+'profile/'+
+(project.user.id)+
+'" >\n                      '+
+(project.user.display_name)+
+'\n                    </a>\n                   \n                  </div>\n                 \n                </div>\n                  \n            \n            </div>\n            <a href="'+
+(path )+
+''+
+(project.id )+
+'" class="mobile-play" data-bypass="true"></a>\n    </article>\n\n</div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a data-bypass="true" href="'+
 ( path )+
 'profile/'+
 ( userId )+
@@ -55837,14 +55861,34 @@ function( app, Backbone ) {
         initialize: function() {
             this.model.on("endpage_enter", this.endPageEnter, this );
             this.model.on("endpage_exit", this.endPageExit, this );
+            this.relatedProject = $.parseJSON( window.relatedProjectsJSON ).projects[0];
+            
         },
 
         events: {
-            "click .ZEEGA-tab": "toggleCoffin"
+            "click .ZEEGA-tab": "toggleCoffin",
+            "click .favorite": "toggleFavorite"
         },
 
         toggleCoffin: function() {
             app.layout.toggleCoffin();
+        },
+
+        toggleFavorite: function(){
+            var url;
+            this.$(".btnz").toggleClass("favorited");
+
+            if(this.model.project.get("favorite")){
+                url = "http://" + app.metadata.hostname + app.metadata.directory + "api/projects/" + this.model.project.id + "/unfavorite";
+                this.model.project.set({ "favorite": false });
+            } else {
+                url = "http://" + app.metadata.hostname + app.metadata.directory + "api/projects/" + this.model.project.id + "/favorite";
+                this.model.project.set({ "favorite": true });
+            }
+            $.ajax({ url: url, type: 'POST', success: function(){  }  });
+
+            return false;
+
         },
 
         endPageEnter: function() {
@@ -55864,7 +55908,8 @@ function( app, Backbone ) {
                 app.metadata,
                 this.model.project.toJSON(),
                 {
-                    tumblr_share: this.getTumblrShareUrl()
+                    tumblr_share: this.getTumblrShareUrl(),
+                    project: this.relatedProject
                 }
             );
         },

@@ -4,6 +4,13 @@
 
 <div class="share-block">
     <ul class="share-sites">
+        <li>
+             <% if ( favorite === true ) {  %> 
+                <a href="#" class="favorite favorited">♥</a>
+            <% } else {%>
+                <a href="#" class="favorite">♥</a>
+            <% } %>
+        </li>
         <li><a
             href="https://twitter.com/intent/tweet?original_referer=<%= path %><%= id %>&text=<%= description %> Made w/ @zeega&url=<%= path %><%= id %>"
             target="blank"
@@ -21,7 +28,31 @@
 </div>
 
 <div class="endpage-actions">
-    <a data-bypass="true" href="<%= path %>" class="btnz btnz-action" >Explore More Zeegas</a>
+    <h2>Explore More Zeegas</h2>
+     <article style="background-image: url(<%=project.cover_image %>);" >
+            <div class="info-overlay">
+                <div class="left-column">
+                  <a data-bypass="true" href="<%=path %>profile/<%=project.user.id %>" >
+                    <div class="profile-token" style="background-image: url(<%= project.user.thumbnail_url %>);"></div>
+                   </a>
+                </div>
+                <div class="right-column">
+                  <h1 class = "caption"><%= project.title %></h1>
+                  
+                  <div class="profile-name">
+                    <a data-bypass="true" href="<%=path %>profile/<%=project.user.id%>" >
+                      <%=project.user.display_name%>
+                    </a>
+                   
+                  </div>
+                 
+                </div>
+                  
+            
+            </div>
+            <a href="<%=path %><%=project.id %>" class="mobile-play" data-bypass="true"></a>
+    </article>
+
 </div>
 
 <div class="ZEEGA-chrome-metablock">

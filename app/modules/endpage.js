@@ -14,14 +14,34 @@ function( app, Backbone ) {
         initialize: function() {
             this.model.on("endpage_enter", this.endPageEnter, this );
             this.model.on("endpage_exit", this.endPageExit, this );
+            this.relatedProject = $.parseJSON( window.relatedProjectsJSON ).projects[0];
+            
         },
 
         events: {
-            "click .ZEEGA-tab": "toggleCoffin"
+            "click .ZEEGA-tab": "toggleCoffin",
+            "click .favorite": "toggleFavorite"
         },
 
         toggleCoffin: function() {
             app.layout.toggleCoffin();
+        },
+
+        toggleFavorite: function(){
+            var url;
+            this.$(".btnz").toggleClass("favorited");
+
+            if(this.model.project.get("favorite")){
+                url = "http://" + app.metadata.hostname + app.metadata.directory + "api/projects/" + this.model.project.id + "/unfavorite";
+                this.model.project.set({ "favorite": false });
+            } else {
+                url = "http://" + app.metadata.hostname + app.metadata.directory + "api/projects/" + this.model.project.id + "/favorite";
+                this.model.project.set({ "favorite": true });
+            }
+            $.ajax({ url: url, type: 'POST', success: function(){  }  });
+
+            return false;
+
         },
 
         endPageEnter: function() {
@@ -41,7 +61,8 @@ function( app, Backbone ) {
                 app.metadata,
                 this.model.project.toJSON(),
                 {
-                    tumblr_share: this.getTumblrShareUrl()
+                    tumblr_share: this.getTumblrShareUrl(),
+                    project: this.relatedProject
                 }
             );
         },
