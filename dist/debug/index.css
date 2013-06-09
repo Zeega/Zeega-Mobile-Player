@@ -2617,6 +2617,7 @@ a:active {
 .ZEEGA-endpage .share-sites li {
   display: inline-block;
   margin-right: 10px;
+  margin-left: 10px;
   opacity: 0.9;
 }
 .ZEEGA-endpage .share-sites .favorite {
@@ -2627,7 +2628,13 @@ a:active {
   left: -20px;
   top: 5px;
 }
+.ZEEGA-endpage .share-sites .favorite:hover {
+  color: white;
+}
 .ZEEGA-endpage .share-sites .favorite.favorited {
+  color: orangered;
+}
+.ZEEGA-endpage .share-sites .favorite.favorited:hover {
   color: orangered;
 }
 .ZEEGA-endpage .share-block {
@@ -2657,6 +2664,7 @@ a:active {
   margin-right: auto;
 }
 .ZEEGA-endpage .endpage-actions h2 {
+  font-family: "futura", sans-serif;
   opacity: 1;
   font-size: 1.5em;
 }
@@ -2668,7 +2676,7 @@ a:active {
   background-image: url(../img/default_project_cover.png);
   width: 240px;
   height: 160px;
-  margin-top: 10px;
+  margin-top: 15px;
   outline: 1px solid rgba(255, 255, 255, 0.6);
   position: relative;
 }
@@ -2706,6 +2714,7 @@ a:active {
   height: 45px;
   position: relative;
   float: left;
+  text-align: left;
 }
 .ZEEGA-endpage article .info-overlay .right-column .profile-name {
   font-size: 0.7em;

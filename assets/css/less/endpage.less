@@ -65,6 +65,7 @@
         li {
             display: inline-block;
             margin-right: 10px;
+            margin-left: 10px;
             opacity: 0.9;
         }
 
@@ -75,8 +76,14 @@
             position: absolute;
             left: -20px;
             top: 5px;
+            &:hover{
+                color:white;
+            }
             &.favorited{
                 color:orangered;
+                &:hover{
+                    color:orangered;
+                }
             }
         }
     }
@@ -113,6 +120,7 @@
         margin-left: auto;
         margin-right: auto;
         h2 {
+            font-family: "futura", sans-serif;
             opacity:1;
             font-size:1.5em;
         }
@@ -127,7 +135,7 @@
         background-image: url(../img/default_project_cover.png);
         width: 240px;
         height: 160px;
-        margin-top: 10px;
+        margin-top: 15px;
         outline: 1px solid rgba(255,255,255,0.6);
         position: relative;
 
@@ -166,6 +174,7 @@
                 height: 45px;
                 position: relative;
                 float:left;
+                text-align: left;
                 
                 .profile-name{
                     font-size: 0.7em;

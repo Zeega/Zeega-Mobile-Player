@@ -69,7 +69,7 @@ __p+='<div href="'+
 (project.user.display_name)+
 '\n                    </a>\n                   \n                  </div>\n                 \n                </div>\n                  \n            \n            </div>\n            <a href="'+
 (path )+
-''+
+'m/'+
 (project.id )+
 '" class="mobile-play" data-bypass="true"></a>\n    </article>\n\n</div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a data-bypass="true" href="'+
 ( path )+

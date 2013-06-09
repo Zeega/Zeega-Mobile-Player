@@ -29,7 +29,7 @@ function( app, Backbone ) {
 
         toggleFavorite: function(){
             var url;
-            this.$(".btnz").toggleClass("favorited");
+            this.$(".favorite").toggleClass("favorited");
 
             if(this.model.project.get("favorite")){
                 url = "http://" + app.metadata.hostname + app.metadata.directory + "api/projects/" + this.model.project.id + "/unfavorite";
