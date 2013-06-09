@@ -1,10 +1,7 @@
-// This is the main application configuration file.  It is a Grunt
-// configuration file, which you can learn more about here:
 // https://github.com/cowboy/grunt/blob/master/docs/configuring.md
 module.exports = function(grunt) {
 
     grunt.initConfig({
-
         // The clean task ensures all files are removed from the dist/ directory so
         // that no files linger from previous builds.
         clean: ["dist/"],
@@ -228,26 +225,26 @@ module.exports = function(grunt) {
                 }
             },
 
-            pre: {
-                options: {
-                    cwd: "/",
-                    flatten : false
-                },
-                files: {
-                    "assets/img/zeegaplayer/": "assets/vendor/zeegaplayer/dist/release/img/**/*"
-                }
-            }
-
-            // dist: {
+            // pre: {
             //     options: {
             //         cwd: "/",
-            //         flatten : true
+            //         flatten : false
             //     },
             //     files: {
-            //         "dist/img/": [ "assets/img/*", "assets/img/zeegaplayer/*" ],
-            //         "dist/img/layers/": "assets/img/zeegaplayer/layers/*"
+            //         "assets/img/zeegaplayer/": "assets/vendor/zeegaplayer/dist/release/img/**/*"
             //     }
             // }
+
+            dist: {
+                options: {
+                    cwd: "/",
+                    flatten : true
+                },
+                files: {
+                    "dist/img/": [ "assets/img/*", "assets/img/zeegaplayer/*" ],
+                    "dist/img/layers/": "assets/img/zeegaplayer/layers/*"
+                }
+            }
 
         }
 
@@ -263,5 +260,4 @@ module.exports = function(grunt) {
     // The release task will run the debug tasks and then minify the
     // dist/debug/require.js file and CSS files.
     grunt.registerTask("release", "debug min mincss copy");
-
 };

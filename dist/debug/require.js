@@ -347,9 +347,9 @@ __p+='<div href="'+
 ( path )+
 'profile/'+
 ( userId )+
-'">\n                <div class="profile-token"><img src="'+
+'">\n                <div class="profile-token" style="\n                    background: url('+
 ( userThumbnail )+
-'"/></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a data-bypass="true" href="'+
+');\n                    background-size: cover;\n                    background-position: center;\n                "></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a data-bypass="true" href="'+
 ( path )+
 'profile/'+
 ( userId )+
@@ -367,31 +367,55 @@ var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
 __p+='<div href="'+
 ( path )+
-'" class="ZEEGA-tab">\n    <span class="ZTab-logo"></span>\n</div>\n\n<div class="share-block">\n    <ul class="share-sites">\n        <li><a\n            href="https://twitter.com/intent/tweet?original_referer='+
+'" class="ZEEGA-tab">\n    <span class="ZTab-logo"></span>\n</div>\n\n<div class="share-block">\n    <ul class="share-sites">\n        <li>\n             ';
+ if ( favorite === true ) {  
+;__p+=' \n                <a href="#" class="favorite favorited">♥</a>\n            ';
+ } else {
+;__p+='\n                <a href="#" class="favorite">♥</a>\n            ';
+ } 
+;__p+='\n        </li>\n        <li><a\n            href="https://twitter.com/intent/tweet?original_referer='+
 ( path )+
 ''+
-( item_id )+
+( id )+
 '&text='+
 ( description )+
 ' Made w/ @zeega&url='+
 ( path )+
 ''+
-( item_id )+
+( id )+
 '"\n            target="blank"\n            ><i class="endpage-social endpage-social-twitter"\n            ></i></a></li>\n        <li><a\n            href="http://www.facebook.com/sharer.php?u='+
 ( path )+
 ''+
-( item_id )+
+( id )+
 '"><i class="endpage-social endpage-social-facebook"\n            target="blank"\n            ></i></a></li>\n        <li><a\n            href="http://www.tumblr.com/share/photo?'+
 ( tumblr_share )+
-'"\n            target="blank"\n            ><i class="endpage-social endpage-social-tumblr"></i></a></li>\n    </ul>\n</div>\n\n<div class="endpage-actions">\n    <a href="'+
-( path )+
-'" class="btnz btnz-action" >Explore More Zeegas</a>\n</div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a data-bypass="true" href="'+
+'"\n            target="blank"\n            ><i class="endpage-social endpage-social-tumblr"></i></a></li>\n    </ul>\n</div>\n\n<div class="endpage-actions">\n    <h2>Explore More Zeegas</h2>\n     <article style="background-image: url('+
+(project.cover_image )+
+');" >\n            <div class="info-overlay">\n                <div class="left-column">\n                  <a data-bypass="true" href="'+
+(path )+
+'profile/'+
+(project.user.id )+
+'" >\n                    <div class="profile-token" style="background-image: url('+
+( project.user.thumbnail_url )+
+');"></div>\n                   </a>\n                </div>\n                <div class="right-column">\n                  <h1 class = "caption">'+
+( project.title )+
+'</h1>\n                  \n                  <div class="profile-name">\n                    <a data-bypass="true" href="'+
+(path )+
+'profile/'+
+(project.user.id)+
+'" >\n                      '+
+(project.user.display_name)+
+'\n                    </a>\n                   \n                  </div>\n                 \n                </div>\n                  \n            \n            </div>\n            <a href="'+
+(path )+
+'m/'+
+(project.id )+
+'" class="mobile-play" data-bypass="true"></a>\n    </article>\n\n</div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a data-bypass="true" href="'+
 ( path )+
 'profile/'+
 ( userId )+
-'">\n                <div class="profile-token"><img src="'+
+'">\n                <div class="profile-token" style="\n                    background: url('+
 ( userThumbnail )+
-'"/></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a data-bypass="true" href="'+
+');\n                    background-size: cover;\n                    background-position: center;\n                "></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a data-bypass="true" href="'+
 ( path )+
 'profile/'+
 ( userId )+
@@ -413,9 +437,9 @@ __p+='<div href="'+
 ( path )+
 'profile/'+
 ( userId )+
-'">\n                <div class="profile-token"><img src="'+
+'">\n                <div class="profile-token" style="\n                    background: url('+
 ( userThumbnail )+
-'"/></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a data-bypass="true" href="'+
+');\n                    background-size: cover;\n                    background-position: center;\n                "></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a data-bypass="true" href="'+
 ( path )+
 'profile/'+
 ( userId )+
@@ -454,17 +478,17 @@ __p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="he
 ' views\n            </div>\n        </li>\n\n        <li><a href="https://twitter.com/intent/tweet?original_referer='+
 ( path )+
 ''+
-( item_id )+
+( id )+
 '&text='+
 ( description )+
 ' Made w/ @zeega&url='+
 ( path )+
 ''+
-( item_id )+
+( id )+
 '"\n            target="blank"><i class="zsocial-twitter"></i>  Share on Twitter</a></li>\n        <li><a href="http://m.facebook.com/sharer.php?u='+
 ( path )+
 ''+
-( item_id )+
+( id )+
 '&t='+
 ( title )+
 ' by '+
@@ -472,8 +496,8 @@ __p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="he
 '" target="blank"><i class="zsocial-facebook"></i>  Share on Facebook</a></li>\n        <li><a href="mailto:?subject=Check out this Zeega!&body='+
 ( path )+
 ''+
-( item_id )+
-'"><i class="zsocial-email"></i>  Share on Email</a></li>\n        <li class="spacer"></li>\n        <li class="highlight"><a href="'+
+( id )+
+'"><i class="zsocial-email"></i>  Share on Email</a></li>\n        <li class="spacer"></li>\n        <li class="highlight"><a data-bypass="true" href="'+
 ( path )+
 '"><i class="icon-home icon-white"></i> Zeega Home</a></li>\n        <li class="spacer"></li>\n        <li class="header">Credits</li>\n        ';
  _.each( layers, function( layer ) { 
@@ -746,10 +770,18 @@ __p+='<a href="#" class="ZEEGA-playpause pause-zcon"></a>';
 return __p;
 };
 
+this["JST"]["app/player/templates/controls/size-toggle.html"] = function(obj){
+var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+with(obj||{}){
+__p+='<a href="#" class="size-toggle">\n    <i class="size-toggle-mobile"></i>\n</a>';
+}
+return __p;
+};
+
 this["JST"]["app/player/templates/layouts/player-layout.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<div class=\'ZEEGA-player-window\'></div>';
+__p+='<div class="ZEEGA-player-wrapper">\n    <div class=\'ZEEGA-player-window\'></div>\n</div>';
 }
 return __p;
 };;
@@ -18175,14 +18207,34 @@ function( app, Backbone ) {
         initialize: function() {
             this.model.on("endpage_enter", this.endPageEnter, this );
             this.model.on("endpage_exit", this.endPageExit, this );
+            this.relatedProject = $.parseJSON( window.relatedProjectsJSON ).projects[0];
+            
         },
 
         events: {
-            "click .ZEEGA-tab": "toggleCoffin"
+            "click .ZEEGA-tab": "toggleCoffin",
+            "click .favorite": "toggleFavorite"
         },
 
         toggleCoffin: function() {
             app.layout.toggleCoffin();
+        },
+
+        toggleFavorite: function(){
+            var url;
+            this.$(".favorite").toggleClass("favorited");
+
+            if(this.model.project.get("favorite")){
+                url = "http://" + app.metadata.hostname + app.metadata.directory + "api/projects/" + this.model.project.id + "/unfavorite";
+                this.model.project.set({ "favorite": false });
+            } else {
+                url = "http://" + app.metadata.hostname + app.metadata.directory + "api/projects/" + this.model.project.id + "/favorite";
+                this.model.project.set({ "favorite": true });
+            }
+            $.ajax({ url: url, type: 'POST', success: function(){  }  });
+
+            return false;
+
         },
 
         endPageEnter: function() {
@@ -18202,7 +18254,8 @@ function( app, Backbone ) {
                 app.metadata,
                 this.model.project.toJSON(),
                 {
-                    tumblr_share: this.getTumblrShareUrl()
+                    tumblr_share: this.getTumblrShareUrl(),
+                    project: this.relatedProject
                 }
             );
         },
@@ -34225,7 +34278,8 @@ function( app ) {
 
     return app.Backbone.View.extend({
 
-
+        tagName: "li",
+        
         type: "",
         parentName: "",
         propertyName: "",
@@ -34587,6 +34641,8 @@ function( Zeega, ControlView ) {
                        
                         this.update( attr );
                         this.updateCSS( attr );
+
+                        this.model.trigger("resized", attr );
                     }.bind( this )
                 };
 
@@ -35686,8 +35742,8 @@ function( app, Controls ) {
             if ( this.model.mode == "player") {
                 this.verifyReady();
             } else if ( this.model.mode == "editor") {
-                this.afterEditorRender();
                 this.loadControls();
+                this.afterEditorRender();
             }
             this.applyVisualProperties();
             this.visualAfterRender();
@@ -35853,6 +35909,103 @@ function( app, Controls ) {
 
 });
 
+define('engine/modules/askers/asker.view',[
+    "app",
+    "backbone"
+],
+
+function( app ) {
+
+    return Backbone.View.extend({
+
+        template: "app/engine/modules/askers/asker",
+        className: "ZEEGA-asker asker-overlay",
+
+        serialize: function() {
+            return this.model.toJSON();
+        },
+
+        start: function() {
+            $("body").append( this.el );
+            $("#main").addClass("modal");
+            this.render();
+            this.$el.fadeIn("fast");
+        },
+
+        afterRender: function() {
+            $("body").bind("keyup.asker", function( e ) {
+                if ( e.which == 13 ) { //enter
+                    this.okay();
+                } else if ( e.which == 27 ) { // esc
+                    this.cancel();
+                }
+            }.bind( this ));
+        },
+
+        events: {
+            "click .ask-cancel": "cancel",
+            "click .ask-okay": "okay"
+        },
+
+        cancel: function() {
+            this.model.set("response", false );
+            this.close();
+        },
+
+        okay: function() {
+            this.model.set("response", true );
+            this.close();
+        },
+
+        close: function() {
+            $("#main").removeClass("modal");
+            this.$el.fadeOut( 250, function() {
+                this.remove();
+            }.bind( this ));
+            $("body").unbind("keyup.asker");
+        }
+
+    });
+
+});
+
+define('engine/modules/askers/asker',[
+    "app",
+    "engine/modules/askers/asker.view",
+    "backbone"
+],
+
+function( app, AskerView ) {
+
+    return Backbone.Model.extend({
+
+        defaults: {
+            question: "",
+            description: "",
+            response: null,
+            okay: null,
+            cancel: null
+        },
+
+        initialize: function() {
+            this.view = new AskerView({ model: this });
+            this.view.start();
+
+            this.on("change:response", this.onAnswer, this );
+        },
+
+        onAnswer: function( model, answer ) {
+            this.off("change:response");
+            if ( answer && _.isFunction( this.get("okay"))) {
+                this.get("okay")( answer );
+            } else if ( !answer && _.isFunction( this.get("cancel"))) {
+                this.get("cancel")( answer );
+            }
+        }
+
+    });
+});
+
 (function(c,n){var k="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";c.fn.imagesLoaded=function(l){function m(){var b=c(h),a=c(g);d&&(g.length?d.reject(e,b,a):d.resolve(e));c.isFunction(l)&&l.call(f,e,b,a)}function i(b,a){b.src===k||-1!==c.inArray(b,j)||(j.push(b),a?g.push(b):h.push(b),c.data(b,"imagesLoaded",{isBroken:a,src:b.src}),o&&d.notifyWith(c(b),[a,e,c(h),c(g)]),e.length===j.length&&(setTimeout(m),e.unbind(".imagesLoaded")))}var f=this,d=c.isFunction(c.Deferred)?c.Deferred():
 0,o=c.isFunction(d.notify),e=f.find("img").add(f.filter("img")),j=[],h=[],g=[];e.length?e.bind("load.imagesLoaded error.imagesLoaded",function(b){i(b.target,"error"===b.type)}).each(function(b,a){var e=a.src,d=c.data(a,"imagesLoaded");if(d&&d.src===e)i(a,d.isBroken);else if(a.complete&&a.naturalWidth!==n)i(a,0===a.naturalWidth||0===a.naturalHeight);else if(a.readyState||a.complete)a.src=k,a.src=e}):m();return d?d.promise(f):f}})(jQuery);
 define("engineVendor/jquery.imagesloaded.min", function(){});
@@ -35861,11 +36014,13 @@ define('engine/plugins/layers/image/image',[
     "app",
     "engine/modules/layer.model",
     "engine/modules/layer.visual.view",
+    "engine/modules/askers/asker",
+
     //plugins
     "engineVendor/jquery.imagesloaded.min"
 ],
 
-function( app, Layer, Visual ){
+function( app, Layer, Visual, Asker ){
 
     var L = {};
 
@@ -35902,7 +36057,7 @@ function( app, Layer, Visual ){
             {
                 type: "slider",
                 options: {
-                    title: "<i class='icon-eye-open icon-white'></i>",
+                    title: "opacity",
                     propertyName: "opacity",
                     min: 0,
                     max: 1,
@@ -35912,7 +36067,7 @@ function( app, Layer, Visual ){
             },{
                 type: "checkbox",
                 options: {
-                    title: "<i class='icon-resize-full icon-white'></i>",
+                    title: "fullscreen",
                     propertyName: "page_background",
                     triggerEvent: "toggle_page_background"
                 }
@@ -35936,13 +36091,16 @@ function( app, Layer, Visual ){
         },
 
         init: function() {
-            window.JST["app/zeega-parser/plugins/layers/image/image.html"] = null;
 
             if ( this.model.getAttr("page_background")) {
                 this.visualProperties = ["opacity"];
             }
 
+            this.stopListening( this.model );
             this.model.on("toggle_page_background", this.togglePageBackgroundState, this );
+            
+            this.model.off("resized");
+            this.model.on("resized", this.onResize, this );
         },
 
         afterEditorRender: function() {
@@ -35955,6 +36113,18 @@ function( app, Layer, Visual ){
             if ( this.model.getAttr("page_background")) {
                 this.makePageBackground();
                 this.disableDrag();
+            }
+        },
+
+        onResize: function( attr ) {
+            if ( attr.width > 100 || attr.height > 100 ) {
+                new Asker({
+                    question: "Make this layer fullscreen?",
+                    okay: function() {
+                        this.disableDrag();
+                        this.makePageBackground();
+                    }.bind( this )
+                });
             }
         },
 
@@ -35981,9 +36151,14 @@ function( app, Layer, Visual ){
         disableDrag: function() {
             this.model.trigger("control_drag_disable");
             this.$el.bind("mousedown.imageDrag", function() {
-                if ( confirm("make layer positionable?") ) {
-                    this.fitToWorkspace();
-                }
+
+                new Asker({
+                    question: "Make this layer positionable?",
+                    okay: function() {
+                        this.fitToWorkspace();
+                    }.bind( this )
+                });
+
             }.bind( this ));
         },
 
@@ -37295,16 +37470,6 @@ function( app ) {
 
         className: "text-modal overlay-dimmer ZEEGA-modal",
 
-        initialize: function() {
-            // temporary hack to get latest textmodal.html to load
-            // window.JST["app/zeega-parser/plugins/layers/text_v2/textmodal.html"] = null;
-
-            this.saveContent = _.debounce(function() {
-                this.model.saveAttr({ content: this.$("textarea").val() });
-                this.updateSample();
-            }, 1000);
-        },
-
         afterRender: function() {
             $("#main").addClass("modal");
             this.loadFonts();
@@ -37340,15 +37505,10 @@ function( app ) {
         events: {
             "click .modal-close": "closeThis",
             "click .text-modal-save": "submit",
-            "keypress textarea": "onKeypress",
             "click .page" : "selectPage",
             "click .link-new-page": "selectNewPage",
             "click .link-page-open": "openLinkDrawer",
             "click .unlink-text": "unlink"
-        },
-
-        onKeypress: function( e ) {
-            this.saveContent();
         },
 
         closeThis: function() {
@@ -37384,7 +37544,7 @@ function( app ) {
         },
 
         submit: function() {
-            this.model.setAttr({ content: this.$("textarea").val() });
+            this.model.saveAttr({ content: this.$("textarea").val() });
             this.closeThis();
             this.updateVisualElement();
 
@@ -37535,7 +37695,7 @@ function( app, _Layer, Visual, TextModal ) {
             },
             { type: "slider",
                 options: {
-                    title: "<i class='icon-eye-open icon-white'></i>",
+                    title: "opacity",
                     propertyName: "opacity",
                     min: 0,
                     max: 1,
@@ -39631,7 +39791,7 @@ function( app ) {
 
     return app.Backbone.Layout.extend({
         template: "app/player/templates/controls/arrows",
-        className: "controls-arrows"
+        className: "ZEEGA-player-control controls-arrows"
     });
 
 });
@@ -39643,7 +39803,7 @@ function( app ) {
 
     return app.Backbone.Layout.extend({
         template: "app/player/templates/controls/close",
-        className: "controls-close"
+        className: "ZEEGA-player-control  controls-close"
     });
 
 });
@@ -39655,7 +39815,19 @@ function( app ) {
 
     return app.Backbone.Layout.extend({
         template: "app/player/templates/controls/playpause",
-        className: "controls-playpause"
+        className: "ZEEGA-player-control  controls-playpause"
+    });
+
+});
+
+define('player/modules/controls/size-toggle',[
+    "player/app"
+],
+function( app ) {
+
+    return app.Backbone.Layout.extend({
+        template: "app/player/templates/controls/size-toggle",
+        className: "ZEEGA-player-control controls-screen-toggle"
     });
 
 });
@@ -39664,9 +39836,10 @@ define('player/modules/controls-view',[
     "player/app",
     "player/modules/controls/arrows",
     "player/modules/controls/close",
-    "player/modules/controls/playpause"
+    "player/modules/controls/playpause",
+    "player/modules/controls/size-toggle"
 ],
-function( app, ArrowView, CloseView, PlayPauseView ) {
+function( app, ArrowView, CloseView, PlayPauseView, SizeToggle ) {
 
     return app.Backbone.Layout.extend({
 
@@ -39690,22 +39863,24 @@ function( app, ArrowView, CloseView, PlayPauseView ) {
             if ( this.options.settings.playpause ) {
                 this.insertView( new PlayPauseView() );
             }
-        },
 
-        serialize: function() {
-
-            // return _.defaults( this.options.settings, {
-            //     arrows: true,
-            //     close: true,
-            //     playpause: true
-            // });
+            if ( this.options.settings.sizeToggle ) {
+                this.insertView( new SizeToggle() );
+            }
         },
 
         events: {
             "click .ZEEGA-close": "close",
             "click .ZEEGA-prev": "prev",
             "click .ZEEGA-next": "next",
-            "click .ZEEGA-playpause": "playpause"
+            "click .ZEEGA-playpause": "playpause",
+            "click .size-toggle": "toggleSize"
+        },
+
+        toggleSize: function( event ) {
+            this.model.trigger("size_toggle");
+
+            this.$(".size-toggle i").toggleClass("size-toggle-laptop").toggleClass("size-toggle-mobile");
         },
 
         close: function( event ) {
@@ -39788,12 +39963,16 @@ function( app, ControlsView ) {
         template: "app/player/templates/layouts/player-layout",
         className: "ZEEGA-player",
 
+        mobileView: false,
+
         initialize: function() {
             // debounce the resize function so it doesn"t bog down the browser
             var divId = this.model.get("divId"),
                 lazyResize = _.debounce(function() {
                     this.resizeWindow();
                 }.bind(this), 300);
+
+            this.mobileView = this.model.get("previewMode") == "mobile";
 
             // attempt to detect if the parent container is being resized
             app.$( window ).resize( lazyResize );
@@ -39805,9 +39984,10 @@ function( app, ControlsView ) {
 
         afterRender: function() {
             // correctly size the player window
-            this.$(".ZEEGA-player-window").css( this.getWindowSize() );
-            this.setPrevNext();
+            this.$(".ZEEGA-player-wrapper").css( this.mobileView ? this.getPlayerSize() : this.getWrapperSize() );
+            this.$(".ZEEGA-player-window").css( this.getPlayerSize() );
 
+            this.setPrevNext();
             this.renderControls();
         },
 
@@ -39858,17 +40038,49 @@ function( app, ControlsView ) {
             }
         },
 
+        toggleSize: function() {
+            this.mobileView = !this.mobileView;
+            if ( this.mobileView ) {
+                this.$(".ZEEGA-player-wrapper").css( this.getPlayerSize() );
+            } else {
+                this.$(".ZEEGA-player-wrapper").css( this.getWrapperSize() );
+            }
+        },
+
         resizeWindow: function() {
             // animate the window size in place
-            var css = this.getWindowSize();
-            this.$(".ZEEGA-player-window").animate( css );
+            var css = this.mobileView ? this.getPlayerSize() : this.getWrapperSize();
+
+            this.$(".ZEEGA-player-wrapper").css( css );
+            this.$(".ZEEGA-player-window").css( this.getPlayerSize() );
+            
             this.model.trigger( "window_resized", css );
             app.trigger( "resize_window", css );
         },
 
+        getPlayerSize: function() {
+            var windowRatio, winHeight,
+                css = {
+                    width: 0,
+                    height: 0,
+                    top: 0,
+                    left: 0
+                };
+
+            windowRatio = this.model.get("windowRatio");
+            winHeight = app.$( this.model.get("target") ).find(".ZEEGA-player").height();
+
+            css.width = winHeight * windowRatio;
+            css.height = winHeight;
+            css.top = (winHeight - css.height) / 2;
+            css.fontSize = ( css.width / 520 ) +'em';
+
+            return css;
+        },
+
         // calculate and return the correct window size for the player window
-        getWindowSize: function() {
-            var windowRatio, winWidth, winHeight, actualRatio,
+        getWrapperSize: function() {
+            var windowRatio, winWidth, winHeight, actualRatio, playerMaxWidth, playerMinWidth,
                 css = {
                     width: 0,
                     height: 0,
@@ -39881,44 +40093,17 @@ function( app, ControlsView ) {
             winHeight = app.$( this.model.get("target") ).find(".ZEEGA-player").height();
             actualRatio = winWidth / winHeight;
 
-            if ( this.model.get("cover") === true ) {
-                if ( actualRatio > windowRatio ) { // width > height // fit left & right
-                    css.width = winWidth;
-                    css.height = winWidth / windowRatio;
-                    css.top = (winHeight - css.height) / 2;
-                } else if ( this.model.get("cover") == "vertical" ) {
-                    css.width = winHeight * windowRatio;
-                    css.height = winHeight;
-                    css.left = (winWidth - css.width) / 2;
-                } else { // width < height
-                    css.width = winHeight * windowRatio;
-                    css.height = winHeight;
-                    css.left = (winWidth - css.width) / 2;
-                }
-            } else if ( this.model.get("cover") === false ) {
-                if ( actualRatio > windowRatio ) { // width > height
-                    css.width = winHeight * windowRatio;
-                    css.height = winHeight;
-                } else { // width < height
-                    css.width = winWidth;
-                    css.height = winWidth / windowRatio;
-                    css.top = (winHeight - css.height) / 2;
-                }
+            playerMaxWidth = winHeight * (16/9);
+            playerMinWidth = winHeight * windowRatio;
+
+
+            if ( this.model.get("mobile") ) {
+
             } else {
-                if ( this.model.get("cover") == "horizontal" ) { // width > height // fit left & right
-                    css.width = winWidth;
-                    css.height = winWidth / windowRatio;
-                    css.top = (winHeight - css.height) / 2;
-                } else if ( this.model.get("cover") == "vertical" ) {
-                    var left = ( winWidth - winHeight * windowRatio ) / 2;
-
-                    css.width = winHeight * windowRatio;
-                    css.height = winHeight;
-                    css.left = left < 0 ? left : 0;
-                }
+                css.width = winWidth < playerMaxWidth ? winWidth : playerMaxWidth;
+                css.height = winHeight;
+                css.top = (winHeight - css.height) / 2;
             }
-
-            css.fontSize = ( css.width / 520 ) +'em';
 
             // Append unit to calculated value
             css.width += "px";
@@ -40076,6 +40261,15 @@ function( app, Engine, Relay, Status, PlayerLayout ) {
             preloadRadius: 2,
 
             /**
+            the beginning state of the preview. vertical or fullscreen mode
+
+            @property previewMode
+            @type String
+            @default "standard"
+            **/
+            previewMode: "standard", // or mobile
+
+            /**
             Instance of a Sequence.Collection
 
             @property sequences
@@ -40206,7 +40400,10 @@ function( app, Engine, Relay, Status, PlayerLayout ) {
         */
 
         initialize: function( attributes ) {
+
             this.loadSoundtrack = _.once(function() {
+                // this can be done better // TODO 6/8/13
+                app.soundtrack = this.project.sequences.at(0).soundtrackModel;
 
                 if ( app.soundtrack ) {
                     if ( app.soundtrack.state == "ready" ) {
@@ -40293,8 +40490,13 @@ function( app, Engine, Relay, Status, PlayerLayout ) {
         // attach listeners
         _listen: function() {
             this.on("cue_frame", this.cueFrame, this );
+            this.on("size_toggle", this.toggleSize, this );
             // relays
             this.relay.on("change:current_frame", this._remote_cueFrame, this );
+        },
+
+        toggleSize: function() {
+            this.Layout.toggleSize();
         },
 
         _remote_cueFrame: function( info, id ) {

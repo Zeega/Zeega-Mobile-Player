@@ -19,7 +19,11 @@
     <div class="meta-inner">
         <div class="left-col">
             <a data-bypass="true"  href="<%= path %>profile/<%= userId %>">
-                <div class="profile-token"><img src="<%= userThumbnail %>"/></div>
+                <div class="profile-token" style="
+                    background: url(<%= userThumbnail %>);
+                    background-size: cover;
+                    background-position: center;
+                "></div>
             </a>
         </div>
         <div class="right-col">

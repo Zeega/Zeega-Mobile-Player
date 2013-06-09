@@ -9,9 +9,9 @@ __p+='<div href="'+
 ( path )+
 'profile/'+
 ( userId )+
-'">\n                <div class="profile-token"><img src="'+
+'">\n                <div class="profile-token" style="\n                    background: url('+
 ( userThumbnail )+
-'"/></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a data-bypass="true" href="'+
+');\n                    background-size: cover;\n                    background-position: center;\n                "></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a data-bypass="true" href="'+
 ( path )+
 'profile/'+
 ( userId )+
@@ -29,31 +29,55 @@ var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
 __p+='<div href="'+
 ( path )+
-'" class="ZEEGA-tab">\n    <span class="ZTab-logo"></span>\n</div>\n\n<div class="share-block">\n    <ul class="share-sites">\n        <li><a\n            href="https://twitter.com/intent/tweet?original_referer='+
+'" class="ZEEGA-tab">\n    <span class="ZTab-logo"></span>\n</div>\n\n<div class="share-block">\n    <ul class="share-sites">\n        <li>\n             ';
+ if ( favorite === true ) {  
+;__p+=' \n                <a href="#" class="favorite favorited">♥</a>\n            ';
+ } else {
+;__p+='\n                <a href="#" class="favorite">♥</a>\n            ';
+ } 
+;__p+='\n        </li>\n        <li><a\n            href="https://twitter.com/intent/tweet?original_referer='+
 ( path )+
 ''+
-( item_id )+
+( id )+
 '&text='+
 ( description )+
 ' Made w/ @zeega&url='+
 ( path )+
 ''+
-( item_id )+
+( id )+
 '"\n            target="blank"\n            ><i class="endpage-social endpage-social-twitter"\n            ></i></a></li>\n        <li><a\n            href="http://www.facebook.com/sharer.php?u='+
 ( path )+
 ''+
-( item_id )+
+( id )+
 '"><i class="endpage-social endpage-social-facebook"\n            target="blank"\n            ></i></a></li>\n        <li><a\n            href="http://www.tumblr.com/share/photo?'+
 ( tumblr_share )+
-'"\n            target="blank"\n            ><i class="endpage-social endpage-social-tumblr"></i></a></li>\n    </ul>\n</div>\n\n<div class="endpage-actions">\n    <a href="'+
-( path )+
-'" class="btnz btnz-action" >Explore More Zeegas</a>\n</div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a data-bypass="true" href="'+
+'"\n            target="blank"\n            ><i class="endpage-social endpage-social-tumblr"></i></a></li>\n    </ul>\n</div>\n\n<div class="endpage-actions">\n    <h2>Explore More Zeegas</h2>\n     <article style="background-image: url('+
+(project.cover_image )+
+');" >\n            <div class="info-overlay">\n                <div class="left-column">\n                  <a data-bypass="true" href="'+
+(path )+
+'profile/'+
+(project.user.id )+
+'" >\n                    <div class="profile-token" style="background-image: url('+
+( project.user.thumbnail_url )+
+');"></div>\n                   </a>\n                </div>\n                <div class="right-column">\n                  <h1 class = "caption">'+
+( project.title )+
+'</h1>\n                  \n                  <div class="profile-name">\n                    <a data-bypass="true" href="'+
+(path )+
+'profile/'+
+(project.user.id)+
+'" >\n                      '+
+(project.user.display_name)+
+'\n                    </a>\n                   \n                  </div>\n                 \n                </div>\n                  \n            \n            </div>\n            <a href="'+
+(path )+
+'m/'+
+(project.id )+
+'" class="mobile-play" data-bypass="true"></a>\n    </article>\n\n</div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a data-bypass="true" href="'+
 ( path )+
 'profile/'+
 ( userId )+
-'">\n                <div class="profile-token"><img src="'+
+'">\n                <div class="profile-token" style="\n                    background: url('+
 ( userThumbnail )+
-'"/></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a data-bypass="true" href="'+
+');\n                    background-size: cover;\n                    background-position: center;\n                "></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a data-bypass="true" href="'+
 ( path )+
 'profile/'+
 ( userId )+
@@ -75,9 +99,9 @@ __p+='<div href="'+
 ( path )+
 'profile/'+
 ( userId )+
-'">\n                <div class="profile-token"><img src="'+
+'">\n                <div class="profile-token" style="\n                    background: url('+
 ( userThumbnail )+
-'"/></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a data-bypass="true" href="'+
+');\n                    background-size: cover;\n                    background-position: center;\n                "></div>\n            </a>\n        </div>\n        <div class="right-col">\n            <div class="username">\n                <a data-bypass="true" href="'+
 ( path )+
 'profile/'+
 ( userId )+
@@ -116,17 +140,17 @@ __p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="he
 ' views\n            </div>\n        </li>\n\n        <li><a href="https://twitter.com/intent/tweet?original_referer='+
 ( path )+
 ''+
-( item_id )+
+( id )+
 '&text='+
 ( description )+
 ' Made w/ @zeega&url='+
 ( path )+
 ''+
-( item_id )+
+( id )+
 '"\n            target="blank"><i class="zsocial-twitter"></i>  Share on Twitter</a></li>\n        <li><a href="http://m.facebook.com/sharer.php?u='+
 ( path )+
 ''+
-( item_id )+
+( id )+
 '&t='+
 ( title )+
 ' by '+
@@ -134,8 +158,8 @@ __p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="he
 '" target="blank"><i class="zsocial-facebook"></i>  Share on Facebook</a></li>\n        <li><a href="mailto:?subject=Check out this Zeega!&body='+
 ( path )+
 ''+
-( item_id )+
-'"><i class="zsocial-email"></i>  Share on Email</a></li>\n        <li class="spacer"></li>\n        <li class="highlight"><a href="'+
+( id )+
+'"><i class="zsocial-email"></i>  Share on Email</a></li>\n        <li class="spacer"></li>\n        <li class="highlight"><a data-bypass="true" href="'+
 ( path )+
 '"><i class="icon-home icon-white"></i> Zeega Home</a></li>\n        <li class="spacer"></li>\n        <li class="header">Credits</li>\n        ';
  _.each( layers, function( layer ) { 
@@ -408,10 +432,18 @@ __p+='<a href="#" class="ZEEGA-playpause pause-zcon"></a>';
 return __p;
 };
 
+this["JST"]["app/player/templates/controls/size-toggle.html"] = function(obj){
+var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+with(obj||{}){
+__p+='<a href="#" class="size-toggle">\n    <i class="size-toggle-mobile"></i>\n</a>';
+}
+return __p;
+};
+
 this["JST"]["app/player/templates/layouts/player-layout.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<div class=\'ZEEGA-player-window\'></div>';
+__p+='<div class="ZEEGA-player-wrapper">\n    <div class=\'ZEEGA-player-window\'></div>\n</div>';
 }
 return __p;
 };
