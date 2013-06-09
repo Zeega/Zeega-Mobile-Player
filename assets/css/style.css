@@ -1200,6 +1200,7 @@ table {
   position: relative;
 }
 .ZEEGA-player-wrapper {
+  position: absolute;
   background: black;
   overflow: hidden;
   margin: auto;
@@ -2424,14 +2425,12 @@ html {
 #main {
   height: 100%;
 }
-/* Portrait */
 @media screen and (orientation: portrait) {
-  #main.iphone-webview {
+  #main.iphone-safari {
     height: -webkit-calc( 100% + 60px );
     height: calc( 100% + 60px );
   }
 }
-/* Landscape */
 @media screen and (orientation: landscape) {
   #main.iphone-webview {
     height: 100%;
@@ -2914,7 +2913,7 @@ a:active {
   height: 30px;
   border-radius: 0 0 2px 2px;
   position: absolute;
-  z-index: 2;
+  z-index: 10;
   background-size: 30px 150px;
   right: 20px;
   top: 20px;
@@ -2937,7 +2936,7 @@ a:active {
   bottom: 0;
   width: 100%;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 1;
+  z-index: 10;
 }
 .ZEEGA-chrome-metablock .meta-inner {
   padding: 10px;

@@ -47,11 +47,16 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome, EndPage ) {
         },
 
         detectUserAgent: function() {
-            var is_safari_or_uiwebview = /(iPhone|iPod|iPad).*AppleWebKit/i.test(navigator.userAgent),
-                is_uiwebview = /(iPhone|iPod|iPad).*AppleWebKit(?!.*Safari)/i.test(navigator.userAgent);
-            
-            if ( !is_uiwebview ) {
-                $("#main").addClass("iphone-webview");
+            var userAgent = navigator.userAgent;
+
+            // var is_safari_or_uiwebview = /(iPhone|iPod|iPad).*AppleWebKit/i.test(navigator.userAgent),
+            //     is_uiwebview = /(iPhone|iPod|iPad).*AppleWebKit(?!.*Safari)/i.test(navigator.userAgent),
+            //     is_chrome = /CriOS/i.test(navigator.userAgent);
+
+            if ( /CriOS/i.test( userAgent ) ) {
+                $("#main").addClass("iphone-chrome");
+            } else if ( !/(iPhone|iPod|iPad).*AppleWebKit(?!.*Safari)/i.test( userAgent ) ) {
+                $("#main").addClass("iphone-safari");
                 window.scrollTo(0, 1);
             }
         },

@@ -12,30 +12,31 @@
 }
 
 html {
-	background: black;
-	font-family: 'Helvetica', sans-serif;
+    background: black;
+    font-family: 'Helvetica', sans-serif;
 }
 
 #main {
     height: 100%;
 }
 
-/* Portrait */
+// Portrait
 @media screen and (orientation:portrait) {
-    #main.iphone-webview {
+    #main.iphone-safari {
         height: -webkit-calc( ~' 100% + 60px ' );
         height: calc( ~" 100% + 60px ");
     }
-
+    #main.iphone-webview {
+        
+    }
 }
 
-/* Landscape */
+// Landscape
 @media screen and (orientation:landscape) {
     #main.iphone-webview {
         height: 100%;
     }
 }
-
 
 
 #main {

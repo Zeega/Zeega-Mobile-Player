@@ -40,6 +40,7 @@ function(app, Backbone, UI, Player) {
                 autoplay: false,
                 cover: true,
                 target: '#player',
+                previewMode: "mobile",
                 startFrame: app.state.get("frameID"),
                 keyboard: false,
                 data: $.parseJSON( window.projectJSON ) || null,
