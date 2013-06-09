@@ -1532,6 +1532,7 @@ a:active {
   border-radius: 0 0 2px 2px;
 }
 .ZEEGA-endpage {
+  display: none;
   z-index: 1000;
   position: absolute;
   height: 100%;
