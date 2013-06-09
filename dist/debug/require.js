@@ -19240,6 +19240,7 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome, EndPage ) {
         },
 
         onTap: function() {
+            window.scrollTo(0, 1);
             this.chrome.toggle();
             this.glowLinks();
         },
