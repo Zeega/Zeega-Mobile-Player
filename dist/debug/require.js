@@ -773,7 +773,13 @@ return __p;
 this["JST"]["app/player/templates/controls/size-toggle.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<a href="#" class="size-toggle">\n    <i class="size-toggle-mobile"></i>\n</a>';
+__p+='<a href="#" class="size-toggle">\n    ';
+ if ( previewMode == "mobile" ) { 
+;__p+='\n        <i class="size-toggle-mobile"></i>\n    ';
+ } else { 
+;__p+='\n        <i class="size-toggle-laptop"></i>\n    ';
+ } 
+;__p+='\n</a>';
 }
 return __p;
 };
@@ -781,7 +787,7 @@ return __p;
 this["JST"]["app/player/templates/layouts/player-layout.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<div class="ZEEGA-player-wrapper">\n    <div class=\'ZEEGA-player-window\'></div>\n</div>';
+__p+='<div class="ZEEGA-player-wrapper">\n    <div class="ZEEGA-player-window"></div>\n</div>';
 }
 return __p;
 };;
@@ -35076,7 +35082,7 @@ function( app, ControlView ) {
                         onClose: function() {
                             this.onChange();
                         }.bind( this ),
-                        callback: function( hex ) {
+                        onSelect: function( hex ) {
                             var attr = {};
 
                             attr[ this.propertyName ] = "#" + hex;
@@ -36121,6 +36127,7 @@ function( app, Layer, Visual, Asker ){
         },
 
         onResize: function( attr ) {
+            /*
             if ( attr.width > 100 || attr.height > 100 ) {
                 new Asker({
                     question: "Make this layer fullscreen?",
@@ -36130,6 +36137,7 @@ function( app, Layer, Visual, Asker ){
                     }.bind( this )
                 });
             }
+            */
         },
 
         determineAspectRatio: function() {
@@ -36873,14 +36881,19 @@ function( app, LayerModel, Visual ) {
         attr: {
             backgroundColor: "#FFFFFF",
             citation: false,
-            height: 100,
-            left: 0,
+            // height: 100,
+            // left: 0,
             linkable: false,
             opacity: 0.75,
             title: "Color Layer",
-            top: 0,
-            width: 100,
-            dissolve: true
+            // top: 0,
+            // width: 100,
+            dissolve: true,
+
+            height: 112.67,
+            width: 236.72,
+            top: -6.57277,
+            left: -68.4375
         },
 
         controls: [
@@ -37165,7 +37178,8 @@ function( app, _Layer, Visual ) {
         //Preserve the original defaults by passing an empty object as the target
         //The object is used to get global flags like embedCSS.
         var options = $.extend({}, defaults, options);
-        
+        var opts = options;
+
         //CSS styles are only added once.
         if ($('#css-ddslick').length <= 0 && options.embedCSS) {
             $(ddslickCSS).appendTo('head');
@@ -37175,8 +37189,8 @@ function( app, _Layer, Visual ) {
         return this.each(function () {
             //Preserve the original defaults by passing an empty object as the target 
             //The object is used to save drop-down's corresponding settings and data.
-            var options = $.extend({}, defaults, options);
-            
+            var options = $.extend({}, defaults, opts);
+
             var obj = $(this),
                 data = obj.data('ddslick');
             //If the plugin has not been initialized yet
@@ -37232,7 +37246,7 @@ function( app, _Layer, Visual ) {
                         '<a class="dd-option">' +
                             (item.value ? ' <input class="dd-option-value" type="hidden" value="' + item.value + '" />' : '') +
                             (item.imageSrc ? ' <img class="dd-option-image' + (options.imagePosition == "right" ? ' dd-image-right' : '') + '" src="' + item.imageSrc + '" />' : '') +
-                            (item.text ? ' <label class="dd-option-text">' + item.text + '</label>' : '') +
+                            (item.text ? ' <label class="dd-option-text"><i class="font-sample-' + item.text.replace(/ /g,"-") + '"></i></label>' : '') +
                             (item.description ? ' <small class="dd-option-description dd-desc">' + item.description + '</small>' : '') +
                         '</a>' +
                     '</li>');
@@ -37670,7 +37684,7 @@ function( app, _Layer, Visual, TextModal ) {
             citation: false,
             color: "#FFF",
             content: "text",
-            fontSize: 150,
+            fontSize: 375,
             fontFamily: "Archivo Black",
             default_controls: true,
             left: 12.5,
@@ -37893,7 +37907,6 @@ function( app, _Layer, Visual, TextModal ) {
                 textAlign: this.model.getAttr("textAlign"),
                 lineHeight: this.model.getAttr("lineHeight") + "em"
             };
-
             this.$el.css( css );
         },
 
@@ -38860,14 +38873,17 @@ function( app, SequenceModel, FrameCollection, LayerCollection, LayerModels ) {
 
             // generate classed layers and add their visual counterparts
             classedLayers = _.map( layers, function( layer ) {
-                var layerModel = new LayerModels[ layer.type ]( layer );
 
-                layerModel.initVisual( LayerModels[ layer.type ] );
-                
-                return layerModel;
+                if ( LayerModels[ layer.type ]) {
+                    var layerModel = new LayerModels[ layer.type ]( layer );
+
+                    layerModel.initVisual( LayerModels[ layer.type ] );
+
+                    return layerModel;
+                }
             });
 
-            layerCollection = new LayerCollection( classedLayers );
+            layerCollection = new LayerCollection( _.compact( classedLayers ));
 
             this.each(function( sequence ) {
                 var seqFrames;
@@ -39831,7 +39847,11 @@ function( app ) {
 
     return app.Backbone.Layout.extend({
         template: "app/player/templates/controls/size-toggle",
-        className: "ZEEGA-player-control controls-screen-toggle"
+        className: "ZEEGA-player-control controls-screen-toggle",
+
+        serialize: function() {
+            return this.model.toJSON();
+        }
     });
 
 });
@@ -39869,7 +39889,7 @@ function( app, ArrowView, CloseView, PlayPauseView, SizeToggle ) {
             }
 
             if ( this.options.settings.sizeToggle ) {
-                this.insertView( new SizeToggle() );
+                this.insertView( new SizeToggle({ model: this.model }) );
             }
         },
 
@@ -39884,7 +39904,9 @@ function( app, ArrowView, CloseView, PlayPauseView, SizeToggle ) {
         toggleSize: function( event ) {
             this.model.trigger("size_toggle");
 
-            this.$(".size-toggle i").toggleClass("size-toggle-laptop").toggleClass("size-toggle-mobile");
+            this.$(".size-toggle i")
+                .toggleClass("size-toggle-laptop")
+                .toggleClass("size-toggle-mobile");
         },
 
         close: function( event ) {
@@ -39967,7 +39989,7 @@ function( app, ControlsView ) {
         template: "app/player/templates/layouts/player-layout",
         className: "ZEEGA-player",
 
-        mobileView: true,
+        mobileView: false,
         mobileOrientation: "portrait", // "landscape"
 
         initialize: function() {
@@ -39978,7 +40000,6 @@ function( app, ControlsView ) {
                 }.bind(this), 300);
 
             this.mobileView = this.model.get("previewMode") == "mobile";
-
             // attempt to detect if the parent container is being resized
             app.$( window ).resize( lazyResize );
         },
@@ -39989,11 +40010,21 @@ function( app, ControlsView ) {
 
         afterRender: function() {
             // correctly size the player window
-            this.$(".ZEEGA-player-wrapper").css( this.getWrapperSize() );
+            if ( this.mobileView ) {
+                this.$(".ZEEGA-player-wrapper").css( this.getPlayerSize() );
+            } else {
+                this.$(".ZEEGA-player-wrapper").css( this.getWrapperSize() );
+            }
             this.$(".ZEEGA-player-window").css( this.getPlayerSize() );
 
             this.setPrevNext();
             this.renderControls();
+
+            if ( this.model.get("previewMode") == "standard>mobile" ) {
+                _.delay(function() {
+                    this.controls.toggleSize();
+                }.bind( this ), 1000 );
+            }
         },
 
         setPrevNext: function() {
@@ -40905,7 +40936,6 @@ function(app, Backbone, UI, Player) {
                 autoplay: false,
                 cover: true,
                 target: '#player',
-                previewMode: "mobile",
                 startFrame: app.state.get("frameID"),
                 keyboard: false,
                 data: $.parseJSON( window.projectJSON ) || null,

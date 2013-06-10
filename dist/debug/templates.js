@@ -435,7 +435,13 @@ return __p;
 this["JST"]["app/player/templates/controls/size-toggle.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<a href="#" class="size-toggle">\n    <i class="size-toggle-mobile"></i>\n</a>';
+__p+='<a href="#" class="size-toggle">\n    ';
+ if ( previewMode == "mobile" ) { 
+;__p+='\n        <i class="size-toggle-mobile"></i>\n    ';
+ } else { 
+;__p+='\n        <i class="size-toggle-laptop"></i>\n    ';
+ } 
+;__p+='\n</a>';
 }
 return __p;
 };
@@ -443,7 +449,7 @@ return __p;
 this["JST"]["app/player/templates/layouts/player-layout.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<div class="ZEEGA-player-wrapper">\n    <div class=\'ZEEGA-player-window\'></div>\n</div>';
+__p+='<div class="ZEEGA-player-wrapper">\n    <div class="ZEEGA-player-window"></div>\n</div>';
 }
 return __p;
 };
