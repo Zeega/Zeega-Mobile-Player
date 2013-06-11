@@ -34335,6 +34335,10 @@ function( app ) {
             this.create();
         },
 
+        $getVisual: function() {
+            return this.model.visual.$el.find(".visual-target");
+        },
+
         _onFocus: function() {
             this.onFocus();
         },
@@ -34367,7 +34371,7 @@ function( app ) {
         }, 500 ),
 
         updateVisual: function( value ) {
-            this.$visual.css( this.propertyName, value );
+            this.$getVisual().css( this.propertyName, value );
         },
 
         onPropertyUpdate: function() {},
@@ -34695,9 +34699,15 @@ function( Zeega, ControlView ) {
     return {
         checkbox: ControlView.extend({
 
-            //propertyName: "checkbox", // autoset
-            
             template: "checkbox/checkbox",
+
+            init: function() {
+                this.model.on("change:attr", this.heardChange, this );
+            },
+
+            heardChange: function( model, attr ) {
+                this.render();
+            },
 
             serialize: function() {
                 return _.extend({}, this.model.toJSON(), this._userOptions );
@@ -34715,7 +34725,7 @@ function( Zeega, ControlView ) {
                 var attr = {};
 
                 attr[ this.propertyName ] = this.$("input").is(":checked");
-                this.update( attr );
+                if ( this._userOptions ) this.update( attr );
 
                 if ( this._userOptions.triggerEvent ) {
                     this.model.trigger( this._userOptions.triggerEvent, attr );
@@ -36078,6 +36088,7 @@ function( app, Layer, Visual, Asker ){
                 type: "checkbox",
                 options: {
                     title: "fullscreen",
+                    save: false,
                     propertyName: "page_background",
                     triggerEvent: "toggle_page_background"
                 }
@@ -36105,12 +36116,6 @@ function( app, Layer, Visual, Asker ){
             if ( this.model.getAttr("page_background")) {
                 this.visualProperties = ["opacity"];
             }
-
-            this.stopListening( this.model );
-            this.model.on("toggle_page_background", this.togglePageBackgroundState, this );
-            
-            this.model.off("resized");
-            this.model.on("resized", this.onResize, this );
         },
 
         afterEditorRender: function() {
@@ -36124,6 +36129,10 @@ function( app, Layer, Visual, Asker ){
                 this.makePageBackground();
                 this.disableDrag();
             }
+
+            this.stopListening( this.model );
+            this.model.on("toggle_page_background", this.togglePageBackgroundState, this );
+            this.model.on("resized", this.onResize, this );
         },
 
         onResize: function( attr ) {
@@ -36163,13 +36172,14 @@ function( app, Layer, Visual, Asker ){
         disableDrag: function() {
             this.model.trigger("control_drag_disable");
             this.$el.bind("mousedown.imageDrag", function() {
-
-                new Asker({
-                    question: "Make this layer positionable?",
-                    okay: function() {
-                        this.fitToWorkspace();
-                    }.bind( this )
-                });
+                this.fitToWorkspace();
+                // new Asker({
+                //     question: "Manually position this image?",
+                //     description: "Right now the image is set to fullscreen",
+                //     okay: function() {
+                //         this.fitToWorkspace();
+                //     }.bind( this )
+                // });
 
             }.bind( this ));
         },
@@ -37708,7 +37718,7 @@ function( app, _Layer, Visual, TextModal ) {
                 type: "resize",
                 options: {
                     aspectRatio: false,
-                    handles: "se"
+                    handles: "e"
                 }
             },
             { type: "slider",
@@ -37802,6 +37812,15 @@ function( app, _Layer, Visual, TextModal ) {
             "lineHeight"
         ],
 
+        init: function() {
+            this.model.off("resized");
+            this.model.on("resized", this.onResize, this );
+        },
+
+        onResize: function() {
+            this.$el.css({ height: "auto"});
+        },
+
         serialize: function() {
             return this.model.toJSON();
         },
@@ -37865,12 +37884,6 @@ function( app, _Layer, Visual, TextModal ) {
                 fontFamily: this.model.get("attr").fontFamily
             });
 
-            this.$el.unbind("mouseup");
-
-            this.$el.bind("mouseup", function() {
-                this.launchTextModal();
-            }.bind( this ));
-
             this.on("sync", function() {
                 this.updateStyle();
             });
@@ -37911,17 +37924,27 @@ function( app, _Layer, Visual, TextModal ) {
         },
 
         events: {
-            "click": "onClick"
+            "mousedown": "onMouseDown",
+            "mouseup": "onMouseUp"
         },
 
-        onClick: function() {
+        mousedown: false,
 
-            if ( this.model.mode == "editor" ) {
-                app.status.setCurrentLayer( this.model );
-            } else {
-                this.model.relay.set( "current_frame", this.getAttr("to_frame") );
+        onMouseDown: function() {
+            this.mousedown = true;
+        },
+
+        onMouseUp: function() {
+
+            if ( this.mousedown ) {
+                this.launchTextModal();
+                if ( this.model.mode == "editor" ) {
+                    app.status.setCurrentLayer( this.model );
+                } else {
+                    this.model.relay.set( "current_frame", this.getAttr("to_frame") );
+                }
             }
-            return false;
+            this.mousedown = false;
         }
   });
 
@@ -40127,7 +40150,7 @@ function( app, ControlsView ) {
                 css.top = (winHeight - css.height) / 2;
             }
 
-            css.fontSize = ( css.width / 520 ) +'em';
+            css.fontSize = ( css.width / 410 ) +'em';
 
             return css;
         },
