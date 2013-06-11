@@ -17250,7 +17250,6 @@ function( app, Backbone, Spinner ) {
 
         initialize: function() {
             this.model.on("frame_ready", this.onCanPlay, this );
-            console.log("INIT", app, this.model );
         },
 
         serialize: function() {
@@ -35518,6 +35517,8 @@ function( app, Controls ) {
         initialize: function() {
             var augmentAttr = _.extend({}, this.attr, this.toJSON().attr );
 
+            this.mode = "player",
+            
             this.set("attr", augmentAttr );
             this.order = {};
         
@@ -35700,7 +35701,9 @@ function( app, Controls ) {
         },
 
         onClick: function() {
-            app.status.setCurrentLayer( this.model );
+            if ( this.model.mode == "editor") {
+                app.status.setCurrentLayer( this.model );
+            }
         },
 
         /* editor fxns */
@@ -36903,6 +36906,15 @@ function( app, LayerModel, Visual ) {
             height: 112.67,
             width: 236.72,
             top: -6.57277,
+            left: -68.4375,
+
+            page_background: true
+        },
+
+        pageBackgroundPositioning: {
+            height: 112.67,
+            width: 236.72,
+            top: -6.57277,
             left: -68.4375
         },
 
@@ -36925,6 +36937,14 @@ function( app, LayerModel, Visual ) {
                     title: "color",
                     propertyName: "backgroundColor"
                 }
+            },{
+                type: "checkbox",
+                options: {
+                    title: "fullscreen",
+                    save: false,
+                    propertyName: "page_background",
+                    triggerEvent: "toggle_page_background"
+                }
             }
         ]
 
@@ -36945,6 +36965,17 @@ function( app, LayerModel, Visual ) {
             return this.model.toJSON();
         },
 
+        afterEditorRender: function() {
+
+            if ( this.model.getAttr("page_background")) {
+                this.makePageBackground();
+                this.disableDrag();
+            }
+
+            this.stopListening( this.model );
+            this.model.on("toggle_page_background", this.togglePageBackgroundState, this );
+        },
+
         beforePlayerRender: function() {
             // update the rectangle style
             var style = {
@@ -36954,6 +36985,53 @@ function( app, LayerModel, Visual ) {
             };
 
             this.$el.css( style );
+        },
+
+        disableDrag: function() {
+            this.model.trigger("control_drag_disable");
+            this.$el.bind("mousedown.rectangleDrag", function() {
+                this.fitToWorkspace();
+            }.bind( this ));
+        },
+
+        togglePageBackgroundState: function( state ) {
+            if ( state.page_background ) {
+                this.disableDrag();
+                this.makePageBackground();
+            } else {
+                this.fitToWorkspace();
+            }
+        },
+
+        makePageBackground: function() {
+            _.each( this.model.pageBackgroundPositioning, function( val, key ) {
+                this.$el.css( key, val +"%" );
+            }, this );
+            this.model.saveAttr( this.model.pageBackgroundPositioning );
+        },
+
+        fitToWorkspace: function() {
+            var width = 100,
+                height = 100,
+                top = 0,
+                left = 0;
+
+            this.$el.unbind("mousedown.rectangleDrag");
+            this.model.trigger("control_drag_enable");
+
+            this.$el.css({
+                height: height + "%",
+                width: width + "%",
+                top: top + "%",
+                left: left + "%"
+            });
+            this.model.saveAttr({
+                page_background: false,
+                height: height,
+                width: width,
+                top: top,
+                left: left
+            });
         }
 
   });
@@ -37572,7 +37650,7 @@ function( app ) {
         },
 
         submit: function() {
-            this.model.saveAttr({ content: this.$("textarea").val() });
+            this.model.setAttr({ content: this.$("textarea").val() });
             this.closeThis();
             this.updateVisualElement();
 
@@ -37580,6 +37658,7 @@ function( app ) {
                 this.linkToNewPage();
                 this.closeThis();
                 this.model.visual.$el.addClass("linked-layer");
+                this.model.save();
             } else if ( this.selectedFrame !== null && !_.isUndefined( this.selectedFrame )) {
                 this.model.saveAttr({ to_frame: this.selectedFrame });
                 this.model.trigger("change:to_frame", this.model, this.selectedFrame );
@@ -37870,7 +37949,6 @@ function( app, _Layer, Visual, TextModal ) {
         },
 
         afterEditorRender: function() {
-
             if ( this.textModal === null ) {
                 this.textModal = new TextModal({ model: this.model });
                 if ( this.model.get("attr").content == "text" ) {
@@ -37890,7 +37968,7 @@ function( app, _Layer, Visual, TextModal ) {
         },
 
         launchTextModal: function() {
-            if ( !this.transforming ) {
+            if ( !this.transforming && this.model.mode == "editor" ) {
                 $("body").append( this.textModal.el );
                 this.textModal.render();
             }
@@ -37935,7 +38013,6 @@ function( app, _Layer, Visual, TextModal ) {
         },
 
         onMouseUp: function() {
-
             if ( this.mousedown ) {
                 this.launchTextModal();
                 if ( this.model.mode == "editor" ) {
@@ -40022,7 +40099,7 @@ function( app, ControlsView ) {
                     this.resizeWindow();
                 }.bind(this), 300);
 
-            this.mobileView = this.model.get("previewMode") == "mobile";
+            this.mobileView = this.model.get("mobile");
             // attempt to detect if the parent container is being resized
             app.$( window ).resize( lazyResize );
         },
@@ -40150,7 +40227,7 @@ function( app, ControlsView ) {
                 css.top = (winHeight - css.height) / 2;
             }
 
-            css.fontSize = ( css.width / 410 ) +'em';
+            css.fontSize = ( css.height *  16 / 426 ) + "px";
 
             return css;
         },

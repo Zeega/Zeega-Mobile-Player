@@ -19,7 +19,6 @@ function( app, Backbone, Spinner ) {
 
         initialize: function() {
             this.model.on("frame_ready", this.onCanPlay, this );
-            console.log("INIT", app, this.model );
         },
 
         serialize: function() {
