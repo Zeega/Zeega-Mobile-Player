@@ -34724,7 +34724,7 @@ function( Zeega, ControlView ) {
                 var attr = {};
 
                 attr[ this.propertyName ] = this.$("input").is(":checked");
-                if ( this._userOptions ) this.update( attr );
+                if ( this._userOptions.save ) this.update( attr );
 
                 if ( this._userOptions.triggerEvent ) {
                     this.model.trigger( this._userOptions.triggerEvent, attr );
@@ -36197,10 +36197,13 @@ function( app, Layer, Visual, Asker ){
         },
 
         makePageBackground: function() {
-            _.each( this.model.pageBackgroundPositioning, function( val, key ) {
+            var vals = _.extend({}, this.model.pageBackgroundPositioning );
+            
+            _.each( vals, function( val, key ) {
                 this.$el.css( key, val +"%" );
             }, this );
-            this.model.saveAttr( this.model.pageBackgroundPositioning );
+
+            this.model.saveAttr(_.extend({ page_background: true }, vals ));
         },
 
         fitToWorkspace: function() {
@@ -37007,7 +37010,7 @@ function( app, LayerModel, Visual ) {
             _.each( this.model.pageBackgroundPositioning, function( val, key ) {
                 this.$el.css( key, val +"%" );
             }, this );
-            this.model.saveAttr( this.model.pageBackgroundPositioning );
+            this.model.saveAttr( _.extend({ page_background: true }, this.model.pageBackgroundPositioning ));
         },
 
         fitToWorkspace: function() {
@@ -40112,6 +40115,7 @@ function( app, ControlsView ) {
             // correctly size the player window
             if ( this.mobileView ) {
                 this.$(".ZEEGA-player-wrapper").css( this.getPlayerSize() );
+                this.$el.addClass("mobile-player");
             } else {
                 this.$(".ZEEGA-player-wrapper").css( this.getWrapperSize() );
             }

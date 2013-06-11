@@ -1199,6 +1199,9 @@ table {
   width: 100%;
   opacity: 0.01;
 }
+.ZEEGA-player.mobile-player {
+  background: black;
+}
 .ZEEGA-player .ZEEGA-player-window,
 .ZEEGA-player .ZEEGA-player-overlay {
   margin: 0 auto;
