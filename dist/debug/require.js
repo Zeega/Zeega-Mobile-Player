@@ -15881,6 +15881,10 @@ function( app, Backbone ) {
             initialized: false,
             projectID: null,
             frameID: null
+        },
+
+        emit: function( e, o ) {
+            this.get("app").player.trigger( e, o );
         }
     });
 
@@ -16789,6 +16793,8 @@ function( $, _, Backbone, State ) {
 
     var meta = $("meta[name=zeega]");
 
+    // var state = new State();
+
     var app = {
         // The root path to run the application.
         root: "/",
@@ -16803,11 +16809,13 @@ function( $, _, Backbone, State ) {
       /*
         app.state stores information on the current state of the application
       */
-        state: new State(),
+        // state: state,
 
         Backbone: Backbone,
         $: $
     };
+
+    app.state = new State({ app: app });
 
     // Localize or create a new JavaScript Template object.
     var JST = window.JST = window.JST || {};
@@ -35562,8 +35570,8 @@ function( app, Controls ) {
 
         // when the parent collection is resorted as in a layer shuffle
         onSort: function( collection ) {
-
             var zIndex = this.order[ collection.frame.id ];
+
             this.updateZIndex( zIndex );
         },
 

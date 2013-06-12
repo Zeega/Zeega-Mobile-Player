@@ -18,6 +18,10 @@ function( app, Backbone ) {
             initialized: false,
             projectID: null,
             frameID: null
+        },
+
+        emit: function( e, o ) {
+            this.get("app").player.trigger( e, o );
         }
     });
 
