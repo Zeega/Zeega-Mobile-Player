@@ -98,10 +98,14 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome, EndPage ) {
             "click #player": "onTap"
         },
 
-        onTap: function() {
-            window.scrollTo(0, 1);
-            this.chrome.toggle();
-            this.glowLinks();
+        onTap: function( e ) {
+
+            // do not activate if tapping on link
+            if ( !$(e.target).closest(".visual-element").hasClass("linked-layer") ) {
+                window.scrollTo(0, 1);
+                this.chrome.toggle();
+                this.glowLinks();
+            }
         },
 
         glowLinks: function() {
