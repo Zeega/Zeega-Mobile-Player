@@ -94,13 +94,14 @@ function( app, Backbone, Spinner ) {
         },
 
         toggleMute: function(){
-            if( $("audio")[0] ){
+
+            if( app.soundtrack ){
                 if( this.$(".ZEEGA-sound-state").hasClass("muted") ){
                     this.$(".ZEEGA-sound-state").removeClass("muted");
-                    $("audio")[0].play();
+                    app.soundtrack.visual.onPlay();
                 } else {
                     this.$(".ZEEGA-sound-state").addClass("muted");
-                    $("audio")[0].pause();
+                    app.soundtrack.visual.onPause();
                 }
             }
             return false;
