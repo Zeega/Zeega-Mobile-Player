@@ -38324,7 +38324,7 @@ function( app, Layers ) {
         initSoundtrackModel: function( layers ) {
             if ( this.get("attr").soundtrack ) {
                 this.soundtrackModel = app.soundtrack = layers.get( this.get("attr").soundtrack );
-                this.soundtrackModel.status = app.status;
+                this.soundtrackModel.status = app.player.status;
             }
         },
 
@@ -40024,6 +40024,8 @@ function( app, ArrowView, CloseView, PlayPauseView, SizeToggle ) {
             this.model.on("frame_play", this.onFramePlay, this );
             this.model.on("play", this.onPlay, this );
             this.model.on("pause", this.onPause, this );
+
+            this.model.on("player_destroyed", this.cleanup, this );
         },
 
         beforeRender: function() {
@@ -40113,6 +40115,10 @@ function( app, ArrowView, CloseView, PlayPauseView, SizeToggle ) {
 
         disableArrow: function(className) {
             this.$("."+ className).addClass("disabled");
+        },
+
+        cleanup: function() {
+            $(".tipsy").remove();
         }
 
     });
