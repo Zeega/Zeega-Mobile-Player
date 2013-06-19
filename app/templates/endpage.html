@@ -11,37 +11,28 @@
                 <a href="#" class="favorite">♥</a>
             <% } %>
         </li>
-        <li><a
-            href="https://twitter.com/intent/tweet?original_referer=<%= path %><%= id %>&text=<%= description %> Made w/ @zeega&url=<%= path %><%= id %>"
-            target="blank"
-            ><i class="endpage-social endpage-social-twitter"
-            ></i></a></li>
-        <li><a
-            href="http://www.facebook.com/sharer.php?u=<%= path %><%= id %>"><i class="endpage-social endpage-social-facebook"
-            target="blank"
-            ></i></a></li>
-        <li><a
-            href="http://www.tumblr.com/share/photo?<%= tumblr_share %>"
-            target="blank"
-            ><i class="endpage-social endpage-social-tumblr"></i></a></li>
+        <li><a href="<%= share_links.twitter %>" target="blank" ><i class="endpage-social endpage-social-twitter"></i></a></li>
+        <li><a href="<%= share_links.facebook %>"><i class="endpage-social endpage-social-facebook" target="blank" ></i></a></li>
+        <li><a href="<%= share_links.tumblr %>" target="blank" ><i class="endpage-social endpage-social-tumblr"></i></a></li>
+        <li><a href="<%= share_links.reddit %>" target="blank" ><i class="endpage-social endpage-social-reddit"></i></a></li>
     </ul>
 </div>
 
 <div class="endpage-actions">
     <h2>Explore More Zeegas</h2>
-     <article style="background-image: url(<%=project.cover_image %>);" >
+     <article style="background-image: url(<%=related_project.cover_image %>);" >
             <div class="info-overlay">
                 <div class="left-column">
-                  <a data-bypass="true" href="<%=path %>profile/<%=project.user.id %>" >
-                    <div class="profile-token" style="background-image: url(<%= project.user.thumbnail_url %>);"></div>
+                  <a data-bypass="true" href="<%=path %>profile/<%=related_project.user.id %>" >
+                    <div class="profile-token" style="background-image: url(<%= related_project.user.thumbnail_url %>);"></div>
                    </a>
                 </div>
                 <div class="right-column">
-                  <h1 class = "caption"><%= project.title %></h1>
+                  <h1 class = "caption"><%= related_project.title %></h1>
                   
                   <div class="profile-name">
-                    <a data-bypass="true" href="<%=path %>profile/<%=project.user.id%>" >
-                      <%=project.user.display_name%>
+                    <a data-bypass="true" href="<%=path %>profile/<%=related_project.user.id%>" >
+                      <%=related_project.user.display_name%>
                     </a>
                    
                   </div>
@@ -50,7 +41,7 @@
                   
             
             </div>
-            <a href="<%=path %>m/<%=project.id %>" class="mobile-play" data-bypass="true"></a>
+            <a href="<%=path %>m/<%=related_project.id %>" class="mobile-play" data-bypass="true"></a>
     </article>
 
 </div>

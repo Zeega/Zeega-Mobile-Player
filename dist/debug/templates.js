@@ -35,42 +35,34 @@ __p+='<div href="'+
  } else {
 ;__p+='\n                <a href="#" class="favorite">♥</a>\n            ';
  } 
-;__p+='\n        </li>\n        <li><a\n            href="https://twitter.com/intent/tweet?original_referer='+
-( path )+
-''+
-( id )+
-'&text='+
-( description )+
-' Made w/ @zeega&url='+
-( path )+
-''+
-( id )+
-'"\n            target="blank"\n            ><i class="endpage-social endpage-social-twitter"\n            ></i></a></li>\n        <li><a\n            href="http://www.facebook.com/sharer.php?u='+
-( path )+
-''+
-( id )+
-'"><i class="endpage-social endpage-social-facebook"\n            target="blank"\n            ></i></a></li>\n        <li><a\n            href="http://www.tumblr.com/share/photo?'+
-( tumblr_share )+
-'"\n            target="blank"\n            ><i class="endpage-social endpage-social-tumblr"></i></a></li>\n    </ul>\n</div>\n\n<div class="endpage-actions">\n    <h2>Explore More Zeegas</h2>\n     <article style="background-image: url('+
-(project.cover_image )+
+;__p+='\n        </li>\n        <li><a href="'+
+( share_links.twitter )+
+'" target="blank" ><i class="endpage-social endpage-social-twitter"></i></a></li>\n        <li><a href="'+
+( share_links.facebook )+
+'"><i class="endpage-social endpage-social-facebook" target="blank" ></i></a></li>\n        <li><a href="'+
+( share_links.tumblr )+
+'" target="blank" ><i class="endpage-social endpage-social-tumblr"></i></a></li>\n        <li><a href="'+
+( share_links.reddit )+
+'" target="blank" ><i class="endpage-social endpage-social-reddit"></i></a></li>\n    </ul>\n</div>\n\n<div class="endpage-actions">\n    <h2>Explore More Zeegas</h2>\n     <article style="background-image: url('+
+(related_project.cover_image )+
 ');" >\n            <div class="info-overlay">\n                <div class="left-column">\n                  <a data-bypass="true" href="'+
 (path )+
 'profile/'+
-(project.user.id )+
+(related_project.user.id )+
 '" >\n                    <div class="profile-token" style="background-image: url('+
-( project.user.thumbnail_url )+
+( related_project.user.thumbnail_url )+
 ');"></div>\n                   </a>\n                </div>\n                <div class="right-column">\n                  <h1 class = "caption">'+
-( project.title )+
+( related_project.title )+
 '</h1>\n                  \n                  <div class="profile-name">\n                    <a data-bypass="true" href="'+
 (path )+
 'profile/'+
-(project.user.id)+
+(related_project.user.id)+
 '" >\n                      '+
-(project.user.display_name)+
+(related_project.user.display_name)+
 '\n                    </a>\n                   \n                  </div>\n                 \n                </div>\n                  \n            \n            </div>\n            <a href="'+
 (path )+
 'm/'+
-(project.id )+
+(related_project.id )+
 '" class="mobile-play" data-bypass="true"></a>\n    </article>\n\n</div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a data-bypass="true" href="'+
 ( path )+
 'profile/'+
@@ -347,17 +339,7 @@ return __p;
 this["JST"]["app/engine/plugins/layers/rectangle/rectangle.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<div class="visual-target"></div>\n<div class="controls-inline"></div>';
-}
-return __p;
-};
-
-this["JST"]["app/engine/plugins/layers/text/text.html"] = function(obj){
-var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
-with(obj||{}){
-__p+='<div class="visual-target">'+
-( attr.content )+
-'</div>\n<div class="controls-inline"></div>';
+__p+='<div class="visual-target"></div>';
 }
 return __p;
 };
@@ -367,7 +349,7 @@ var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
 __p+='<div class="visual-target">'+
 ( attr.content )+
-'</div>\n<div class="controls-inline"></div>';
+'</div>';
 }
 return __p;
 };
@@ -375,7 +357,7 @@ return __p;
 this["JST"]["app/engine/plugins/layers/text_v2/textmodal.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<div class="modal-content">\n    <div class="modal-title">Edit your text</div>\n    <div class="modal-body">\n\n        <div class="top-box clearfix">\n            <textarea rows="4" cols="59" maxlength="140">'+
+__p+='<div class="modal-content">\n    <div class="modal-title">Edit your text</div>\n    <div class="modal-body">\n\n        <div class="top-box clearfix">\n            <textarea rows="4" cols="59" maxlength="140" placeholder="Type your text here">'+
 ( attr.content )+
 '</textarea>\n            <select class="font-list" id="font-list-'+
 ( id )+
@@ -388,22 +370,6 @@ __p+='<div class="modal-content">\n    <div class="modal-title">Edit your text</
 ;__p+='hide';
  } 
 ;__p+='">\n                <a href="#" class="link-new-page"><i class="icon-plus icon-white"></i></br>New Page</a>\n                <div class="divider">or</div>\n                <ul class="page-chooser-list clearfix"></ul>\n                <a href="#" class="unlink-text action"><i class="icon-minus-sign"></i> remove link</a>\n            </div>\n        </div>\n\n        <div class="bottom-chooser clearfix">\n            <a href="#" class="text-modal-save btnz btnz-submit">OK</a>\n        </div>\n    </div>\n</div>\n';
-}
-return __p;
-};
-
-this["JST"]["app/engine/plugins/layers/youtube/youtube.html"] = function(obj){
-var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
-with(obj||{}){
-__p+='<div   class="youtube-player"  class="visual-target">\n    \n\n    <iframe id="yt-player-'+
-( id )+
-'" type="text/html" width="100%" height="100%"\n        src="http://www.youtube.com/embed/'+
-( attr.uri )+
-'?enablejsapi=1&iv_load_policy=3&showinfo=0';
- if ( !/iPad/i.test(navigator.userAgent) ) { 
-;__p+='&controls=0';
- } 
-;__p+='&modestbranding=1&disablekb=1&rel=0&wmode=opaque"\n        frameborder="0">\n    </iframe>\n</div>\n<div class="play-button"></div>\n<div class="ipad-cover"> pause video to return to Zeega </div>\n<div class="controls-inline"></div>\n\n';
 }
 return __p;
 };
