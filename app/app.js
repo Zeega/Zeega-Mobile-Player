@@ -45,6 +45,10 @@ function( $, _, Backbone, State, Spinner ) {
             top: 'auto', // Top position relative to parent in px
             left: 'auto' // Left position relative to parent in px
         }),
+        emit: function( event, args ) {
+            // other things can be done here as well
+            this.trigger( event, args );
+        },
 
       /*
         app.state stores information on the current state of the application

@@ -10,10 +10,11 @@ define([
 
     "modules/ui",
      // Plugins
-    "player/modules/player"
+    "player/modules/player",
+    "analytics/analytics"
 ],
 
-function(app, Backbone, UI, Player) {
+function(app, Backbone, UI, Player, Analytics) {
 
     return Backbone.Model.extend({
 
@@ -47,6 +48,10 @@ function(app, Backbone, UI, Player) {
                     app.state.get("projectID") !== null ? app.api + "/items/" + app.state.get("projectID") :
                     "testproject.json"
             });
+
+            
+
+
             if ( window.projectJSON ) {
                 this.onDataLoaded();
             } else {
@@ -57,6 +62,19 @@ function(app, Backbone, UI, Player) {
         },
 
         onDataLoaded: function( parsed ) {
+
+            app.analytics = new Analytics();
+
+            app.analytics.setGlobals({
+                projectId: app.player.project.get("id"),
+                projectPageCount: app.player.project.sequences.at(0).frames.length,
+                userId: app.metadata.userId,
+                userName: app.metadata.userName,
+                app: "player",
+                context: "mobile"
+            });
+
+            app.analytics.trackEvent("zeega_view");
             app.hasSoundtrack = !_.isUndefined( app.player.getProjectData().sequences[0].attr.soundtrack );
             app.layout = new UI({ model: app.player });
         }

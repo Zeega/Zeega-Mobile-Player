@@ -8,6 +8,7 @@ function( app, Backbone ) {
 
     return Backbone.View.extend({
 
+        viewed: false,
         className: "ZEEGA-endpage",
         template: "app/templates/endpage",
 
@@ -20,7 +21,8 @@ function( app, Backbone ) {
 
         events: {
             "click .ZEEGA-tab": "toggleCoffin",
-            "click .favorite": "toggleFavorite"
+            "click .favorite": "toggleFavorite",
+            "click .share-network a": "onShare"
         },
 
         toggleCoffin: function() {
@@ -34,9 +36,11 @@ function( app, Backbone ) {
             if(this.model.project.get("favorite")){
                 url = "http://" + app.metadata.hostname + app.metadata.directory + "api/projects/" + this.model.project.id + "/unfavorite";
                 this.model.project.set({ "favorite": false });
+                app.emit("unfavorite");
             } else {
                 url = "http://" + app.metadata.hostname + app.metadata.directory + "api/projects/" + this.model.project.id + "/favorite";
                 this.model.project.set({ "favorite": true });
+                app.emit("favorite");
             }
             $.ajax({ url: url, type: 'POST', success: function(){  }  });
 
@@ -47,6 +51,16 @@ function( app, Backbone ) {
         endPageEnter: function() {
             this.$el.show();
             this.$(".upper-wrapper").css("height", this.$(".ZEEGA-loader-inner").height() + 20 );
+            if( !this.viewed ){
+                this.viewed = true;
+                app.emit("viewed_to_end");
+            }
+        },
+
+        onShare: function( event ){
+            app.emit( "share", {
+                "type": event.currentTarget.name
+            });
         },
 
         endPageExit: function() {

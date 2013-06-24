@@ -367,19 +367,23 @@ var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
 __p+='<div href="'+
 ( path )+
-'" class="ZEEGA-tab">\n    <span class="ZTab-logo"></span>\n</div>\n\n<div class="share-block">\n    <ul class="share-sites">\n        <li>\n             ';
+'" class="ZEEGA-tab">\n    <span class="ZTab-logo"></span>\n</div>\n\n<div class="share-block">\n    <ul class="share-sites share-network">\n        \n        ';
+ if ( loggedIn === true ){  
+;__p+=' \n            <li>\n                 ';
  if ( favorite === true ) {  
-;__p+=' \n                <a href="#" class="favorite favorited">♥</a>\n            ';
+;__p+=' \n                    <a href="#" class="favorite favorited">♥</a>\n                ';
  } else {
-;__p+='\n                <a href="#" class="favorite">♥</a>\n            ';
+;__p+='\n                    <a href="#" class="favorite">♥</a>\n                ';
  } 
-;__p+='\n        </li>\n        <li><a href="'+
+;__p+='\n            </li>\n        ';
+ } 
+;__p+='  \n        <li><a name = "twitter" href="'+
 ( share_links.twitter )+
-'" target="blank" ><i class="endpage-social endpage-social-twitter"></i></a></li>\n        <li><a href="'+
+'" target="blank" ><i class="endpage-social endpage-social-twitter"></i></a></li>\n        <li><a name = "facebook" href="'+
 ( share_links.facebook )+
-'"><i class="endpage-social endpage-social-facebook" target="blank" ></i></a></li>\n        <li><a href="'+
+'" target="blank"><i class="endpage-social endpage-social-facebook" target="blank" ></i></a></li>\n        <li><a name = "tumblr" href="'+
 ( share_links.tumblr )+
-'" target="blank" ><i class="endpage-social endpage-social-tumblr"></i></a></li>\n        <li><a href="'+
+'" target="blank" ><i class="endpage-social endpage-social-tumblr"></i></a></li>\n        <li><a name = "reddit" href="'+
 ( share_links.reddit )+
 '" target="blank" ><i class="endpage-social endpage-social-reddit"></i></a></li>\n    </ul>\n</div>\n\n<div class="endpage-actions">\n    <h2>Explore More Zeegas</h2>\n     <article style="background-image: url('+
 (related_project.cover_image )+
@@ -17140,6 +17144,10 @@ function( $, _, Backbone, State, Spinner ) {
             top: 'auto', // Top position relative to parent in px
             left: 'auto' // Left position relative to parent in px
         }),
+        emit: function( event, args ) {
+            // other things can be done here as well
+            this.trigger( event, args );
+        },
 
       /*
         app.state stores information on the current state of the application
@@ -17327,6 +17335,9 @@ function( app, Backbone, Spinner ) {
         },
 
         play: function() {
+
+            app.emit("swipe_to_play");
+            
             this.model.mobileLoadAudioLayers();
             this.$(".mobile-play, .loader-footer").fadeOut();
             this.spinner = new Spinner({
@@ -18221,6 +18232,7 @@ function( app, Backbone ) {
 
     return Backbone.View.extend({
 
+        viewed: false,
         className: "ZEEGA-endpage",
         template: "app/templates/endpage",
 
@@ -18233,7 +18245,8 @@ function( app, Backbone ) {
 
         events: {
             "click .ZEEGA-tab": "toggleCoffin",
-            "click .favorite": "toggleFavorite"
+            "click .favorite": "toggleFavorite",
+            "click .share-network a": "onShare"
         },
 
         toggleCoffin: function() {
@@ -18247,9 +18260,11 @@ function( app, Backbone ) {
             if(this.model.project.get("favorite")){
                 url = "http://" + app.metadata.hostname + app.metadata.directory + "api/projects/" + this.model.project.id + "/unfavorite";
                 this.model.project.set({ "favorite": false });
+                app.emit("unfavorite");
             } else {
                 url = "http://" + app.metadata.hostname + app.metadata.directory + "api/projects/" + this.model.project.id + "/favorite";
                 this.model.project.set({ "favorite": true });
+                app.emit("favorite");
             }
             $.ajax({ url: url, type: 'POST', success: function(){  }  });
 
@@ -18260,6 +18275,16 @@ function( app, Backbone ) {
         endPageEnter: function() {
             this.$el.show();
             this.$(".upper-wrapper").css("height", this.$(".ZEEGA-loader-inner").height() + 20 );
+            if( !this.viewed ){
+                this.viewed = true;
+                app.emit("viewed_to_end");
+            }
+        },
+
+        onShare: function( event ){
+            app.emit( "share", {
+                "type": event.currentTarget.name
+            });
         },
 
         endPageExit: function() {
@@ -40770,6 +40795,150 @@ function( app, Engine, Relay, Status, PlayerLayout ) {
     return app;
 });
 
+define('analytics/analytics',[
+    "app",
+
+    "backbone"
+],
+
+function( app ) {
+
+    return Backbone.Model.extend({
+
+        loggingEnabled: true,
+
+        initialize: function() {
+            app.on( "all", this.onEvent, this );
+            if( !window.mixpanel ){
+                this.generateConsole();
+            }
+        },
+
+        onEvent: function( event, args ){
+            if(_.contains( this.plainEvents, event )){
+                this.trackEvent (event, args);
+            } else if( _.contains( this.modelEvents, event ) ) {
+                this.parseModelEvent (event, args);
+            } else {
+                //console.log("untracked event:: ", event, args );
+            }
+        },
+
+        parseModelEvent: function ( event, model ){
+            var params = {};
+            if( model.modelType == "frame" ){
+                params.layerCount = model.layers.length;
+            } else if ( model.modelType == "layer" ){
+                params = {
+                    type: model.get("type"),
+                    source: model.get("attr").archive ?  model.get("attr").archive : "none"
+                }
+            } else if ( model.modelType == "sequence" ){
+                params = {
+                    pageCount: model.frames.length
+                }
+            } else if ( model.modelType == "item" ){
+                params = {
+                    type: model.get("media_type"),
+                    source: model.get("archive") ?  model.get("archive") : "none"
+                }
+            }
+            
+            params = _.extend( params, model.eventData );
+
+            this.trackEvent( event, params );
+
+
+        },
+
+        setGlobals: function ( args ){
+
+            _.each(args, function (value, key){
+                var param = {};
+                param[ key ] = value;
+                mixpanel.register( param );
+            });
+        },
+
+        trackEvent: function ( event, args ){
+            mixpanel.track( event, args );
+        },
+
+        plainEvents: [
+        //editor
+            "project_preview",
+            "media_search",
+            "page_added",
+            "layer_font_change",
+            "toggle_help",
+            "help",
+            "preview_toggle_view",
+            "toggle_page_background",
+            "new_zeega",
+            "advance_toggle",
+          
+           // "view_item",
+
+            //player
+            
+            // "start_over",
+            // "mute_toggle",
+            // "fullscreen_toggle",
+            "zeega_view",
+            "favorite",
+            "unfavorite",
+            "viewed_to_end",
+
+
+            //mobile player
+            "swipe_to_play",
+
+        //shared
+
+            "share",
+            "to_profile",
+            "to_home"
+
+        ],
+
+        modelEvents: [
+        //editor
+            "page_delete",
+            "layer_added_success",
+            "layer_deleted",
+            "soundtrack_added_success",
+            "soundtrack_delete",
+            "pages_reordered",
+            "layers_reordered",
+            "select_link_page",
+            "link_new_page",
+            "unlink",
+            "init_link"
+
+
+        ],
+
+        generateConsole: function(){
+
+            var debug = this.loggingEnabled;
+
+            window.mixpanel = {
+                register: function (obj){
+                    if( debug ){
+                        console.log("registering global property::  " + _.keys(obj) + " : " + _.values(obj) );
+                    }
+                },                
+                track: function ( event, params ){
+                    if( debug ){
+                        console.log( "tracking event:: " + event, params );
+                    }
+                }
+            }
+        }
+
+    });
+
+});
 /*
 
 the controller model should remove any non-route code from router.js
@@ -40782,10 +40951,11 @@ define('modules/initializer',[
 
     "modules/ui",
      // Plugins
-    "player/modules/player"
+    "player/modules/player",
+    "analytics/analytics"
 ],
 
-function(app, Backbone, UI, Player) {
+function(app, Backbone, UI, Player, Analytics) {
 
     return Backbone.Model.extend({
 
@@ -40819,6 +40989,10 @@ function(app, Backbone, UI, Player) {
                     app.state.get("projectID") !== null ? app.api + "/items/" + app.state.get("projectID") :
                     "testproject.json"
             });
+
+            
+
+
             if ( window.projectJSON ) {
                 this.onDataLoaded();
             } else {
@@ -40829,6 +41003,19 @@ function(app, Backbone, UI, Player) {
         },
 
         onDataLoaded: function( parsed ) {
+
+            app.analytics = new Analytics();
+
+            app.analytics.setGlobals({
+                projectId: app.player.project.get("id"),
+                projectPageCount: app.player.project.sequences.at(0).frames.length,
+                userId: app.metadata.userId,
+                userName: app.metadata.userName,
+                app: "player",
+                context: "mobile"
+            });
+
+            app.analytics.trackEvent("zeega_view");
             app.hasSoundtrack = !_.isUndefined( app.player.getProjectData().sequences[0].attr.soundtrack );
             app.layout = new UI({ model: app.player });
         }

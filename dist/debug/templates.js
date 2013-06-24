@@ -29,19 +29,23 @@ var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
 __p+='<div href="'+
 ( path )+
-'" class="ZEEGA-tab">\n    <span class="ZTab-logo"></span>\n</div>\n\n<div class="share-block">\n    <ul class="share-sites">\n        <li>\n             ';
+'" class="ZEEGA-tab">\n    <span class="ZTab-logo"></span>\n</div>\n\n<div class="share-block">\n    <ul class="share-sites share-network">\n        \n        ';
+ if ( loggedIn === true ){  
+;__p+=' \n            <li>\n                 ';
  if ( favorite === true ) {  
-;__p+=' \n                <a href="#" class="favorite favorited">♥</a>\n            ';
+;__p+=' \n                    <a href="#" class="favorite favorited">♥</a>\n                ';
  } else {
-;__p+='\n                <a href="#" class="favorite">♥</a>\n            ';
+;__p+='\n                    <a href="#" class="favorite">♥</a>\n                ';
  } 
-;__p+='\n        </li>\n        <li><a href="'+
+;__p+='\n            </li>\n        ';
+ } 
+;__p+='  \n        <li><a name = "twitter" href="'+
 ( share_links.twitter )+
-'" target="blank" ><i class="endpage-social endpage-social-twitter"></i></a></li>\n        <li><a href="'+
+'" target="blank" ><i class="endpage-social endpage-social-twitter"></i></a></li>\n        <li><a name = "facebook" href="'+
 ( share_links.facebook )+
-'"><i class="endpage-social endpage-social-facebook" target="blank" ></i></a></li>\n        <li><a href="'+
+'" target="blank"><i class="endpage-social endpage-social-facebook" target="blank" ></i></a></li>\n        <li><a name = "tumblr" href="'+
 ( share_links.tumblr )+
-'" target="blank" ><i class="endpage-social endpage-social-tumblr"></i></a></li>\n        <li><a href="'+
+'" target="blank" ><i class="endpage-social endpage-social-tumblr"></i></a></li>\n        <li><a name = "reddit" href="'+
 ( share_links.reddit )+
 '" target="blank" ><i class="endpage-social endpage-social-reddit"></i></a></li>\n    </ul>\n</div>\n\n<div class="endpage-actions">\n    <h2>Explore More Zeegas</h2>\n     <article style="background-image: url('+
 (related_project.cover_image )+

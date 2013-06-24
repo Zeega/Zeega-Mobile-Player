@@ -21,6 +21,15 @@
 
 	<!-- Application root. -->
 	<base href="/">
+	 <meta name="zeega" content="zeega-mobile"
+            data-directory="jmongo/web/"
+            data-hostname="//dev.zeega.com/"
+            data-project-id="51b14ae214c50a4147000001"
+            data-user-thumbnail="http://zeegastaging.s3.amazonaws.com/f0f968614b0ae50a468eb5008b6f4894_4.jpg"
+            data-user-id="51afee2c8d34d4d711000e93"
+            data-views=""
+            data-logged-in=false
+        />
 
 	<script>
 		localStorage.api = 'http://alpha.zeega.org/api';
