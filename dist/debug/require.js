@@ -354,7 +354,7 @@ __p+='<div href="'+
 'profile/'+
 ( userId )+
 '">\n                    <div class="profile-name">'+
-( authors )+
+( user.display_name )+
 '</div>\n                </a>\n            </div>\n            <div class="caption">'+
 ( title )+
 '</div>\n        </div>\n    </div>\n</div>';
@@ -416,7 +416,7 @@ __p+='<div href="'+
 'profile/'+
 ( userId )+
 '">\n                    <div class="profile-name">'+
-( authors )+
+( user.display_name )+
 '</div>\n                </a>\n            </div>\n            <div class="caption">'+
 ( title )+
 '</div>\n        </div>\n    </div>\n</div>';
@@ -440,7 +440,7 @@ __p+='<div href="'+
 'profile/'+
 ( userId )+
 '">\n                    <div class="profile-name">'+
-( authors )+
+( user.display_name )+
 '</div>\n                </a>\n            </div>\n            <div class="caption">'+
 ( title )+
 '</div>\n        </div>\n    </div>\n</div>\n\n<div class="ZEEGA-loader-bg-overlay"></div>\n<span class="ZEEGA-loader-bg"></span>';
@@ -454,7 +454,7 @@ with(obj||{}){
 __p+='<a href="#" class="mobile-play"><img src="assets/img/start-button.png"/></a>\n\n<div class="ZEEGA-pause-meta">\n    <h1>'+
 ( title )+
 '</h1>\n    <h2>by '+
-( authors )+
+( user.display_name )+
 '</h2>\n</div>\n\n<div class="ZEEGA-paused-footer">\n    <a class="menu" href="#"><img src="assets/img/menu-icon.png"/></a>\n    <span class="pull-right tip">tip:';
  if ( frames.length > 1 ) { 
 ;__p+=' Swipe to explore';
@@ -488,7 +488,7 @@ __p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="he
 '&t='+
 ( title )+
 ' by '+
-( authors )+
+( user.display_name )+
 '" target="blank"><i class="zsocial-facebook"></i>  Share on Facebook</a></li>\n        <li><a href="mailto:?subject=Check out this Zeega!&body='+
 ( path )+
 ''+
@@ -17275,6 +17275,7 @@ function( app, Backbone, Spinner ) {
         },
 
         serialize: function() {
+            console.log( "author:", this.model.project.toJSON() );
             return _.extend({
                 path: "http:" + app.metadata.hostname + app.metadata.directory
                 },
@@ -40912,9 +40913,6 @@ function(app, Backbone, UI, Player, Analytics) {
                     "testproject.json"
             });
 
-            
-
-
             if ( window.projectJSON ) {
                 this.onDataLoaded();
             } else {
@@ -40925,7 +40923,6 @@ function(app, Backbone, UI, Player, Analytics) {
         },
 
         onDataLoaded: function( parsed ) {
-
             app.analytics = new Analytics();
 
             app.analytics.setGlobals({

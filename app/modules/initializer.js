@@ -49,7 +49,6 @@ function(app, Backbone, UI, Player, Analytics) {
                     "testproject.json"
             });
 
-console.log(app.player)
             if ( window.projectJSON ) {
                 this.onDataLoaded();
             } else {
