@@ -49,9 +49,7 @@ function(app, Backbone, UI, Player, Analytics) {
                     "testproject.json"
             });
 
-            
-
-
+console.log(app.player)
             if ( window.projectJSON ) {
                 this.onDataLoaded();
             } else {
@@ -62,7 +60,6 @@ function(app, Backbone, UI, Player, Analytics) {
         },
 
         onDataLoaded: function( parsed ) {
-
             app.analytics = new Analytics();
 
             app.analytics.setGlobals({
