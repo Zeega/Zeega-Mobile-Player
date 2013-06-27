@@ -16,7 +16,6 @@ function( app, Backbone ) {
             this.model.on("endpage_enter", this.endPageEnter, this );
             this.model.on("endpage_exit", this.endPageExit, this );
             this.relatedProject = $.parseJSON( window.relatedProjectsJSON ).projects[0];
-            
         },
 
         events: {
@@ -80,6 +79,7 @@ function( app, Backbone ) {
                 }
             );
         },
+
         getShareLinks: function() {
             var html,
                 links = {},
@@ -113,8 +113,6 @@ function( app, Backbone ) {
 
             return links;
         }
-
-
 
   });
 

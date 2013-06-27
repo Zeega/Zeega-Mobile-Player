@@ -9,10 +9,23 @@
     width: 100%;
     display: none;
 
+    .share-links {
+        a {
+            float:left;
+        }
+    }
+
+    .zeega-logo {
+        background: url(../img/logo-full.gif);
+        background-size: 100%;
+        width: 100px;
+        height: 20px;
+        background-repeat: no-repeat;
+    }
+
     .ZEEGA-underlay {
         height: 100%;
         position: relative;
-        background: #333;
     }
     #scroller {
         height: 100%;
@@ -52,8 +65,11 @@
         }
 
         &.header {
+            font-family: "Futura", sans-serif;
+            letter-spacing: 5px;
+            font-size: 16px;
             padding: 10px 20px;
-            color: #ccc;
+            color: orangered;
             line-height: 1.5em;
 
             .project-views {

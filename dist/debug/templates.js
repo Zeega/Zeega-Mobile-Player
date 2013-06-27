@@ -39,15 +39,15 @@ __p+='<div href="'+
  } 
 ;__p+='\n            </li>\n        ';
  } 
-;__p+='  \n        <li><a name = "twitter" href="'+
+;__p+='  \n        <li>\n            <a name = "twitter" href="'+
 ( share_links.twitter )+
-'" target="blank" ><i class="endpage-social endpage-social-twitter"></i></a></li>\n        <li><a name = "facebook" href="'+
+'" target="blank" ><i class="endpage-social endpage-social-twitter"></i></a>\n        </li>\n        <li>\n            <a name = "facebook" href="'+
 ( share_links.facebook )+
-'" target="blank"><i class="endpage-social endpage-social-facebook" target="blank" ></i></a></li>\n        <li><a name = "tumblr" href="'+
+'" target="blank"><i class="endpage-social endpage-social-facebook" target="blank" ></i></a>\n        </li>\n        <li>\n            <a name = "tumblr" href="'+
 ( share_links.tumblr )+
-'" target="blank" ><i class="endpage-social endpage-social-tumblr"></i></a></li>\n        <li><a name = "reddit" href="'+
+'" target="blank" ><i class="endpage-social endpage-social-tumblr"></i></a>\n        </li>\n        <li>\n            <a name = "reddit" href="'+
 ( share_links.reddit )+
-'" target="blank" ><i class="endpage-social endpage-social-reddit"></i></a></li>\n    </ul>\n</div>\n\n<div class="endpage-actions">\n    <h2>Explore More Zeegas</h2>\n     <article style="background-image: url('+
+'" target="blank" ><i class="endpage-social endpage-social-reddit"></i></a>\n        </li>\n    </ul>\n</div>\n\n<div class="endpage-actions">\n    <h2>Explore More Zeegas</h2>\n     <article style="background-image: url('+
 (related_project.cover_image )+
 ');" >\n            <div class="info-overlay">\n                <div class="left-column">\n                  <a data-bypass="true" href="'+
 (path )+
@@ -131,33 +131,35 @@ return __p;
 this["JST"]["app/templates/underlay.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<div id="scroller">\n    <ul class="underlay-menu">\n        <li class="header">\n            <div class="project-views">\n                <i class="icon-eye-open icon-white"></i> '+
-( views )+
-' views\n            </div>\n        </li>\n\n        <li><a href="https://twitter.com/intent/tweet?original_referer='+
-( path )+
-''+
-( id )+
-'&text='+
-( description )+
-' Made w/ @zeega&url='+
-( path )+
-''+
-( id )+
-'"\n            target="blank"><i class="zsocial-twitter"></i>  Share on Twitter</a></li>\n        <li><a href="http://m.facebook.com/sharer.php?u='+
-( path )+
-''+
-( id )+
-'&t='+
-( title )+
-' by '+
-( user.display_name )+
-'" target="blank"><i class="zsocial-facebook"></i>  Share on Facebook</a></li>\n        <li><a href="mailto:?subject=Check out this Zeega!&body='+
-( path )+
-''+
-( id )+
-'"><i class="zsocial-email"></i>  Share on Email</a></li>\n        <li class="spacer"></li>\n        <li class="highlight"><a data-bypass="true" href="'+
-( path )+
-'"><i class="icon-home icon-white"></i> Zeega Home</a></li>\n        <li class="spacer"></li>\n        <li class="header">Credits</li>\n        ';
+__p+='<div id="scroller">\n    <ul class="underlay-menu">\n\n        <li class="header">\n            <a class="zeega-logo" href="http://www.zeega.com/" data-bypass="true"></a>\n        </li>\n\n        <li class="header">Share</li>\n        <li class="clearfix share-links">\n            <a name="twitter" href="'+
+( share_links.twitter )+
+'" target="blank" >\n                <i class="zsocial-twitter"></i>\n            </a>\n            <a name="facebook" href="'+
+( share_links.facebook )+
+'" target="blank">\n                <i class="zsocial-facebook" target="blank" ></i>\n            </a>\n            <a name="tumblr" href="'+
+( share_links.tumblr )+
+'" target="blank" >\n                <i class="zsocial-tumblr"></i>\n            </a>\n            <a name="reddit" href="'+
+( share_links.reddit )+
+'" target="blank" >\n                <i class="zsocial-reddit"></i>\n            </a>\n        </li>\n\n<!--\n        <li class="header">Explore</li>\n\n        <li style="background-image: url('+
+(related_project.cover_image )+
+');" >\n            <div class="info-overlay">\n                <div class="left-column">\n                  <a data-bypass="true" href="'+
+(path )+
+'profile/'+
+(related_project.user.id )+
+'" >\n                    <div class="profile-token" style="background-image: url('+
+( related_project.user.thumbnail_url )+
+');"></div>\n                   </a>\n                </div>\n                <div class="right-column">\n                  <h1 class = "caption">'+
+( related_project.title )+
+'</h1>\n                  \n                  <div class="profile-name">\n                    <a data-bypass="true" href="'+
+(path )+
+'profile/'+
+(related_project.user.id)+
+'" >\n                      '+
+(related_project.user.display_name)+
+'\n                    </a>\n                   \n                  </div>\n                 \n                </div>\n                  \n            \n            </div>\n            <a href="'+
+(path )+
+'m/'+
+(related_project.id )+
+'" class="mobile-play" data-bypass="true"></a>\n        </li>\n-->\n\n        <li class="header">Credits</li>\n        ';
  _.each( layers, function( layer ) { 
 ;__p+='\n                ';
  if ( !_.contains(["Link","EndPageLayer","Text","TextV2","Rectangle"], layer.type )) { 

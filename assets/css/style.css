@@ -1367,25 +1367,26 @@ table {
 }
 
 [class^="zsocial-"] {
-  background-image: url('../img/social-sprites-20px.png');
+  background-image: url('../img/endpage-share-sprite.png');
   background-position: 0px 0px;
   background-repeat: no-repeat;
   display: inline-block;
-  height: 17px;
+  background-size: 100px 25px;
+  height: 25px;
   vertical-align: text-top;
-  width: 17px;
+  width: 25px;
 }
 .zsocial-twitter {
   background-position: 0px 0px;
 }
 .zsocial-facebook {
-  background-position: 0px -17px;
+  background-position: -25px 0px;
 }
 .zsocial-tumblr {
-  background-position: 0px -34px;
+  background-position: -50px 0px;
 }
 .zsocial-reddit {
-  background-position: 0px -51px;
+  background-position: -75px 0px;
 }
 [class^="zitem-"] {
   background-image: url('../img/zitems-50px.png');
@@ -2685,10 +2686,19 @@ a:active {
   width: 100%;
   display: none;
 }
+#underlay .share-links a {
+  float: left;
+}
+#underlay .zeega-logo {
+  background: url(../img/logo-full.gif);
+  background-size: 100%;
+  width: 100px;
+  height: 20px;
+  background-repeat: no-repeat;
+}
 #underlay .ZEEGA-underlay {
   height: 100%;
   position: relative;
-  background: #333;
 }
 #underlay #scroller {
   height: 100%;
@@ -2722,8 +2732,11 @@ a:active {
   background: orangered;
 }
 #underlay li.header {
+  font-family: "Futura", sans-serif;
+  letter-spacing: 5px;
+  font-size: 16px;
   padding: 10px 20px;
-  color: #ccc;
+  color: orangered;
   line-height: 1.5em;
 }
 #underlay li.header .project-views {
