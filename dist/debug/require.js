@@ -36122,17 +36122,6 @@ function( app, Layer, Visual ){
 
         init: function() {
 
-            if( this.model.get("attr") && this.model.get("attr").uri.indexOf("giphy") > 0 ){
-                
-                var attr = this.model.get("attr");
-
-                attr.uri = attr.uri.replace("giphy.gif", "200w.gif");
-                attr.uri = attr.uri.replace("original.gif", "200w.gif");
-    
-                this.model.set("attr", attr );
-            
-            }
-
             if ( this.model.getAttr("page_background")) {
                 this.visualProperties = ["opacity"];
             }
@@ -40190,7 +40179,7 @@ function( app, Engine, Relay, Status, PlayerLayout ) {
             @type Collection
             @default null
             **/
-            preloadRadius: 1,
+            preloadRadius: 2,
 
             /**
             the beginning state of the preview. vertical or fullscreen mode
