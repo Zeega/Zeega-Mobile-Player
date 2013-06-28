@@ -36650,7 +36650,7 @@ function( app, _Layer, Visual ){
                 this.audio = this.$("#audio-el-" + this.model.id )[0];
 
                 this.audio.load();
-                this.audio.addEventListener("canplaythrough", function() {
+                this.audio.addEventListener("canplay", function() {
                     this.onCanPlay();
                 }.bind( this ));
             },
