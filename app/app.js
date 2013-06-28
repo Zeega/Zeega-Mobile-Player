@@ -20,7 +20,7 @@ function( $, _, Backbone, State, Spinner ) {
     var app = {
         // The root path to run the application.
         root: "/",
-
+        mobile: true,
         hasPlayed: false,
         // the path of the zeega api
         // only required for dynamically loaded zeegas
