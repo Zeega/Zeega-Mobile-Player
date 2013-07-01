@@ -14,14 +14,13 @@ function( app, Backbone ) {
         myScroll: null,
 
         serialize: function() {
-
             return _.extend({
                 path: "http:" + app.metadata.hostname + app.metadata.directory
                 },
                 app.metadata,
                 this.model.project.toJSON(),
                 {
-                    layers: this.model.getProjectData().layers,
+                    layers: this.model.getProjectData().layers.reverse(),
                     share_links: this.getShareLinks(),
                     related_project: $.parseJSON( window.relatedProjectsJSON ).projects[0]
                 }
@@ -67,6 +66,38 @@ function( app, Backbone ) {
                 setTimeout(function () {
                     this.myScroll = new iScroll('scroller');
                 }.bind( this ), 0);
+            }
+
+            this.updateCitations();
+        },
+
+        // update the citations each time the coffin is opened.
+        updateCitations: function() {
+            var frameData = this.model.getFrameData().layers,
+                soundtrackData = this.model.getSoundtrack();
+
+            if ( frameData ) {
+                this.$(".underlay-citation").remove();
+
+                frameData.push( soundtrackData.toJSON() );
+
+                _.each( frameData, function( layer ) {
+                    var link, citation;
+
+                    if( _.contains(["Image", "Audio"], layer.type )) {
+
+                        link = $("<a>")
+                            .attr("href", layer.attr.attribution_uri )
+                            .attr("target", "blank")
+                            .append("<i class='icon-" + layer.type.toLowerCase() + "'></i> " + (layer.attr.title === "" ? "[untitled]" : layer.attr.title ));
+
+                        citation = $("<li>")
+                            .addClass("underlay-citation")
+                            .append( link );
+
+                        this.$(".credits-header").after( citation );
+                    }
+                });
             }
         },
 

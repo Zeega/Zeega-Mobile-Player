@@ -1367,26 +1367,50 @@ table {
 }
 
 [class^="zsocial-"] {
-  background-image: url('../img/endpage-share-sprite.png');
+  background-image: url('../img/social-sprites.png');
   background-position: 0px 0px;
   background-repeat: no-repeat;
   display: inline-block;
-  background-size: 100px 25px;
-  height: 25px;
+  background-size: 200px 150px;
+  height: 50px;
   vertical-align: text-top;
-  width: 25px;
+  width: 50px;
 }
 .zsocial-twitter {
   background-position: 0px 0px;
 }
-.zsocial-facebook {
-  background-position: -25px 0px;
+.zsocial-twitter.zsocial-red {
+  background-position: 0px -50px;
 }
-.zsocial-tumblr {
+.zsocial-twitter.zsocial-color {
+  background-position: 0px -100px;
+}
+.zsocial-facebook {
   background-position: -50px 0px;
 }
+.zsocial-facebook.zsocial-red {
+  background-position: -50px -50px;
+}
+.zsocial-facebook.zsocial-color {
+  background-position: -50px -100px;
+}
+.zsocial-tumblr {
+  background-position: -100px 0px;
+}
+.zsocial-tumblr.zsocial-red {
+  background-position: -100px -50px;
+}
+.zsocial-tumblr.zsocial-color {
+  background-position: -100px -100px;
+}
 .zsocial-reddit {
-  background-position: -75px 0px;
+  background-position: -150px 0px;
+}
+.zsocial-reddit.zsocial-red {
+  background-position: -150px -50px;
+}
+.zsocial-reddit.zsocial-color {
+  background-position: -150px -100px;
 }
 [class^="zitem-"] {
   background-image: url('../img/zitems-50px.png');
@@ -2685,9 +2709,20 @@ a:active {
   height: 100%;
   width: 100%;
   display: none;
+  background: white;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #e5e5e5));
+  /* Chrome,Safari4+ */
+
+  background: linear-gradient(to bottom, #ffffff 0%, #e5e5e5 100%);
+  /* W3C */
+
 }
 #underlay .share-links a {
   float: left;
+  padding: 10px 5px;
+}
+#underlay .share-links a:first-child {
+  padding-left: 20px;
 }
 #underlay .zeega-logo {
   background: url(../img/logo-full.gif);
@@ -2760,7 +2795,7 @@ a:active {
 #underlay a:visited,
 #underlay a:hover,
 #underlay a:active {
-  color: white;
+  color: #333;
 }
 .ZEEGA-tab {
   background: orangered;
@@ -2852,6 +2887,10 @@ a:active {
 }
 .ZEEGA-chrome-metablock .right-col .caption {
   line-height: 1.1em;
+}
+.ZEEGA-chrome-metablock .right-col .stats-meta {
+  font-size: 11px;
+  margin-top: 5px;
 }
 .swipe-left {
   width: 200px;

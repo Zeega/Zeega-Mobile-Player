@@ -357,7 +357,11 @@ __p+='<div href="'+
 ( user.display_name )+
 '</div>\n                </a>\n            </div>\n            <div class="caption">'+
 ( title )+
-'</div>\n        </div>\n    </div>\n</div>';
+'</div>\n            <div class="stats-meta">♥ '+
+( favorite_count )+
+' favorites ► '+
+( views )+
+' views</div>\n        </div>\n    </div>\n</div>';
 }
 return __p;
 };
@@ -419,7 +423,11 @@ __p+='<div href="'+
 ( user.display_name )+
 '</div>\n                </a>\n            </div>\n            <div class="caption">'+
 ( title )+
-'</div>\n        </div>\n    </div>\n</div>';
+'</div>\n            <div class="stats-meta">♥ '+
+( favorite_count )+
+' favorites ► '+
+( views )+
+' views</div>\n        </div>\n    </div>\n</div>';
 }
 return __p;
 };
@@ -443,7 +451,11 @@ __p+='<div href="'+
 ( user.display_name )+
 '</div>\n                </a>\n            </div>\n            <div class="caption">'+
 ( title )+
-'</div>\n        </div>\n    </div>\n</div>\n\n<div class="ZEEGA-loader-bg-overlay"></div>\n<span class="ZEEGA-loader-bg"></span>';
+'And their words to the root and the rock would echo down, down and the magic would hear and answer, faint as a falling butterfly.</div>\n            <div class="stats-meta">♥ '+
+( favorite_count )+
+' favorites ► '+
+( views )+
+' views</div>\n        </div>\n    </div>\n</div>\n\n<div class="ZEEGA-loader-bg-overlay"></div>\n<span class="ZEEGA-loader-bg"></span>';
 }
 return __p;
 };
@@ -471,13 +483,13 @@ var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
 __p+='<div id="scroller">\n    <ul class="underlay-menu">\n\n        <li class="header">\n            <a class="zeega-logo" href="http://www.zeega.com/" data-bypass="true"></a>\n        </li>\n\n        <li class="header">Share</li>\n        <li class="clearfix share-links">\n            <a name="twitter" href="'+
 ( share_links.twitter )+
-'" target="blank" >\n                <i class="zsocial-twitter"></i>\n            </a>\n            <a name="facebook" href="'+
+'" target="blank" >\n                <i class="zsocial-twitter zsocial-color"></i>\n            </a>\n            <a name="facebook" href="'+
 ( share_links.facebook )+
-'" target="blank">\n                <i class="zsocial-facebook" target="blank" ></i>\n            </a>\n            <a name="tumblr" href="'+
+'" target="blank">\n                <i class="zsocial-facebook zsocial-color" target="blank" ></i>\n            </a>\n            <a name="tumblr" href="'+
 ( share_links.tumblr )+
-'" target="blank" >\n                <i class="zsocial-tumblr"></i>\n            </a>\n            <a name="reddit" href="'+
+'" target="blank" >\n                <i class="zsocial-tumblr zsocial-color"></i>\n            </a>\n            <a name="reddit" href="'+
 ( share_links.reddit )+
-'" target="blank" >\n                <i class="zsocial-reddit"></i>\n            </a>\n        </li>\n\n<!--\n        <li class="header">Explore</li>\n\n        <li style="background-image: url('+
+'" target="blank" >\n                <i class="zsocial-reddit zsocial-color"></i>\n            </a>\n        </li>\n\n<!--\n        <li class="header">Explore</li>\n\n        <li style="background-image: url('+
 (related_project.cover_image )+
 ');" >\n            <div class="info-overlay">\n                <div class="left-column">\n                  <a data-bypass="true" href="'+
 (path )+
@@ -497,7 +509,7 @@ __p+='<div id="scroller">\n    <ul class="underlay-menu">\n\n        <li class="
 (path )+
 'm/'+
 (related_project.id )+
-'" class="mobile-play" data-bypass="true"></a>\n        </li>\n-->\n\n        <li class="header">Credits</li>\n        ';
+'" class="mobile-play" data-bypass="true"></a>\n        </li>\n-->\n\n        <li class="header credits-header">Credits</li>\n        ';
  _.each( layers, function( layer ) { 
 ;__p+='\n                ';
  if ( !_.contains(["Link","EndPageLayer","Text","TextV2","Rectangle"], layer.type )) { 
@@ -505,7 +517,7 @@ __p+='<div id="scroller">\n    <ul class="underlay-menu">\n\n        <li class="
 ( layer.attr.attribution_uri )+
 '" target="blank">\n                            <i class="icon-'+
 ( layer.type.toLowerCase() )+
-' icon-white"></i> ';
+'"></i> ';
  if ( layer.attr.title === "" ) { 
 ;__p+='[untitled]';
  } else { 
@@ -517,9 +529,7 @@ __p+='<div id="scroller">\n    <ul class="underlay-menu">\n\n        <li class="
  } 
 ;__p+='\n        ';
  }) 
-;__p+='\n        \n    </ul>\n</div>\n<div class="bg" style="\n    background: url('+
-( cover_image )+
-');\n    background-position: 50% 50%;\n    background-repeat: no-repeat no-repeat;\n    background-attachment: fixed;\n    -webkit-background-size: cover;\n    -moz-background-size: cover;\n    -o-background-size: cover;\n    background-size: cover;\n"></div>';
+;__p+='\n        \n    </ul>\n</div>';
 }
 return __p;
 };
@@ -17277,7 +17287,6 @@ function( app, Backbone, Spinner ) {
         },
 
         serialize: function() {
-            console.log( "author:", this.model.project.toJSON() );
             return _.extend({
                 path: "http:" + app.metadata.hostname + app.metadata.directory
                 },
@@ -18028,14 +18037,13 @@ function( app, Backbone ) {
         myScroll: null,
 
         serialize: function() {
-
             return _.extend({
                 path: "http:" + app.metadata.hostname + app.metadata.directory
                 },
                 app.metadata,
                 this.model.project.toJSON(),
                 {
-                    layers: this.model.getProjectData().layers,
+                    layers: this.model.getProjectData().layers.reverse(),
                     share_links: this.getShareLinks(),
                     related_project: $.parseJSON( window.relatedProjectsJSON ).projects[0]
                 }
@@ -18081,6 +18089,38 @@ function( app, Backbone ) {
                 setTimeout(function () {
                     this.myScroll = new iScroll('scroller');
                 }.bind( this ), 0);
+            }
+
+            this.updateCitations();
+        },
+
+        // update the citations each time the coffin is opened.
+        updateCitations: function() {
+            var frameData = this.model.getFrameData().layers,
+                soundtrackData = this.model.getSoundtrack();
+
+            if ( frameData ) {
+                this.$(".underlay-citation").remove();
+
+                frameData.push( soundtrackData.toJSON() );
+
+                _.each( frameData, function( layer ) {
+                    var link, citation;
+
+                    if( _.contains(["Image", "Audio"], layer.type )) {
+
+                        link = $("<a>")
+                            .attr("href", layer.attr.attribution_uri )
+                            .attr("target", "blank")
+                            .append("<i class='icon-" + layer.type.toLowerCase() + "'></i> " + (layer.attr.title === "" ? "[untitled]" : layer.attr.title ));
+
+                        citation = $("<li>")
+                            .addClass("underlay-citation")
+                            .append( link );
+
+                        this.$(".credits-header").after( citation );
+                    }
+                });
             }
         },
 
@@ -40179,7 +40219,7 @@ function( app, Engine, Relay, Status, PlayerLayout ) {
             @type Collection
             @default null
             **/
-            preloadRadius: 2,
+            preloadRadius: 4,
 
             /**
             the beginning state of the preview. vertical or fullscreen mode
