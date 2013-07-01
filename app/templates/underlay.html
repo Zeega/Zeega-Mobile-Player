@@ -8,16 +8,16 @@
         <li class="header">Share</li>
         <li class="clearfix share-links">
             <a name="twitter" href="<%= share_links.twitter %>" target="blank" >
-                <i class="zsocial-twitter"></i>
+                <i class="zsocial-twitter zsocial-color"></i>
             </a>
             <a name="facebook" href="<%= share_links.facebook %>" target="blank">
-                <i class="zsocial-facebook" target="blank" ></i>
+                <i class="zsocial-facebook zsocial-color" target="blank" ></i>
             </a>
             <a name="tumblr" href="<%= share_links.tumblr %>" target="blank" >
-                <i class="zsocial-tumblr"></i>
+                <i class="zsocial-tumblr zsocial-color"></i>
             </a>
             <a name="reddit" href="<%= share_links.reddit %>" target="blank" >
-                <i class="zsocial-reddit"></i>
+                <i class="zsocial-reddit zsocial-color"></i>
             </a>
         </li>
 
@@ -54,7 +54,7 @@
                 <% if ( !_.contains(["Link","EndPageLayer","Text","TextV2","Rectangle"], layer.type )) { %>
                     <li class="underlay-citation">
                         <a href="<%= layer.attr.attribution_uri %>" target="blank">
-                            <i class="icon-<%= layer.type.toLowerCase() %> icon-white"></i> <% if ( layer.attr.title === "" ) { %>[untitled]<% } else { %><%= layer.attr.title %><% } %>
+                            <i class="icon-<%= layer.type.toLowerCase() %>"></i> <% if ( layer.attr.title === "" ) { %>[untitled]<% } else { %><%= layer.attr.title %><% } %>
                         </a>
                     </li>
                 <% } %>
@@ -62,13 +62,3 @@
         
     </ul>
 </div>
-<div class="bg" style="
-    background: url(<%= cover_image %>);
-    background-position: 50% 50%;
-    background-repeat: no-repeat no-repeat;
-    background-attachment: fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-"></div>

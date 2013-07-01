@@ -9,9 +9,18 @@
     width: 100%;
     display: none;
 
+    background: white;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(229,229,229,1))); /* Chrome,Safari4+ */
+    background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* W3C */
+
     .share-links {
         a {
             float:left;
+            padding: 10px 5px;
+
+            &:first-child {
+                padding-left: 20px;
+            }
         }
     }
 
@@ -103,6 +112,6 @@
     a:visited,
     a:hover,
     a:active {
-        color: white;
+        color: #333;
     }
 }
