@@ -2719,7 +2719,7 @@ a:active {
 }
 #underlay .share-links a {
   float: left;
-  padding: 20px 5px;
+  padding: 10px 5px;
 }
 #underlay .share-links a:first-child {
   padding-left: 20px;
@@ -2887,6 +2887,10 @@ a:active {
 }
 .ZEEGA-chrome-metablock .right-col .caption {
   line-height: 1.1em;
+}
+.ZEEGA-chrome-metablock .right-col .stats-meta {
+  font-size: 11px;
+  margin-top: 5px;
 }
 .swipe-left {
   width: 200px;
