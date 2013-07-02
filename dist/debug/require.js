@@ -451,7 +451,7 @@ __p+='<div href="'+
 ( user.display_name )+
 '</div>\n                </a>\n            </div>\n            <div class="caption">'+
 ( title )+
-'And their words to the root and the rock would echo down, down and the magic would hear and answer, faint as a falling butterfly.</div>\n            <div class="stats-meta">♥ '+
+'</div>\n            <div class="stats-meta">♥ '+
 ( favorite_count )+
 ' favorites ► '+
 ( views )+
