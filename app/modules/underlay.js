@@ -79,7 +79,7 @@ function( app, Backbone ) {
             if ( frameData ) {
                 this.$(".underlay-citation").remove();
 
-                frameData.push( soundtrackData.toJSON() );
+                if ( soundtrackData ) frameData.push( soundtrackData.toJSON() );
 
                 _.each( frameData, function( layer ) {
                     var link, citation;
