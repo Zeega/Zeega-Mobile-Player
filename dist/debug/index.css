@@ -2709,13 +2709,8 @@ a:active {
   height: 100%;
   width: 100%;
   display: none;
-  background: white;
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(100%, #e5e5e5));
-  /* Chrome,Safari4+ */
-
-  background: linear-gradient(to bottom, #ffffff 0%, #e5e5e5 100%);
-  /* W3C */
-
+  background-color: white;
+  background: url(../img/graphpaper.png);
 }
 #underlay .share-links a {
   float: left;
