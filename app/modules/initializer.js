@@ -19,6 +19,17 @@ function(app, Backbone, UI, Player, Analytics) {
     return Backbone.Model.extend({
 
         initialize: function() {
+
+            
+            $("body").prepend("<div id='debug-console' style='position:absolute; height:40%; overflow-y:auto; opacity:0.8; width:100%;background-color:white; z-index:100000'></div>");
+            window.console = {
+                log: function( args ){
+                    $("#debug-console").append(args + "<br>");
+                }
+            };
+            
+
+
             $("#main").empty()
                 .append("<div id='overlays'></div>")
                 .append("<div id='player'></div>")
