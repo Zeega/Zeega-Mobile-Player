@@ -35659,7 +35659,7 @@ function( app, Controls ) {
         initialize: function( attr, opt ) {
             var augmentAttr = _.extend({}, this.attr, this.toJSON().attr );
 
-            this.mode = opt.mode;
+            this.mode = opt.mode || this.mode;
             
             this.set("attr", augmentAttr );
             this.order = {};
@@ -38237,7 +38237,7 @@ function( app, Backbone, Layers, ThumbWorker ) {
         startThumbWorker: null,
 
         initialize: function() {
-            this.mode = this.collection.mode;
+            this.mode = this.collection ? this.collection.mode : this.mode;
             this.lazySave = _.debounce(function() {
                 this.save();
             }.bind( this ), 1000 );
@@ -38270,9 +38270,9 @@ function( app, Backbone, Layers, ThumbWorker ) {
             // this.initSaveEvents();
         },
 
-// editor
+        // editor
         listenToLayers: function() {
-            if ( this.mode == "editor ") {
+            if ( this.mode == "editor") {
                 this.stopListening( this.layers );
                 this.layers.on("sort", this.onLayerSort, this );
                 this.layers.on("add remove", this.onLayerAddRemove, this );
@@ -38319,7 +38319,7 @@ function( app, Backbone, Layers, ThumbWorker ) {
                 type: item.get("layer_type"),
                 attr: _.extend({}, item.toJSON() )
             });
-
+console.log("add layer", item, eventData)
             // set image layer opacity to 0.5 for layers on top of other layers
             if ( this.layers.length && newLayer.get("type") != "TextV2") {
                 newLayer.setAttr({ opacity: 0.5 });
@@ -38330,7 +38330,8 @@ function( app, Backbone, Layers, ThumbWorker ) {
             newLayer.eventData = eventData;
             app.emit("layer_added_start", newLayer );
 
-            newLayer.save().success(function( response ) {
+            newLayer.save()
+                .success(function( response ) {
                     this.layers.add( newLayer );
                     app.status.setCurrentLayer( newLayer );
                     app.emit("layer_added_success", newLayer );
@@ -38549,7 +38550,8 @@ function( app, Layers ) {
         },
 
         onAdd: function( layer ) {
-            if( app.mode != "player" ){
+
+            if( layer.mode == "editor" ){
                 if ( layer ) {
                     layer.addCollection( this );
                     layer.initVisual( Layers[ layer.get("type") ]);
