@@ -1,11 +1,8 @@
 define([
-    "app",
-    // Libs
-    "backbone",
-    "engineVendor/spin"
+    "app"
 ],
 
-function( app, Backbone, Spinner ) {
+function( app ) {
 
     return Backbone.View.extend({
 
@@ -31,7 +28,7 @@ function( app, Backbone, Spinner ) {
         },
 
         initialize: function() {
-            this.model.on("frame_play", this.onCanplay, this );
+            this.model.on("page:play", this.onCanplay, this );
         },
 
         onCanplay: _.once(function() {
@@ -45,9 +42,9 @@ function( app, Backbone, Spinner ) {
         }),
 
         showLoadingSoundtrack: function() {
-            var soundtrack = this.model.getSoundtrack();
+            var soundtrack = app.player.zeega.getSoundtrack();
 
-            if ( soundtrack ) {
+            if ( soundtrack && soundtrack.state != "ready" ) {
                 var timer, counter = 0;
 
                 this.$(".ZEEGA-sound-state").show().addClass("loading-0");
@@ -60,7 +57,7 @@ function( app, Backbone, Spinner ) {
                     counter++;
                 }.bind( this ), 150 );
 
-                this.model.on("audio_play", function( model ) {
+                this.model.on("soundtrack:ready", function( model ) {
                     clearInterval( timer );
                     this.$(".ZEEGA-sound-state")
                         .removeClass("loading-0 loading-1 loading-2")
@@ -94,14 +91,13 @@ function( app, Backbone, Spinner ) {
         },
 
         toggleMute: function(){
-
-            if( app.soundtrack ){
+            if( app.player.zeega.getSoundtrack() ){
                 if( this.$(".ZEEGA-sound-state").hasClass("muted") ){
                     this.$(".ZEEGA-sound-state").removeClass("muted");
-                    app.soundtrack.visual.onPlay();
+                    app.player.zeega.getSoundtrack().visual.onPlay();
                 } else {
                     this.$(".ZEEGA-sound-state").addClass("muted");
-                    app.soundtrack.visual.onPause();
+                    app.player.zeega.getSoundtrack().visual.onPause();
                 }
             }
             return false;

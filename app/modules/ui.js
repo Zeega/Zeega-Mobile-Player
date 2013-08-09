@@ -7,17 +7,18 @@
 
 define([
     "app",
-    "backbone",
 
     "modules/loader",
     "modules/pause",
     "modules/underlay",
     "modules/chrome",
     "modules/endpage",
+    "modules/remix-endpage",
+
     "vendor/hammer/hammer"
 ],
 
-function( app, Backbone, Loader, Pause, Underlay, Chrome, EndPage ) {
+function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage ) {
 
     return Backbone.Layout.extend({
         
@@ -34,10 +35,12 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome, EndPage ) {
             this.chrome = new Chrome({ model: this.model });
             this.endpage = new EndPage({ model: this.model });
             this.underlay = new Underlay({ model: this.model });
+            this.remixEndpage = new RemixEndpage({ model: this.model });
 
             this.insertView("#overlays", this.loader );
             this.insertView("#chrome", this.chrome );
             this.insertView("#endpage", this.endpage );
+            this.insertView("#endpage", this.remixEndpage );
             this.insertView("#underlay", this.underlay );
             this.render();
 
@@ -154,7 +157,6 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome, EndPage ) {
         },
 
         showCoffin: function() {
-            console.log("SHOW", this.model.state, this)
             this.preCoffin = this.model.state;
             this.model.pause();
 

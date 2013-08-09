@@ -48,11 +48,13 @@ function( app, Backbone ) {
         },
 
         endPageEnter: function() {
-            this.$el.show();
-            this.$(".upper-wrapper").css("height", this.$(".ZEEGA-loader-inner").height() + 20 );
-            if( !this.viewed ){
-                this.viewed = true;
-                app.emit("viewed_to_end");
+            if ( !app.player.zeega.getNextPage() ) {
+                this.$el.show();
+                this.$(".upper-wrapper").css("height", this.$(".ZEEGA-loader-inner").height() + 20 );
+                if( !this.viewed ){
+                    this.viewed = true;
+                    app.emit("viewed_to_end");
+                }
             }
         },
 

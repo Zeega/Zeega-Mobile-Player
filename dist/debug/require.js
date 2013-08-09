@@ -478,6 +478,34 @@ __p+='<a href="#" class="mobile-play"><img src="assets/img/start-button.png"/></
 return __p;
 };
 
+this["JST"]["app/templates/remix-endpage.html"] = function(obj){
+var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+with(obj||{}){
+__p+='<div class="end-page-wrapper" >\n\n    <h1>Remix</h1>\n    <div class="project-current remix-project-wrapper">\n        <div class="title">just watched</div>\n        <div class="token-wrapper">\n            <div class="user-token user-token-medium" style="\n                background-image: url('+
+( user.thumbnail_url )+
+');\n                background-size: cover;\n                background-position: center;\n            "></div>\n        </div>\n        <div class="username">'+
+( user.display_name )+
+'</div>\n    </div>\n\n';
+ if ( remix.remix ) { 
+;__p+='\n    <div class="project-parent remix-project-wrapper">\n        <div class="title">up next</div>\n        <div class="token-wrapper">\n            <div class="user-token user-token-large" style="\n                background-image: url('+
+( remix.parent.user.thumbnail_url )+
+');\n                background-size: cover;\n                background-position: center;\n            "></div>\n        </div>\n        <div class="username">'+
+( remix.parent.user.display_name )+
+'</div>\n    </div>\n\n    ';
+ if ( remix.parent.id != remix.root.id || true ) { 
+;__p+='\n\n        <div class="project-root remix-project-wrapper">\n            <div class="title">remixed from</div>\n            <div class="token-wrapper">\n                <div class="user-token user-token-medium" style="\n                    background-image: url('+
+( remix.root.user.thumbnail_url )+
+');\n                    background-size: cover;\n                    background-position: center;\n                "></div>\n            </div>\n            <div class="username">'+
+( remix.root.user.display_name )+
+'</div>\n        </div>\n\n    ';
+ } 
+;__p+='\n';
+ } 
+;__p+='\n</div>';
+}
+return __p;
+};
+
 this["JST"]["app/templates/underlay.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
@@ -17302,12 +17330,12 @@ function( app, Backbone, Spinner ) {
                 path: "http:" + app.metadata.hostname + app.metadata.directory
                 },
                 app.metadata,
-                this.model.project.toJSON()
+                app.player.zeega.getCurrentProject().toJSON()
             );
         },
 
         afterRender: function() {
-            var coverImage = this.model.project.get("cover_image");
+            var coverImage = app.player.zeega.getCurrentProject().get("cover_image");
 
             if( !_.isNull( coverImage ) && coverImage != "../../../images/default_cover.png" ) {
                 this.$(".ZEEGA-loader-bg").css({
@@ -17384,7 +17412,7 @@ function( app, Backbone, Spinner ) {
             if ( this.model.canplay ) {
                 this.fadeOut();
             } else {
-                this.model.once("frame_play", this.fadeOut, this );
+                this.model.once("page:play", this.fadeOut, this );
             }
             this.model.play();
         },
@@ -18052,9 +18080,9 @@ function( app, Backbone ) {
                 path: "http:" + app.metadata.hostname + app.metadata.directory
                 },
                 app.metadata,
-                this.model.project.toJSON(),
+                app.player.zeega.getCurrentProject().toJSON(),
                 {
-                    layers: this.model.getProjectData().layers.reverse(),
+                    layers: app.player.zeega.getCurrentProject().get("layers").reverse(),
                     share_links: this.getShareLinks(),
                     related_project: $.parseJSON( window.relatedProjectsJSON ).projects[0]
                 }
@@ -18064,33 +18092,34 @@ function( app, Backbone ) {
         getShareLinks: function() {
             var html,
                 links = {},
-                webRoot = "http:" + app.metadata.hostname + app.metadata.directory;
+                webRoot = "http:" + app.metadata.hostname + app.metadata.directory,
+                currentProject = app.player.zeega.getCurrentProject();
                 
 
-            if( !_.isUndefined(this.model.project.get("title"))){
-                title = this.model.project.get("title");
+            if( !_.isUndefined( currentProject.get("title"))){
+                title = currentProject.get("title");
             } else {
                 title = "";
             }
             
 
             html = "<p>" + title + "</p>" +
-                "<p><a href='" + webRoot + this.model.project.get("id") + "'>" +
+                "<p><a href='" + webRoot + currentProject.get("id") + "'>" +
                 "<strong>►&nbsp;Play&nbsp;Zeega&nbsp;►</strong></a>" +
-                "</p><p>by&nbsp;<a href='" + webRoot + "profile/" + this.model.project.get("user_id") + "'>" + this.model.project.get("authors") + "</a></p>";
+                "</p><p>by&nbsp;<a href='" + webRoot + "profile/" + currentProject.get("user_id") + "'>" + currentProject.get("authors") + "</a></p>";
 
-            links.tumblr = "http://www.tumblr.com/share/photo?source=" + encodeURIComponent( this.model.project.get("cover_image") ) +
+            links.tumblr = "http://www.tumblr.com/share/photo?source=" + encodeURIComponent( currentProject.get("cover_image") ) +
                 "&caption=" + encodeURIComponent( html ) +
-                "&click_thru="+ encodeURIComponent( webRoot ) + this.model.project.get("id");
+                "&click_thru="+ encodeURIComponent( webRoot ) + currentProject.get("id");
 
-            links.reddit = "http://www.reddit.com/submit?url=" + encodeURIComponent( webRoot ) + this.model.project.get("id") +
+            links.reddit = "http://www.reddit.com/submit?url=" + encodeURIComponent( webRoot ) + currentProject.get("id") +
                 "&title=" + encodeURIComponent( title );
 
-            links.twitter = "https://twitter.com/intent/tweet?original_referer=" + encodeURIComponent( webRoot ) + this.model.project.get("id") +
+            links.twitter = "https://twitter.com/intent/tweet?original_referer=" + encodeURIComponent( webRoot ) + currentProject.get("id") +
                 "&text=" + encodeURIComponent( title  + " made w/ @zeega") +
-                "&url=" + encodeURIComponent( webRoot ) + this.model.project.get("id");
+                "&url=" + encodeURIComponent( webRoot ) + currentProject.get("id");
 
-            links.facebook = "http://www.facebook.com/sharer.php?u=" + encodeURIComponent( webRoot ) + this.model.project.get("id");
+            links.facebook = "http://www.facebook.com/sharer.php?u=" + encodeURIComponent( webRoot ) + currentProject.get("id");
 
             return links;
         },
@@ -18153,13 +18182,10 @@ function( app, Backbone ) {
 });
 
 define('modules/chrome',[
-    "app",
-    // Libs
-    "backbone",
-    "engineVendor/spin"
+    "app"
 ],
 
-function( app, Backbone, Spinner ) {
+function( app ) {
 
     return Backbone.View.extend({
 
@@ -18180,12 +18206,12 @@ function( app, Backbone, Spinner ) {
                     path: "http:" + app.metadata.hostname + app.metadata.directory
                 },
                 app.metadata,
-                this.model.project.toJSON()
+                app.player.zeega.getCurrentProject().toJSON()
             );
         },
 
         initialize: function() {
-            this.model.on("frame_play", this.onCanplay, this );
+            this.model.on("page:play", this.onCanplay, this );
         },
 
         onCanplay: _.once(function() {
@@ -18199,9 +18225,9 @@ function( app, Backbone, Spinner ) {
         }),
 
         showLoadingSoundtrack: function() {
-            var soundtrack = this.model.getSoundtrack();
+            var soundtrack = app.player.zeega.getSoundtrack();
 
-            if ( soundtrack ) {
+            if ( soundtrack && soundtrack.state != "ready" ) {
                 var timer, counter = 0;
 
                 this.$(".ZEEGA-sound-state").show().addClass("loading-0");
@@ -18214,7 +18240,7 @@ function( app, Backbone, Spinner ) {
                     counter++;
                 }.bind( this ), 150 );
 
-                this.model.on("audio_play", function( model ) {
+                this.model.on("soundtrack:ready", function( model ) {
                     clearInterval( timer );
                     this.$(".ZEEGA-sound-state")
                         .removeClass("loading-0 loading-1 loading-2")
@@ -18248,14 +18274,13 @@ function( app, Backbone, Spinner ) {
         },
 
         toggleMute: function(){
-
-            if( app.soundtrack ){
+            if( app.player.zeega.getSoundtrack() ){
                 if( this.$(".ZEEGA-sound-state").hasClass("muted") ){
                     this.$(".ZEEGA-sound-state").removeClass("muted");
-                    app.soundtrack.visual.onPlay();
+                    app.player.zeega.getSoundtrack().visual.onPlay();
                 } else {
                     this.$(".ZEEGA-sound-state").addClass("muted");
-                    app.soundtrack.visual.onPause();
+                    app.player.zeega.getSoundtrack().visual.onPause();
                 }
             }
             return false;
@@ -18362,11 +18387,13 @@ function( app, Backbone ) {
         },
 
         endPageEnter: function() {
-            this.$el.show();
-            this.$(".upper-wrapper").css("height", this.$(".ZEEGA-loader-inner").height() + 20 );
-            if( !this.viewed ){
-                this.viewed = true;
-                app.emit("viewed_to_end");
+            if ( !app.player.zeega.getNextPage() ) {
+                this.$el.show();
+                this.$(".upper-wrapper").css("height", this.$(".ZEEGA-loader-inner").height() + 20 );
+                if( !this.viewed ){
+                    this.viewed = true;
+                    app.emit("viewed_to_end");
+                }
             }
         },
 
@@ -18386,7 +18413,7 @@ function( app, Backbone ) {
                     path: "http:" + app.metadata.hostname + app.metadata.directory
                 },
                 app.metadata,
-                this.model.project.toJSON(),
+                app.player.zeega.getCurrentProject().toJSON(),
                 {
                     share_links: this.getShareLinks(),
                     related_project: this.relatedProject
@@ -18397,33 +18424,34 @@ function( app, Backbone ) {
         getShareLinks: function() {
             var html,
                 links = {},
-                webRoot = "http:" + app.metadata.hostname + app.metadata.directory;
+                webRoot = "http:" + app.metadata.hostname + app.metadata.directory,
+                currentProject = app.player.zeega.getCurrentProject();
                 
 
-            if( !_.isUndefined(this.model.project.get("title"))){
-                title = this.model.project.get("title");
+            if( !_.isUndefined( currentProject.get("title"))){
+                title = currentProject.get("title");
             } else {
                 title = "";
             }
             
 
             html = "<p>" + title + "</p>" +
-                "<p><a href='" + webRoot + this.model.project.get("id") + "'>" +
+                "<p><a href='" + webRoot + currentProject.get("id") + "'>" +
                 "<strong>►&nbsp;Play&nbsp;Zeega&nbsp;►</strong></a>" +
-                "</p><p>by&nbsp;<a href='" + webRoot + "profile/" + this.model.project.get("user_id") + "'>" + this.model.project.get("authors") + "</a></p>";
+                "</p><p>by&nbsp;<a href='" + webRoot + "profile/" + currentProject.get("user_id") + "'>" + currentProject.get("authors") + "</a></p>";
 
-            links.tumblr = "http://www.tumblr.com/share/photo?source=" + encodeURIComponent( this.model.project.get("cover_image") ) +
+            links.tumblr = "http://www.tumblr.com/share/photo?source=" + encodeURIComponent( currentProject.get("cover_image") ) +
                 "&caption=" + encodeURIComponent( html ) +
-                "&click_thru="+ encodeURIComponent( webRoot ) + this.model.project.get("id");
+                "&click_thru="+ encodeURIComponent( webRoot ) + currentProject.get("id");
 
-            links.reddit = "http://www.reddit.com/submit?url=" + encodeURIComponent( webRoot ) + this.model.project.get("id") +
+            links.reddit = "http://www.reddit.com/submit?url=" + encodeURIComponent( webRoot ) + currentProject.get("id") +
                 "&title=" + encodeURIComponent( title );
 
-            links.twitter = "https://twitter.com/intent/tweet?original_referer=" + encodeURIComponent( webRoot ) + this.model.project.get("id") +
+            links.twitter = "https://twitter.com/intent/tweet?original_referer=" + encodeURIComponent( webRoot ) + currentProject.get("id") +
                 "&text=" + encodeURIComponent( title  + " made w/ @zeega") +
-                "&url=" + encodeURIComponent( webRoot ) + this.model.project.get("id");
+                "&url=" + encodeURIComponent( webRoot ) + currentProject.get("id");
 
-            links.facebook = "http://www.facebook.com/sharer.php?u=" + encodeURIComponent( webRoot ) + this.model.project.get("id");
+            links.facebook = "http://www.facebook.com/sharer.php?u=" + encodeURIComponent( webRoot ) + currentProject.get("id");
 
             return links;
         }
@@ -18431,6 +18459,71 @@ function( app, Backbone ) {
   });
 
 });
+
+define('modules/remix-endpage',[
+    "app",
+    // Libs
+    "backbone"
+],
+
+function(app, Backbone) {
+
+    return Backbone.View.extend({
+        
+        viewed: false,
+        visible: false,
+        hover: false,
+        sticky: false,
+
+        template: "app/templates/remix-endpage",
+
+        className: "ZEEGA-remix-endpage",
+
+        initialize: function() {
+            this.model.on("endpage_enter", this.endPageEnter, this );
+            this.model.on("endpage_exit", this.endPageExit, this );
+
+            this.relatedProjects = $.parseJSON( window.relatedProjectsJSON ).projects;
+        },
+
+        serialize: function() {
+            if ( this.isRemixPage() && this.model.zeega.getNextPage() ) {
+                return _.extend({
+                        path: "http:" + app.metadata.hostname + app.metadata.directory
+                    },
+                    this.model.zeega.getCurrentProject().toJSON()
+                );
+            }
+        },
+
+        endPageEnter: function( layer ) {
+            
+            if ( this.isRemixPage() ) {
+                this.render();
+                this.show();
+            }
+        },
+
+        isRemixPage: function() {
+            return this.model.zeega.getNextPage() !== false;
+        },
+
+        endPageExit: function() {
+            this.hide();
+        },
+
+        show: function(){
+            this.$el.fadeIn("fast");
+        },
+
+        hide: function(){
+            this.$el.fadeOut("fast");
+        }
+
+    });
+});
+
+
 
 /*
  * Hammer.JS
@@ -19303,17 +19396,18 @@ define("vendor/hammer/hammer", function(){});
 
 define('modules/ui',[
     "app",
-    "backbone",
 
     "modules/loader",
     "modules/pause",
     "modules/underlay",
     "modules/chrome",
     "modules/endpage",
+    "modules/remix-endpage",
+
     "vendor/hammer/hammer"
 ],
 
-function( app, Backbone, Loader, Pause, Underlay, Chrome, EndPage ) {
+function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage ) {
 
     return Backbone.Layout.extend({
         
@@ -19330,10 +19424,12 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome, EndPage ) {
             this.chrome = new Chrome({ model: this.model });
             this.endpage = new EndPage({ model: this.model });
             this.underlay = new Underlay({ model: this.model });
+            this.remixEndpage = new RemixEndpage({ model: this.model });
 
             this.insertView("#overlays", this.loader );
             this.insertView("#chrome", this.chrome );
             this.insertView("#endpage", this.endpage );
+            this.insertView("#endpage", this.remixEndpage );
             this.insertView("#underlay", this.underlay );
             this.render();
 
@@ -19428,7 +19524,7 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome, EndPage ) {
                 if ( e.direction == "left") {
                     this.model.cueNext();
                 } else if ( e.direction == "right") {
-                    this.model.cueBack();
+                    this.model.cuePrev();
                 }
             } else if ( this.model.state == "paused" && this.coffin && e.direction == "left" ) {
                 this.hideCoffin();
@@ -19465,19 +19561,19 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome, EndPage ) {
         hideCoffin: function() {
             this.coffin = false;
             $("#overlays, #player").animate({
-                left: 0
-            },{
-                complete: function() {
-                    this.chrome.show();
-                    if ( this.preCoffin == "playing" || !app.hasSoundtrack ) {
-                        this.model.play();
-                        //need to build into player, mobile audio does not support volume/mute
-                        if( $(".ZEEGA-mute").hasClass("muted") && $("audio")[0] ){
-                            $("audio")[0].pause();
-                        }
-                    } 
-                }.bind( this )
-            });
+                    left: 0
+                },{
+                    complete: function() {
+                        this.chrome.show();
+                        if ( this.preCoffin == "playing" ) {
+                            this.model.play();
+                            //need to build into player, mobile audio does not support volume/mute
+                            if( $(".ZEEGA-mute").hasClass("muted") && $("audio")[0] ){
+                                $("audio")[0].pause();
+                            }
+                        } 
+                    }.bind( this )
+                });
             $("#underlay").fadeOut();
         }
 
@@ -36727,6 +36823,7 @@ function( app, _Layer, Visual ){
 
                 this.audio.load();
                 this.audio.addEventListener("canplay", function() {
+                    this.model.state = "ready";
                     this.onCanPlay();
                 }.bind( this ));
             },
@@ -36891,6 +36988,7 @@ function( app, _Layer, Visual ){
 
             onLoading: function( value ){
                 if( value == 3 ) {
+                    this.model.state = "ready";
                     this.model.trigger( "layer:visual_ready", this.model.id );
                 }
             },
@@ -40634,28 +40732,23 @@ function( app, Engine, Relay, Status, PlayerLayout ) {
             // TODO
         },
 
-        // mobile only hack
-        // TODO -- this blows -j
         mobileLoadAudioLayers: function() {
-            this.project.sequences.each(function( sequence ) {
-                sequence.frames.each(function( frame ) {
-                    frame.layers.each(function( layer ) {
-                        if ( layer.get("type") == "Audio") {
-                            var audio = document.getElementById("audio-el-" + layer.id );
-                            
-                            audio.load();
-                            
-                            return audio;
-                        }
-                    });
+            if ( app.player.zeega.getSoundtrack().state != "ready" ) {
+                var audio = document.getElementById("audio-el-" + app.player.zeega.getSoundtrack().id );
+
+                audio.load();
+                audio.addEventListener("canplay",function() {
+                    app.player.zeega.getSoundtrack().state = "ready";
+                    audio.removeEventListener("canplay");
+                    audio.play();
                 });
-            });
+            }
         },
 
 
         // returns project data
         getProjectData: function() {
-            return this.project.getProjectJSON();
+            return this.zeega.getProjectJSON();
         },
 
         getSoundtrack: function() {
@@ -40663,10 +40756,10 @@ function( app, Engine, Relay, Status, PlayerLayout ) {
         },
 
         getFrameData: function() {
-            if ( this.status.get("current_frame") ) {
+            if ( this.zeega.getCurrentPage() ) {
                 return _.extend({},
-                    this.status.get("current_frame_model").toJSON(),
-                    { layers: this.status.get("current_frame_model").layers.toJSON() }
+                    this.zeega.getCurrentPage().toJSON(),
+                    { layers: this.zeega.getCurrentPage().layers.toJSON() }
                 );
             }
 
@@ -40893,18 +40986,24 @@ function(app, Backbone, UI, Player, Analytics) {
             if ( window.projectJSON ) {
                 this.onDataLoaded();
             } else {
-                app.player.once('data_loaded', function() {
+                app.player.once('player:ready', function() {
                     this.onDataLoaded();
                 }, this);
             }
         },
 
-        onDataLoaded: function( parsed ) {
+        onDataLoaded: function() {
+            this.initAnalytics();
+            app.hasSoundtrack = !_.isUndefined( app.player.getProjectData().sequences[0].attr.soundtrack );
+            app.layout = new UI({ model: app.player });
+        },
+
+        initAnalytics: function() {
             app.analytics = new Analytics();
 
             app.analytics.setGlobals({
-                projectId: app.player.project.get("id"),
-                projectPageCount: app.player.project.sequences.at(0).frames.length,
+                projectId: app.player.zeega.getCurrentProject().id,
+                projectPageCount: app.player.zeega.getCurrentProject().pages.length,
                 userId: app.metadata.userId,
                 userName: app.metadata.userName,
                 app: "player",
@@ -40912,8 +41011,6 @@ function(app, Backbone, UI, Player, Analytics) {
             });
 
             app.analytics.trackEvent("zeega_view");
-            app.hasSoundtrack = !_.isUndefined( app.player.getProjectData().sequences[0].attr.soundtrack );
-            app.layout = new UI({ model: app.player });
         }
 
   });
