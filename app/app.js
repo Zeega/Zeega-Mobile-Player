@@ -59,7 +59,7 @@ function( $, _, Backbone, State, Spinner ) {
         $: $
     };
 
-    var opts = {
+    app.spinner = new Spinner({
         lines: 13, // The number of lines to draw
         length: 10, // The length of each line
         width: 4, // The line thickness
@@ -76,13 +76,28 @@ function( $, _, Backbone, State, Spinner ) {
         zIndex: 2e9, // The z-index (defaults to 2000000000)
         top: 'auto', // Top position relative to parent in px
         left: 'auto' // Left position relative to parent in px
-    };
-    app.spinner = new Spinner(opts);
+    });
+
+    app.spin = function( el ) {
+        var target = el || app.layout.el;
+
+        app.spinner.spin( target );
+    }
+    app.spinStop = function() {
+        app.spinner.stop();
+    }
 
     app.state = new State({ app: app });
 
     // Localize or create a new JavaScript Template object.
     var JST = window.JST = window.JST || {};
+
+    // events that trigger the save indicator on the editor interface
+    Backbone.Model.prototype.initSaveEvents = function() { /* empty for player */ };
+    Backbone.Model.prototype.put = function() {
+        var args = [].slice.call( arguments ).concat([ { silent: true } ]);
+        return this.set.apply( this, args );
+    };
 
     Backbone.Layout.configure({
         // Allow LayoutManager to augment Backbone.View.prototype.

@@ -33,7 +33,7 @@ function(app, Backbone, UI, Player, Analytics) {
         },
 
         initPlayer: function() {
-            app.player = new Player.player({
+            app.player = new Player({
                 // debugEvents: true,
                 endPage: true,
                 mobile: true,
@@ -48,22 +48,29 @@ function(app, Backbone, UI, Player, Analytics) {
                     app.state.get("projectID") !== null ? app.api + "/items/" + app.state.get("projectID") :
                     "testproject.json"
             });
-
+console.log("init player", app.player)
             if ( window.projectJSON ) {
                 this.onDataLoaded();
             } else {
-                app.player.once('data_loaded', function() {
+                app.player.once('player:ready', function() {
                     this.onDataLoaded();
                 }, this);
             }
         },
 
-        onDataLoaded: function( parsed ) {
+        onDataLoaded: function() {
+            this.initAnalytics();
+            console.log("on data loaded", app.player)
+            app.hasSoundtrack = !_.isUndefined( app.player.getProjectData().sequences[0].attr.soundtrack );
+            app.layout = new UI({ model: app.player });
+        },
+
+        initAnalytics: function() {
             app.analytics = new Analytics();
 
             app.analytics.setGlobals({
-                projectId: app.player.project.get("id"),
-                projectPageCount: app.player.project.sequences.at(0).frames.length,
+                projectId: app.player.zeega.getCurrentProject().id,
+                projectPageCount: app.player.zeega.getCurrentProject().pages.length,
                 userId: app.metadata.userId,
                 userName: app.metadata.userName,
                 app: "player",
@@ -71,8 +78,6 @@ function(app, Backbone, UI, Player, Analytics) {
             });
 
             app.analytics.trackEvent("zeega_view");
-            app.hasSoundtrack = !_.isUndefined( app.player.getProjectData().sequences[0].attr.soundtrack );
-            app.layout = new UI({ model: app.player });
         }
 
   });

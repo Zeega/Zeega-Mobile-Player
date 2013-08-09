@@ -26,12 +26,12 @@ function( app, Backbone, Spinner ) {
                 path: "http:" + app.metadata.hostname + app.metadata.directory
                 },
                 app.metadata,
-                this.model.project.toJSON()
+                app.player.zeega.getCurrentProject().toJSON()
             );
         },
 
         afterRender: function() {
-            var coverImage = this.model.project.get("cover_image");
+            var coverImage = app.player.zeega.getCurrentProject().get("cover_image");
 
             if( !_.isNull( coverImage ) && coverImage != "../../../images/default_cover.png" ) {
                 this.$(".ZEEGA-loader-bg").css({
@@ -108,7 +108,7 @@ function( app, Backbone, Spinner ) {
             if ( this.model.canplay ) {
                 this.fadeOut();
             } else {
-                this.model.once("frame_play", this.fadeOut, this );
+                this.model.once("page:play", this.fadeOut, this );
             }
             this.model.play();
         },

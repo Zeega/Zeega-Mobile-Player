@@ -132,7 +132,7 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome, EndPage ) {
                 if ( e.direction == "left") {
                     this.model.cueNext();
                 } else if ( e.direction == "right") {
-                    this.model.cueBack();
+                    this.model.cuePrev();
                 }
             } else if ( this.model.state == "paused" && this.coffin && e.direction == "left" ) {
                 this.hideCoffin();
@@ -154,6 +154,7 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome, EndPage ) {
         },
 
         showCoffin: function() {
+            console.log("SHOW", this.model.state, this)
             this.preCoffin = this.model.state;
             this.model.pause();
 
@@ -169,19 +170,19 @@ function( app, Backbone, Loader, Pause, Underlay, Chrome, EndPage ) {
         hideCoffin: function() {
             this.coffin = false;
             $("#overlays, #player").animate({
-                left: 0
-            },{
-                complete: function() {
-                    this.chrome.show();
-                    if ( this.preCoffin == "playing" || !app.hasSoundtrack ) {
-                        this.model.play();
-                        //need to build into player, mobile audio does not support volume/mute
-                        if( $(".ZEEGA-mute").hasClass("muted") && $("audio")[0] ){
-                            $("audio")[0].pause();
-                        }
-                    } 
-                }.bind( this )
-            });
+                    left: 0
+                },{
+                    complete: function() {
+                        this.chrome.show();
+                        if ( this.preCoffin == "playing" ) {
+                            this.model.play();
+                            //need to build into player, mobile audio does not support volume/mute
+                            if( $(".ZEEGA-mute").hasClass("muted") && $("audio")[0] ){
+                                $("audio")[0].pause();
+                            }
+                        } 
+                    }.bind( this )
+                });
             $("#underlay").fadeOut();
         }
 

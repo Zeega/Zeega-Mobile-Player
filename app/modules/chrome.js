@@ -26,7 +26,7 @@ function( app, Backbone, Spinner ) {
                     path: "http:" + app.metadata.hostname + app.metadata.directory
                 },
                 app.metadata,
-                this.model.project.toJSON()
+                app.player.zeega.getCurrentProject().toJSON()
             );
         },
 
