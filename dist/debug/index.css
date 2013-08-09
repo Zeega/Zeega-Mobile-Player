@@ -3199,10 +3199,6 @@ a:active {
 .ZEEGA-remix-endpage .end-page-wrapper {
   height: 200px;
   width: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
   position: absolute;
   text-align: center;
   font-size: 14px;

@@ -492,7 +492,7 @@ __p+='<div class="end-page-wrapper" >\n\n    <h1>Remix</h1>\n    <div class="pro
 ');\n                background-size: cover;\n                background-position: center;\n            "></div>\n        </div>\n        <div class="username">'+
 ( remix.parent.user.display_name )+
 '</div>\n    </div>\n\n    ';
- if ( remix.parent.id != remix.root.id || true ) { 
+ if ( remix.parent.id != remix.root.id ) { 
 ;__p+='\n\n        <div class="project-root remix-project-wrapper">\n            <div class="title">remixed from</div>\n            <div class="token-wrapper">\n                <div class="user-token user-token-medium" style="\n                    background-image: url('+
 ( remix.root.user.thumbnail_url )+
 ');\n                    background-size: cover;\n                    background-position: center;\n                "></div>\n            </div>\n            <div class="username">'+
@@ -36807,7 +36807,6 @@ function( app, _Layer, Visual ){
             setAudio: function() {
                 if ( this.audio === null ) {
                     this.audio = this.$("audio")[0];
-                    console.log("SET AUDIO", this.audio, this.$("audio")[0])
                     this.audio.load();
                 }
             },
@@ -38009,7 +38008,6 @@ function( app, _Layer, Visual, TextModal ) {
         },
 
         onMouseUp: function() {
-            console.log("TEXT MOUSE UP", this.mousedown,this.model.zeega.get("mode"))
             if ( this.mousedown ) {
                 this.launchTextModal();
                 if ( this.model.zeega.get("mode") == "editor" ) {
@@ -38418,7 +38416,7 @@ function( app, PageModel, LayerCollection ) {
 
         initialize: function() {
             if ( this.zeega.get("mode") == "editor" ) {
-                this.initEditor()
+                this.initEditor();
             } else if ( this.zeega.get("mode") == "player") {
 
             }
@@ -38684,13 +38682,13 @@ function( app, PageCollection, Layers, SequenceModel ) {
 
         // sequences should be eraticated
         _loadSequence: function() {
-            this.sequence = new SequenceModel( this.get("sequences")[0])
+            this.sequence = new SequenceModel( this.get("sequences")[0]);
         },
 
         _loadPages: function() {
             var pageArray = _.map( this.get("sequences")[0].frames, function( pageId ) {
                     return _.find( this.get("frames"), function( page ) {
-                        return page.id == pageId
+                        return page.id == pageId;
                     });
                 }, this );
 
@@ -39426,7 +39424,7 @@ function( app, Parser, ProjectCollection, ProjectModel, PageCollection, PageMode
             
             this.projects.each(function( project ) {
                 project.pages.each(function( page ) {
-                    pagesArray.push( page )
+                    pagesArray.push( page );
                 });
             });
 
@@ -39450,7 +39448,7 @@ function( app, Parser, ProjectCollection, ProjectModel, PageCollection, PageMode
 
             if ( layer ) {
                 this.set("currentLayer", layer );
-                layer.trigger("focus")
+                layer.trigger("focus");
             } else if ( layer === null ) {
                 this.set("currentLayer", null );
             }
@@ -39915,7 +39913,7 @@ function( app, ArrowView, CloseView, PlayPauseView, SizeToggle ) {
         },
 
         afterRender: function() {
-            this.onFramePlay()
+            this.onFramePlay();
         },
 
         events: {

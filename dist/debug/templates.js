@@ -154,7 +154,7 @@ __p+='<div class="end-page-wrapper" >\n\n    <h1>Remix</h1>\n    <div class="pro
 ');\n                background-size: cover;\n                background-position: center;\n            "></div>\n        </div>\n        <div class="username">'+
 ( remix.parent.user.display_name )+
 '</div>\n    </div>\n\n    ';
- if ( remix.parent.id != remix.root.id || true ) { 
+ if ( remix.parent.id != remix.root.id ) { 
 ;__p+='\n\n        <div class="project-root remix-project-wrapper">\n            <div class="title">remixed from</div>\n            <div class="token-wrapper">\n                <div class="user-token user-token-medium" style="\n                    background-image: url('+
 ( remix.root.user.thumbnail_url )+
 ');\n                    background-size: cover;\n                    background-position: center;\n                "></div>\n            </div>\n            <div class="username">'+
