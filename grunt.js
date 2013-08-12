@@ -244,7 +244,8 @@ module.exports = function(grunt) {
                 },
                 files: {
                     "dist/img/": [ "assets/img/*", "assets/img/zeegaplayer/*" ],
-                    "dist/img/layers/": "assets/img/zeegaplayer/layers/*"
+                    "dist/img/layers/": "assets/img/zeegaplayer/layers/*",
+                    "dist/fonts/": "assets/fonts/*"
                 }
             }
 

@@ -18383,11 +18383,11 @@ function( app, Backbone ) {
             $.ajax({ url: url, type: 'POST', success: function(){  }  });
 
             return false;
-
         },
 
         endPageEnter: function() {
             if ( !app.player.zeega.getNextPage() ) {
+                console.log("SHOW")
                 this.$el.show();
                 this.$(".upper-wrapper").css("height", this.$(".ZEEGA-loader-inner").height() + 20 );
                 if( !this.viewed ){
@@ -39489,11 +39489,13 @@ function( app, Parser, ProjectCollection, ProjectModel, PageCollection, PageMode
             if ( remixData.remix && !this.projects.get( remixData.parent.id ) && this.waiting ) {
                 var projectUrl = "http:" + app.metadata.hostname + app.metadata.directory +'api/projects/' + remixData.parent.id;
 
+                this.emit("project:fetching");
+
                 $.getJSON( projectUrl, function( data ) {
                     this._onDataLoaded( data );
                     this.waiting = false;
+                    this.emit("project:fetch_success");
                 }.bind(this));
-
             }
         },
 
@@ -40733,13 +40735,15 @@ function( app, Engine, Relay, Status, PlayerLayout ) {
         mobileLoadAudioLayers: function() {
             if ( app.player.zeega.getSoundtrack().state != "ready" ) {
                 var audio = document.getElementById("audio-el-" + app.player.zeega.getSoundtrack().id );
-
-                audio.load();
-                audio.addEventListener("canplay",function() {
-                    app.player.zeega.getSoundtrack().state = "ready";
-                    audio.removeEventListener("canplay");
-                    audio.play();
-                });
+                
+                if ( audio ) {
+                    audio.load();
+                    audio.addEventListener("canplay",function() {
+                        app.player.zeega.getSoundtrack().state = "ready";
+                        audio.removeEventListener("canplay");
+                        audio.play();
+                    });
+                }
             }
         },
 

@@ -44,11 +44,11 @@ function( app, Backbone ) {
             $.ajax({ url: url, type: 'POST', success: function(){  }  });
 
             return false;
-
         },
 
         endPageEnter: function() {
             if ( !app.player.zeega.getNextPage() ) {
+                console.log("SHOW")
                 this.$el.show();
                 this.$(".upper-wrapper").css("height", this.$(".ZEEGA-loader-inner").height() + 20 );
                 if( !this.viewed ){
