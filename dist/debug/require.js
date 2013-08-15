@@ -19477,22 +19477,6 @@ function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage ) {
 
         onTap: function( e ) {
 
-            // do not activate if tapping on link
-            if ( !$(e.target).closest(".visual-element").hasClass("linked-layer") ) {
-                window.scrollTo(0, 1);
-                this.chrome.toggle();
-                this.glowLinks();
-            }
-        },
-
-        glowLinks: function() {
-            if ( this.model.state != "paused" ) {
-                clearInterval( this.glowTimer );
-                $(".visual-element-link[data-glowonhover=true]").addClass("mobile-glow");
-                this.timer = setTimeout(function() {
-                    $(".visual-element-link").removeClass("mobile-glow");
-                }, this.GLOW );
-            }
         },
 
         startTouchEvents: function() {
