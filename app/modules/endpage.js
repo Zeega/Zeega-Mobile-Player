@@ -61,7 +61,6 @@ function( app, Backbone ) {
 
         endPageEnter: function() {
             if ( !app.player.zeega.getNextPage() ) {
-                console.log("SHOW")
                 this.$el.show();
                 this.$(".upper-wrapper").css("height", this.$(".ZEEGA-loader-inner").height() + 20 );
                 if( !this.viewed ){

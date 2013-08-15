@@ -18386,7 +18386,6 @@ function( app, Backbone ) {
 
         endPageEnter: function() {
             if ( !app.player.zeega.getNextPage() ) {
-                console.log("SHOW")
                 this.$el.show();
                 this.$(".upper-wrapper").css("height", this.$(".ZEEGA-loader-inner").height() + 20 );
                 if( !this.viewed ){
@@ -19396,12 +19395,11 @@ function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage ) {
 
     return Backbone.Layout.extend({
         
+        firstFrameTimer: null,
+        FIRST_FRAME_TIMEOUT: 4000,
         preCoffin: null,
         coffin: false,
         pauseView: null,
-        glowTimer: null,
-
-        GLOW: 3000,
         el: "#main",
 
         initialize: function() {
@@ -19469,14 +19467,25 @@ function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage ) {
                 event.preventDefault();
             });
 
+            this.model.once("player:play", this.onPlay, this );
         },
 
-        events: {
-            "click #player": "onTap"
-        },
-
-        onTap: function( e ) {
-
+        onPlay: function() {
+            this.firstFrameTimer = setTimeout(function() {
+                $("body").append("<img class='swipe-reminder' src='assets/img/swipe-left.png'/>");
+                $(".swipe-reminder").animate({
+                        left: "50%"
+                    }, 750, function() {
+                        $(".swipe-reminder").animate({
+                            left: "100%"
+                        }, 1000, function() {
+                            $(".swipe-reminder").remove();
+                        });
+                    });
+            }, this.FIRST_FRAME_TIMEOUT );
+            this.model.once("page:play", function(){
+                clearTimeout( this.firstFrameTimer );
+            }, this)
         },
 
         startTouchEvents: function() {
