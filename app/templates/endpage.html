@@ -31,29 +31,26 @@
 
 <div class="endpage-actions">
     <h2>Explore More Zeegas</h2>
-     <article style="background-image: url(<%=related_project.cover_image %>);" >
-            <div class="info-overlay">
-                <div class="left-column">
-                  <a data-bypass="true" href="<%=path %>profile/<%=related_project.user.id %>" >
-                    <div class="profile-token" style="background-image: url(<%= related_project.user.thumbnail_url %>);"></div>
-                   </a>
-                </div>
-                <div class="right-column">
-                  <h1 class = "caption"><%= related_project.title %></h1>
-                  
-                  <div class="profile-name">
-                    <a data-bypass="true" href="<%=path %>profile/<%=related_project.user.id%>" >
-                      <%=related_project.user.display_name%>
-                    </a>
-                   
-                  </div>
-                 
-                </div>
-                  
-            
-            </div>
-            <a href="<%=path %>m/<%=related_project.id %>" class="mobile-play" data-bypass="true"></a>
-    </article>
+
+    <div class="suggested-zeega">
+
+        <div class="top"><%= related_project.user.display_name %></div>
+
+        <a href="<%=path %><%=related_project.id %>"
+                class="middle zeega-thumb play-next"
+                data-id="<%=related_project.id %>"
+                data-bypass="true"
+                style="background-image: url(<%=related_project.cover_image %>);">
+
+            <div class="profile-token"
+                    style="background-image: url(<%= related_project.user.thumbnail_url %>);
+                            background-size: cover;
+                            background-position: center;"></div>
+            <span class="playbutton"></span>
+        </a>
+
+        <div class="bottom"><%= related_project.title %></div>
+    </div>
 
 </div>
 

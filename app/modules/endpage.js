@@ -12,10 +12,23 @@ function( app, Backbone ) {
         className: "ZEEGA-endpage",
         template: "app/templates/endpage",
 
+        serialize: function() {
+            return _.extend({
+                    path: "http:" + app.metadata.hostname + app.metadata.directory
+                },
+                app.metadata,
+                app.player.zeega.getCurrentProject().toJSON(),
+                {
+                    share_links: this.getShareLinks(),
+                    related_project: this.relatedProjects[0]
+                }
+            );
+        },
+
         initialize: function() {
             this.model.on("endpage_enter", this.endPageEnter, this );
             this.model.on("endpage_exit", this.endPageExit, this );
-            this.relatedProject = $.parseJSON( window.relatedProjectsJSON ).projects[0];
+            this.relatedProjects = $.parseJSON( window.relatedProjectsJSON ).projects;
         },
 
         events: {
@@ -66,20 +79,6 @@ function( app, Backbone ) {
 
         endPageExit: function() {
             this.$el.hide();
-        },
-
-        serialize: function() {
-
-            return _.extend({
-                    path: "http:" + app.metadata.hostname + app.metadata.directory
-                },
-                app.metadata,
-                app.player.zeega.getCurrentProject().toJSON(),
-                {
-                    share_links: this.getShareLinks(),
-                    related_project: this.relatedProject
-                }
-            );
         },
 
         getShareLinks: function() {
