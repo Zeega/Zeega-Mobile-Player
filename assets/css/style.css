@@ -2884,8 +2884,10 @@ a:active {
   width: -webkit-calc(100% - 66px);
 }
 .ZEEGA-chrome-metablock .right-col .username {
-  font-size: 11px;
   margin-bottom: 5px;
+}
+.ZEEGA-chrome-metablock .right-col .username .profile-name {
+  font-size: 11px !important;
 }
 .ZEEGA-chrome-metablock .right-col .caption {
   line-height: 1.1em;
@@ -3162,7 +3164,6 @@ a:active {
   text-align: left;
 }
 .ZEEGA-endpage article .info-overlay .right-column .profile-name {
-  font-size: 0.7em;
   position: absolute;
   width: 100%;
   bottom: 0;

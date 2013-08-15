@@ -51,27 +51,21 @@ __p+='<div href="'+
 ( share_links.tumblr )+
 '" target="blank" ><i class="endpage-social endpage-social-tumblr"></i></a>\n        </li>\n        <li>\n            <a name = "reddit" href="'+
 ( share_links.reddit )+
-'" target="blank" ><i class="endpage-social endpage-social-reddit"></i></a>\n        </li>\n    </ul>\n</div>\n\n<div class="endpage-actions">\n    <h2>Explore More Zeegas</h2>\n     <article style="background-image: url('+
-(related_project.cover_image )+
-');" >\n            <div class="info-overlay">\n                <div class="left-column">\n                  <a data-bypass="true" href="'+
+'" target="blank" ><i class="endpage-social endpage-social-reddit"></i></a>\n        </li>\n    </ul>\n</div>\n\n<div class="endpage-actions">\n    <h2>Explore More Zeegas</h2>\n\n    <div class="suggested-zeega">\n\n        <div class="top">'+
+( related_project.user.display_name )+
+'</div>\n\n        <a href="'+
 (path )+
-'profile/'+
-(related_project.user.id )+
-'" >\n                    <div class="profile-token" style="background-image: url('+
-( related_project.user.thumbnail_url )+
-');"></div>\n                   </a>\n                </div>\n                <div class="right-column">\n                  <h1 class = "caption">'+
-( related_project.title )+
-'</h1>\n                  \n                  <div class="profile-name">\n                    <a data-bypass="true" href="'+
-(path )+
-'profile/'+
-(related_project.user.id)+
-'" >\n                      '+
-(related_project.user.display_name)+
-'\n                    </a>\n                   \n                  </div>\n                 \n                </div>\n                  \n            \n            </div>\n            <a href="'+
-(path )+
-'m/'+
+''+
 (related_project.id )+
-'" class="mobile-play" data-bypass="true"></a>\n    </article>\n\n</div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a data-bypass="true" href="'+
+'"\n                class="middle zeega-thumb play-next"\n                data-id="'+
+(related_project.id )+
+'"\n                data-bypass="true"\n                style="background-image: url('+
+(related_project.cover_image )+
+');">\n\n            <div class="profile-token"\n                    style="background-image: url('+
+( related_project.user.thumbnail_url )+
+');\n                            background-size: cover;\n                            background-position: center;"></div>\n            <span class="playbutton"></span>\n        </a>\n\n        <div class="bottom">'+
+( related_project.title )+
+'</div>\n    </div>\n\n</div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a data-bypass="true" href="'+
 ( path )+
 'profile/'+
 ( userId )+
@@ -401,15 +395,7 @@ __p+='<div class="modal-content">\n    <div class="modal-title">Edit your text</
 ( attr.content )+
 '</textarea>\n            <select class="font-list" id="font-list-'+
 ( id )+
-'"></select>\n            <div class="textarea-info">max 140 characters</div>\n        </div>\n\n<!--\n        <div class="bottom-box clearfix">\n            <a href="#" class="link-page-open action ';
- if ( attr.to_frame ) { 
-;__p+='hide';
- } 
-;__p+='"><i class="icon-plus-sign"></i> link to page</a>\n\n            <div class="page-chooser-wrapper ';
- if ( !attr.to_frame ) { 
-;__p+='hide';
- } 
-;__p+='">\n                <a href="#" class="link-new-page"><i class="icon-plus icon-white"></i></br>New Page</a>\n                <div class="divider">or</div>\n                <ul class="page-chooser-list clearfix"></ul>\n                <a href="#" class="unlink-text action"><i class="icon-minus-sign"></i> remove link</a>\n            </div>\n        </div>\n-->\n        <div class="bottom-chooser clearfix">\n            <a href="#" class="text-modal-save btnz btnz-submit">OK</a>\n        </div>\n    </div>\n</div>\n';
+'"></select>\n            <div class="textarea-info">max 140 characters</div>\n        </div>\n\n        <div class="bottom-chooser clearfix">\n            <a href="#" class="text-modal-save btnz btnz-submit">OK</a>\n        </div>\n    </div>\n</div>\n';
 }
 return __p;
 };

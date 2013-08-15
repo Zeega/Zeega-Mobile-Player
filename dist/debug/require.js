@@ -389,27 +389,21 @@ __p+='<div href="'+
 ( share_links.tumblr )+
 '" target="blank" ><i class="endpage-social endpage-social-tumblr"></i></a>\n        </li>\n        <li>\n            <a name = "reddit" href="'+
 ( share_links.reddit )+
-'" target="blank" ><i class="endpage-social endpage-social-reddit"></i></a>\n        </li>\n    </ul>\n</div>\n\n<div class="endpage-actions">\n    <h2>Explore More Zeegas</h2>\n     <article style="background-image: url('+
-(related_project.cover_image )+
-');" >\n            <div class="info-overlay">\n                <div class="left-column">\n                  <a data-bypass="true" href="'+
+'" target="blank" ><i class="endpage-social endpage-social-reddit"></i></a>\n        </li>\n    </ul>\n</div>\n\n<div class="endpage-actions">\n    <h2>Explore More Zeegas</h2>\n\n    <div class="suggested-zeega">\n\n        <div class="top">'+
+( related_project.user.display_name )+
+'</div>\n\n        <a href="'+
 (path )+
-'profile/'+
-(related_project.user.id )+
-'" >\n                    <div class="profile-token" style="background-image: url('+
-( related_project.user.thumbnail_url )+
-');"></div>\n                   </a>\n                </div>\n                <div class="right-column">\n                  <h1 class = "caption">'+
-( related_project.title )+
-'</h1>\n                  \n                  <div class="profile-name">\n                    <a data-bypass="true" href="'+
-(path )+
-'profile/'+
-(related_project.user.id)+
-'" >\n                      '+
-(related_project.user.display_name)+
-'\n                    </a>\n                   \n                  </div>\n                 \n                </div>\n                  \n            \n            </div>\n            <a href="'+
-(path )+
-'m/'+
+''+
 (related_project.id )+
-'" class="mobile-play" data-bypass="true"></a>\n    </article>\n\n</div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a data-bypass="true" href="'+
+'"\n                class="middle zeega-thumb play-next"\n                data-id="'+
+(related_project.id )+
+'"\n                data-bypass="true"\n                style="background-image: url('+
+(related_project.cover_image )+
+');">\n\n            <div class="profile-token"\n                    style="background-image: url('+
+( related_project.user.thumbnail_url )+
+');\n                            background-size: cover;\n                            background-position: center;"></div>\n            <span class="playbutton"></span>\n        </a>\n\n        <div class="bottom">'+
+( related_project.title )+
+'</div>\n    </div>\n\n</div>\n\n<div class="ZEEGA-chrome-metablock">\n    <div class="meta-inner">\n        <div class="left-col">\n            <a data-bypass="true" href="'+
 ( path )+
 'profile/'+
 ( userId )+
@@ -739,15 +733,7 @@ __p+='<div class="modal-content">\n    <div class="modal-title">Edit your text</
 ( attr.content )+
 '</textarea>\n            <select class="font-list" id="font-list-'+
 ( id )+
-'"></select>\n            <div class="textarea-info">max 140 characters</div>\n        </div>\n\n<!--\n        <div class="bottom-box clearfix">\n            <a href="#" class="link-page-open action ';
- if ( attr.to_frame ) { 
-;__p+='hide';
- } 
-;__p+='"><i class="icon-plus-sign"></i> link to page</a>\n\n            <div class="page-chooser-wrapper ';
- if ( !attr.to_frame ) { 
-;__p+='hide';
- } 
-;__p+='">\n                <a href="#" class="link-new-page"><i class="icon-plus icon-white"></i></br>New Page</a>\n                <div class="divider">or</div>\n                <ul class="page-chooser-list clearfix"></ul>\n                <a href="#" class="unlink-text action"><i class="icon-minus-sign"></i> remove link</a>\n            </div>\n        </div>\n-->\n        <div class="bottom-chooser clearfix">\n            <a href="#" class="text-modal-save btnz btnz-submit">OK</a>\n        </div>\n    </div>\n</div>\n';
+'"></select>\n            <div class="textarea-info">max 140 characters</div>\n        </div>\n\n        <div class="bottom-chooser clearfix">\n            <a href="#" class="text-modal-save btnz btnz-submit">OK</a>\n        </div>\n    </div>\n</div>\n';
 }
 return __p;
 };
@@ -18351,10 +18337,23 @@ function( app, Backbone ) {
         className: "ZEEGA-endpage",
         template: "app/templates/endpage",
 
+        serialize: function() {
+            return _.extend({
+                    path: "http:" + app.metadata.hostname + app.metadata.directory
+                },
+                app.metadata,
+                app.player.zeega.getCurrentProject().toJSON(),
+                {
+                    share_links: this.getShareLinks(),
+                    related_project: this.relatedProjects[0]
+                }
+            );
+        },
+
         initialize: function() {
             this.model.on("endpage_enter", this.endPageEnter, this );
             this.model.on("endpage_exit", this.endPageExit, this );
-            this.relatedProject = $.parseJSON( window.relatedProjectsJSON ).projects[0];
+            this.relatedProjects = $.parseJSON( window.relatedProjectsJSON ).projects;
         },
 
         events: {
@@ -18405,20 +18404,6 @@ function( app, Backbone ) {
 
         endPageExit: function() {
             this.$el.hide();
-        },
-
-        serialize: function() {
-
-            return _.extend({
-                    path: "http:" + app.metadata.hostname + app.metadata.directory
-                },
-                app.metadata,
-                app.player.zeega.getCurrentProject().toJSON(),
-                {
-                    share_links: this.getShareLinks(),
-                    related_project: this.relatedProject
-                }
-            );
         },
 
         getShareLinks: function() {
@@ -37577,32 +37562,6 @@ function( app ) {
             $("#main").addClass("modal");
             this.loadFonts();
             this.$("textarea").focus().select();
-            this.fillInPages();
-        },
-
-        fillInPages: function() {
-            app.status.get("currentSequence").frames.each(function( frame ) {
-                var fv = $("<li>"),
-                    bg = frame.get("thumbnail_url") === "" ? "black" :
-                        "url(" + frame.get("thumbnail_url") +") no-repeat center center";
-
-                fv.addClass("page")
-                    .data("id", frame.id )
-                    .css({
-                        background: bg,
-                        "-webkit-background-size": "cover"
-                    });
-
-                if ( app.status.get("currentFrame").id == frame.id ) {
-                    fv.addClass("inactive");
-                }
-
-                if ( this.model.getAttr("to_frame") == frame.id ) {
-                    fv.addClass("active");
-                }
-
-                this.$('.page-chooser-list').append( fv );
-            }, this );
         },
 
         events: {
@@ -38166,7 +38125,7 @@ function( app, Backbone, LayerCollection, Layers ) {
             }.bind( this ), 1000 );
 
             this.startThumbWorker = _.debounce(function() {
-                var worker = new Worker( app.webRoot + "js/helpers/thumbworker.js" );
+                var worker = new Worker( app.getWebRoot() + "js/helpers/thumbworker.js" );
             
                 worker.addEventListener("message", function(e) {
 
@@ -38787,6 +38746,18 @@ function( app, PageCollection, Layers, SequenceModel ) {
             });
         },
 
+        getSimpleJSON: function() {
+            return _.pick(this.toJSON(),["cover_image", "user", "id"]);
+        },
+
+        getRemixParent: function() {
+
+        },
+
+        getRemixRoot: function() {
+
+        },
+
         getFrame: function( frameID ) {
             
         },
@@ -39298,6 +39269,7 @@ function( app, Parser, ProjectCollection, ProjectModel, PageCollection, PageMode
     return app.Backbone.Model.extend({
 
         projects: null,
+        waiting: false,
 
         defaults: {
             mode: "editor",
@@ -39462,6 +39434,10 @@ function( app, Parser, ProjectCollection, ProjectModel, PageCollection, PageMode
             return this.getCurrentProject().get("remix").remix;
         },
 
+        isNew: function() {
+            return this.getCurrentProject().pages.length == 1 && this.getCurrentProject().pages.at(0).layers.length === 0;
+        },
+
         copyLayer: function( layer ) {
             if ( layer ) {
                 this.set("clipboard", layer );
@@ -39484,11 +39460,15 @@ function( app, Parser, ProjectCollection, ProjectModel, PageCollection, PageMode
         preloadNextZeega: function() {
             var remixData = this.getCurrentProject().getRemixData();
 
-            this.waiting = true;
+// console.log("PRELOAD:", this.waiting, remixData.remix, this.projects.get( remixData.parent.id ),remixData.parent.id, this.projects )
             // only preload if the project does not already exist
-            if ( remixData.remix && !this.projects.get( remixData.parent.id ) && this.waiting ) {
-                var projectUrl = "http:" + app.metadata.hostname + app.metadata.directory +'api/projects/' + remixData.parent.id;
 
+            if ( remixData.remix && !this.projects.get( remixData.parent.id ) && !this.waiting ) {
+                var projectUrl = app.getApi() + "projects/" + remixData.parent.id;
+
+                this.waiting = true;
+
+// console.log("preloading next!!")
                 this.emit("project:fetching");
 
                 $.getJSON( projectUrl, function( data ) {
@@ -39496,6 +39476,29 @@ function( app, Parser, ProjectCollection, ProjectModel, PageCollection, PageMode
                     this.waiting = false;
                     this.emit("project:fetch_success");
                 }.bind(this));
+            }
+        },
+
+        getRemixPath: function() {
+            var isComplete, path, temp;
+
+            path = [ this.projects.at(0).getSimpleJSON() ];
+
+            path = this.projects.map(function( project ) {
+                var remixObj = project.get("remix");
+
+                //isComplete = temp.parent.id == temp.root.id;
+project.getSimpleJSON();
+                // temp = project.get("remix");
+
+                return project.get("remix");
+            });
+
+            console.log("__path", path)
+
+            return {
+                complete: isComplete,
+                path: path
             }
         },
 
@@ -40601,6 +40604,7 @@ function( app, Engine, Relay, Status, PlayerLayout ) {
         preloadPage: function( page ) {
             var nextPage = this.zeega.getNextPage( page );
 
+            this.zeega.preloadNextZeega();
             clearTimeout( this.preloadTimer );
 
             page.preload();
@@ -40612,8 +40616,6 @@ function( app, Engine, Relay, Status, PlayerLayout ) {
                     
                     nextPage.preload();
                     nextPage = this.zeega.getNextPage( nextPage );
-                } else {
-                    this.zeega.preloadNextZeega();
                 }
             }
 
