@@ -387,9 +387,9 @@ __p+='<div href="'+
 ( share_links.facebook )+
 '" target="blank"><i class="endpage-social endpage-social-facebook" target="blank" ></i></a>\n        </li>\n        <li>\n            <a name = "tumblr" href="'+
 ( share_links.tumblr )+
-'" target="blank" ><i class="endpage-social endpage-social-tumblr"></i></a>\n        </li>\n        <li>\n            <a name = "reddit" href="'+
+'" target="blank" ><i class="endpage-social endpage-social-tumblr"></i></a>\n        </li>\n        <!--\n        <li>\n            <a name = "reddit" href="'+
 ( share_links.reddit )+
-'" target="blank" ><i class="endpage-social endpage-social-reddit"></i></a>\n        </li>\n    </ul>\n</div>\n\n<div class="endpage-actions">\n    <h2>Explore More Zeegas</h2>\n\n    <div class="suggested-zeega">\n\n        <div class="top">'+
+'" target="blank" ><i class="endpage-social endpage-social-reddit"></i></a>\n        </li>\n    -->\n    </ul>\n</div>\n\n<div class="endpage-actions">\n    <h2>Explore More Zeegas</h2>\n\n    <div class="suggested-zeega">\n\n        <div class="top">'+
 ( related_project.user.display_name )+
 '</div>\n\n        <a href="'+
 (path )+
@@ -19513,6 +19513,14 @@ function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage ) {
             } else if ( app.hasPlayed && !this.coffin && e.direction == "left" ) {
                 this.pauseView.play();
             }
+        },
+
+        events: {
+            "click": "onTap"
+        },
+
+        onTap: function() {
+            this.chrome.toggle();
         },
 
         toggleCoffin: function() {

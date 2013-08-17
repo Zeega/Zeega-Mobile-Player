@@ -142,6 +142,14 @@ function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage ) {
             }
         },
 
+        events: {
+            "click": "onTap"
+        },
+
+        onTap: function() {
+            this.chrome.toggle();
+        },
+
         toggleCoffin: function() {
             if ( this.coffin ) {
                 this.hideCoffin();
