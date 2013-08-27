@@ -2786,6 +2786,11 @@ a:active {
 #underlay li.underlay-citation {
   font-size: 0.75em;
 }
+#underlay li.underlay-citation img.soundtrack-cover {
+  display: block;
+  margin-bottom: 5px;
+  margin-left: 61px;
+}
 #underlay li.spacer {
   height: 30px;
 }

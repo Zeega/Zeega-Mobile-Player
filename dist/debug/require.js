@@ -17380,7 +17380,6 @@ function( app, Backbone, Spinner ) {
         },
 
         play: function() {
-
             app.emit("swipe_to_play");
             
             this.model.mobileLoadAudioLayers();
@@ -18071,7 +18070,7 @@ function( app, Backbone ) {
 
         serialize: function() {
             return _.extend({
-                path: "http:" + app.metadata.hostname + app.metadata.directory
+                    path: "http:" + app.metadata.hostname + app.metadata.directory
                 },
                 app.metadata,
                 app.player.zeega.getCurrentProject().toJSON(),
@@ -18131,17 +18130,15 @@ function( app, Backbone ) {
         // update the citations each time the coffin is opened.
         updateCitations: function() {
             var frameData = this.model.getFrameData().layers,
-                soundtrackData = this.model.getSoundtrack();
+                soundtrack = this.model.zeega.getSoundtrack();
 
             if ( frameData ) {
                 this.$(".underlay-citation").remove();
 
-                if ( soundtrackData ) frameData.push( soundtrackData.toJSON() );
-
                 _.each( frameData, function( layer ) {
                     var link, citation;
 
-                    if( _.contains(["Image", "Audio"], layer.type )) {
+                    if( _.contains(["Image"], layer.type )) {
 
                         link = $("<a>")
                             .attr("href", layer.attr.attribution_uri )
@@ -18156,6 +18153,27 @@ function( app, Backbone ) {
                     }
                 });
             }
+
+            if ( soundtrack ) {
+                var href, stCitation;
+                
+                // frameData.push( soundtrack.toJSON() );
+
+                href = $("<a>")
+                    .attr("href", soundtrack.get("attr").attribution_uri )
+                    .attr("target", "blank")
+                    .append("<img class='soundtrack-cover' src='" + soundtrack.get("attr").thumbnail_url + "'/>")
+                    .append("<i class='icon-" + soundtrack.get("type").toLowerCase() + "'></i> " + (soundtrack.get("attr").title === "" ? "[untitled]" : soundtrack.get("attr").title ));
+
+                stCitation = $("<li>")
+                    .addClass("underlay-citation")
+                    .append( href );
+
+
+                this.$(".credits-header").after( stCitation );
+            }
+
+
         },
 
         events: {
@@ -18183,7 +18201,6 @@ function( app ) {
 
     return Backbone.View.extend({
 
-        
         FADE_TIMER: 5000,
 
         className: "ZEEGA-chrome",
@@ -18206,10 +18223,11 @@ function( app ) {
 
         initialize: function() {
             this.model.on("page:play", this.onCanplay, this );
+            app.once("swipe_to_play", this.showLoadingSoundtrack, this );
         },
 
         onCanplay: _.once(function() {
-            this.showLoadingSoundtrack();
+            // this.showLoadingSoundtrack();
 
             this.model.on("play", this.onPlay, this );
             this.model.on("pause", this.onPause, this );

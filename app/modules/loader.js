@@ -82,7 +82,6 @@ function( app, Backbone, Spinner ) {
         },
 
         play: function() {
-
             app.emit("swipe_to_play");
             
             this.model.mobileLoadAudioLayers();

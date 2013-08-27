@@ -6,7 +6,6 @@ function( app ) {
 
     return Backbone.View.extend({
 
-        
         FADE_TIMER: 5000,
 
         className: "ZEEGA-chrome",
@@ -29,10 +28,11 @@ function( app ) {
 
         initialize: function() {
             this.model.on("page:play", this.onCanplay, this );
+            app.once("swipe_to_play", this.showLoadingSoundtrack, this );
         },
 
         onCanplay: _.once(function() {
-            this.showLoadingSoundtrack();
+            // this.showLoadingSoundtrack();
 
             this.model.on("play", this.onPlay, this );
             this.model.on("pause", this.onPause, this );
