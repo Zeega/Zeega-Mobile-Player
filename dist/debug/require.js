@@ -17149,6 +17149,14 @@ function( $, _, Backbone, State, Spinner ) {
 
         metadata: $("meta[name=zeega]").data(),
 
+        getWebRoot: function() {
+            return "http:" + this.metadata.hostname + this.metadata.directory;
+        },
+
+        getApi: function() {
+            return this.getWebRoot() + "api/";
+        },
+
         spinner: new Spinner({
             lines: 13, // The number of lines to draw
             length: 7, // The length of each line
@@ -36035,6 +36043,7 @@ function( app, Controls ) {
             }
             this.applyVisualProperties();
             this.visualAfterRender();
+            this.model.trigger("visual:after_render", this );
         },
 
         applyStyles: function() {
@@ -36729,11 +36738,19 @@ function( app, _Layer, Visual ){
                 }
             },
             "av"
-        ]
+        ],
+
+        play: function() {
+            this.visual.onPlay();
+        },
+        pause: function() {
+            this.visual.onPause();
+        }
     });
 
     canPlayMpeg = function(){
         var a = document.createElement('audio');
+
         return !!(a.canPlayType && a.canPlayType('audio/mpeg;').replace(/no/, ''));
     };
 
@@ -36782,9 +36799,9 @@ function( app, _Layer, Visual ){
             playPause: function() {
                 this.setAudio();
                 if ( this.audio.paused ) {
-                    this.audio.play();
+                    this.onPlay();
                 } else {
-                    this.audio.pause();
+                    this.onPause();
                 }
             },
 
@@ -36820,6 +36837,16 @@ function( app, _Layer, Visual ){
 
             init: function() {
                 this.onCanPlay = _.once(function() {
+
+                    this.audio.addEventListener("timeupdate", function() {
+                        if ( this.audio ) {
+                            this.model.trigger("timeupdate", {
+                                currentTime: this.audio.currentTime,
+                                duration: this.audio.duration
+                            });
+                        }
+                    }.bind(this));
+
                     this.audio.pause();
                     this.model.trigger("layer layer:ready", this.model );
                 });
@@ -38099,9 +38126,6 @@ function( app, Backbone, LayerCollection, Layers ) {
         state: "waiting",
         modelType: "frame",
 
-        // lazySave: null,
-        // startThumbWorker: null,
-
         defaults: {
             _order: 0,
             attr: {},
@@ -38128,27 +38152,6 @@ function( app, Backbone, LayerCollection, Layers ) {
             this.lazySave = _.debounce(function() {
                 this.save();
             }.bind( this ), 1000 );
-
-            this.startThumbWorker = _.debounce(function() {
-                var worker = new Worker( app.getWebRoot() + "js/helpers/thumbworker.js" );
-            
-                worker.addEventListener("message", function(e) {
-
-                    if( e.data ) {
-                        this.set("thumbnail_url", e.data );
-                        this.lazySave();
-                    } else {
-                        this.trigger('thumbUpdateFail');
-                    }
-                    worker.terminate();
-                }.bind( this ), false);
-
-                worker.postMessage({
-                    cmd: 'capture',
-                    msg: app.getApi() + "projects/" + app.zeega.getCurrentProject().id + "/frames/" + this.id + "/thumbnail"
-                });
-
-            }, 1000);
 
         },
 
@@ -38254,23 +38257,17 @@ function( app, Backbone, LayerCollection, Layers ) {
         },
 
 
-
         // editor
 
         onLayerAddRemove: function() {
             this.onLayerSort();
-            this.once("sync", function() {
-                this.updateThumb();
-            }.bind( this ));
+            this.updateThumbUrl();
         },
 
         onLayerSort: function() {
             this.set("layers", this.layers.pluck("id") );
             this.lazySave();
-
-            this.once("sync", function() {
-                this.updateThumb();
-            }.bind( this ));
+            this.updateThumbUrl();
         },
 
         addLayerType: function( type ) {
@@ -38344,9 +38341,15 @@ function( app, Backbone, LayerCollection, Layers ) {
         },
 
         //update the frame thumbnail
-        updateThumb: function() {
-            this.trigger("thumbUpdateStart");
-            this.startThumbWorker();
+        updateThumbUrl: function() {
+            var url;
+
+            this.layers.each(function( layer ) {
+                if ( layer.get("type") == "Image" ) {
+                    this.set("thumbnail_url", layer.getAttr("thumbnail_url"));
+                    this.lazySave();
+                }
+            }, this );
         },
 
         saveAttr: function( attrObj ) {
@@ -38691,9 +38694,9 @@ function( app, PageCollection, Layers, SequenceModel ) {
 
         _loadSoundtrack: function() {
             if ( this.get("_soundtrack") ) {
-                this.soundtrack = new Layers["Audio"]( _.extend( this.get("_soundtrack"), { type: "Audio" }) );
+                this.soundtrack = new Layers.Audio( _.extend( this.get("_soundtrack"), { type: "Audio" }) );
 
-                this.soundtrack.visual = new Layers["Audio"].Visual({
+                this.soundtrack.visual = new Layers.Audio.Visual({
                         model: this.soundtrack,
                         attributes: {
                             "data-id": this.get("_soundtrack").id
@@ -38734,6 +38737,13 @@ function( app, PageCollection, Layers, SequenceModel ) {
                 .save()
                 .success(function( response ) {
                     this.soundtrack = newLayer;
+
+                    newLayer.visual = new Layers.Audio.Visual({
+                            model: this.soundtrack,
+                            attributes: {
+                                "data-id": newLayer.id
+                            }
+                        });
 
                     this.sequence.save({
                             attr: _.extend({}, this.sequence.get("attr"), { soundtrack: newLayer.id })
@@ -39341,13 +39351,26 @@ function( app, Parser, ProjectCollection, ProjectModel, PageCollection, PageMode
 
         focusPage: function( page ) {
             if ( this.getCurrentProject().id != page.project.id ) {
+                this.onNewProject( this.getCurrentProject(), page.project );
                 this.set("currentProject", page.project );
+                this.emit("project:project_switch", page.project );
             }
 
             this.blurPage( this.get("currentPage") );
             this.set("currentPage", page );
             page.trigger("focus");
             this.emit("page page:focus", page );
+        },
+
+        onNewProject: function( previous, next ) {
+            if ( (previous.soundtrack && next.soundtrack) && (previous.soundtrack.get("attr").uri == next.soundtrack.get("attr").uri) ) {
+                next.soundtrack = previous.soundtrack;
+            } else if ( (!previous.soundtrack && next.soundtrack) || (previous.soundtrack && !next.soundtrack) || (previous.soundtrack && next.soundtrack) && (previous.soundtrack.get("attr").uri != next.soundtrack.get("attr").uri) ) {
+                this.emit("project:soundtrack_switch", {
+                        next: next ? next.soundtrack : false,
+                        previous: previous ? previous.soundtrack : false
+                    });
+            }
         },
 
         blurPage: function( page ) {
@@ -39407,20 +39430,20 @@ function( app, Parser, ProjectCollection, ProjectModel, PageCollection, PageMode
         },
 
         setCurrentPage: function( page ) {
-            var oldPage = this.get("currentPage");
+            // var oldPage = this.get("currentPage");
 
-            this.setCurrentLayer( null );
+            // this.setCurrentLayer( null );
 
-            if ( oldPage && page ) {
-                oldPage.trigger("blur");
-            }
+            // if ( oldPage && page ) {
+            //     oldPage.trigger("blur");
+            // }
 
-            if ( page ) {
-                this.set("currentPage", page );
-                page.trigger("focus");
-            } else if ( page === null ) { // should this be allowed?
-                this.set("currentPage", null);
-            }
+            // if ( page ) {
+            //     this.set("currentPage", page );
+            //     page.trigger("focus");
+            // } else if ( page === null ) { // should this be allowed?
+            //     this.set("currentPage", null);
+            // }
         },
 
         getPages: function() {
@@ -39459,7 +39482,7 @@ function( app, Parser, ProjectCollection, ProjectModel, PageCollection, PageMode
         },
 
         getSoundtrack: function() {
-            return this.projects.at(0).soundtrack;
+            return this.getCurrentProject().soundtrack;
         },
 
         isRemix: function() {
@@ -39492,15 +39515,10 @@ function( app, Parser, ProjectCollection, ProjectModel, PageCollection, PageMode
         preloadNextZeega: function() {
             var remixData = this.getCurrentProject().getRemixData();
 
-// console.log("PRELOAD:", this.waiting, remixData.remix, this.projects.get( remixData.parent.id ),remixData.parent.id, this.projects )
-            // only preload if the project does not already exist
-
             if ( remixData.remix && !this.projects.get( remixData.parent.id ) && !this.waiting ) {
                 var projectUrl = app.getApi() + "projects/" + remixData.parent.id;
 
                 this.waiting = true;
-
-// console.log("preloading next!!")
                 this.emit("project:fetching");
 
                 $.getJSON( projectUrl, function( data ) {
@@ -39520,18 +39538,16 @@ function( app, Parser, ProjectCollection, ProjectModel, PageCollection, PageMode
                 var remixObj = project.get("remix");
 
                 //isComplete = temp.parent.id == temp.root.id;
-project.getSimpleJSON();
+                project.getSimpleJSON();
                 // temp = project.get("remix");
 
                 return project.get("remix");
             });
 
-            console.log("__path", path)
-
             return {
                 complete: isComplete,
                 path: path
-            }
+            };
         },
 
         _onDataLoaded: function( data ) {
@@ -40562,25 +40578,43 @@ function( app, Engine, Relay, Status, PlayerLayout ) {
             }, this );
 
             this.preloadPage( this.zeega.getCurrentPage() );
+
+            this.zeega.on("project:soundtrack_switch", this.onSoundtrackSwitch, this );
         },
 
-        _renderSoundtrack: function() {
-            var soundtrack = this.zeega.getSoundtrack();
+        onSoundtrackSwitch: function( soundtracks ) {
+            if ( soundtracks.previous ) {
+                soundtracks.previous.pause();
+            }
+            if ( soundtracks.next ) {
+                if ( soundtracks.next.state != "ready" ) {
+                    this._renderSoundtrack( soundtracks.next, true );
+                } else {
+                    soundtracks.next.play();
+                }
+            }
+        },
+
+        _renderSoundtrack: function( st, autoplay ) {
+            var soundtrack = st || this.zeega.getSoundtrack();
+
+            autoplay = autoplay || false;
 
             if ( soundtrack ) {
-                this.soundtrackState = "loading";
                 this.emit("soundtrack soundtrack:loading", soundtrack );
-                soundtrack.once("layer:ready", this._onSoundtrackReady, this );
+                soundtrack.once("layer:ready", function() {
+                        this._onSoundtrackReady( soundtrack, autoplay );
+                    }, this );
                 soundtrack.set("_target", this.layout.$(".ZEEGA-soundtrack") );
                 soundtrack.render();
             }
         },
 
-        _onSoundtrackReady: function( soundtrack ) {
+        _onSoundtrackReady: function( soundtrack, autoplay ) {
             this.soundtrackState = "ready";
             this.emit("soundtrack soundtrack:ready", soundtrack );
 
-            if ( this.get("autoplay") ) this.zeega.getSoundtrack().play();
+            if ( this.get("autoplay") || autoplay ) this.zeega.getSoundtrack().play();
         },
 
         play: function() {
@@ -40593,8 +40627,9 @@ function( app, Engine, Relay, Status, PlayerLayout ) {
                 this._fadeIn();
                 this.cuePage( page );
                 
-                if ( soundtrack ) this.zeega.getSoundtrack().play();
-
+                if ( soundtrack ) {
+                    this.zeega.getSoundtrack().play();
+                }
                 this.emit("player player:play", this );
             }
         },
@@ -40613,7 +40648,6 @@ function( app, Engine, Relay, Status, PlayerLayout ) {
             }
         },
 
-
         playPause: function() {
             if ( this.state == "paused" || this.state == "suspended" ) this.play();
             else this.pause();
@@ -40624,7 +40658,7 @@ function( app, Engine, Relay, Status, PlayerLayout ) {
                 this.state = "playing";
                 this.zeega.focusPage( page );
             } else {
-                this.playAndWaitForPageLoad( page )
+                this.playAndWaitForPageLoad( page );
             }
             this.preloadPage( page );
         },

@@ -28,6 +28,14 @@ function( $, _, Backbone, State, Spinner ) {
 
         metadata: $("meta[name=zeega]").data(),
 
+        getWebRoot: function() {
+            return "http:" + this.metadata.hostname + this.metadata.directory;
+        },
+
+        getApi: function() {
+            return this.getWebRoot() + "api/";
+        },
+
         spinner: new Spinner({
             lines: 13, // The number of lines to draw
             length: 7, // The length of each line
