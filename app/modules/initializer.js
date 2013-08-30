@@ -41,12 +41,9 @@ function(app, Backbone, UI, Player, Analytics) {
                 autoplay: false,
                 cover: true,
                 target: '#player',
-                startFrame: app.state.get("frameID"),
                 keyboard: false,
                 data: $.parseJSON( window.projectJSON ) || null,
-                url: window.projectJSON ? null :
-                    app.state.get("projectID") !== null ? app.api + "/items/" + app.state.get("projectID") :
-                    "testproject.json"
+                url: window.projectJSON ? null : "testproject.json"
             });
 
             if ( window.projectJSON ) {

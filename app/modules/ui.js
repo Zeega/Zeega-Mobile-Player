@@ -86,7 +86,6 @@ function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage ) {
         },
 
         afterRender: function() {
-            app.state.set("baseRendered", true );
             this.startTouchEvents();
             window.scrollTo(0, 1);
 
