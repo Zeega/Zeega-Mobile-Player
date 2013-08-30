@@ -692,6 +692,18 @@ __p+='<div class="visual-target" style="\n    background: url('+
 return __p;
 };
 
+this["JST"]["app/engine/plugins/layers/image/zga.html"] = function(obj){
+var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+with(obj||{}){
+__p+='<div class="visual-target" style="\n    background: url('+
+( attr.zga_uri )+
+');\n">\n    <style>'+
+( css )+
+'</style>\n</div>';
+}
+return __p;
+};
+
 this["JST"]["app/engine/plugins/layers/link/frame-chooser.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
@@ -19592,7 +19604,6 @@ function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage ) {
     });
 
 });
-// layer.js
 define('engine/modules/layer.collection',[
     "app"
 ],
@@ -19673,7 +19684,6 @@ function( app ) {
         onRemove: function( layer ) {
             layer.trigger("blur");
             layer.editorCleanup();
-            layer.destroy();
             app.trigger("layer_remove", layer );
         },
 
@@ -35935,8 +35945,7 @@ function( app, Controls ) {
             this.visual.player_onExit();
         },
 
-        // removes the layer. destroys players, removes from dom, etc
-        destroy: function() {
+        finish: function() {
             // do not attempt to destroy if the layer is waiting or destroyed
             if ( this.state != "waiting" && this.state != "destroyed" ) {
                 this.state = "destroyed";
@@ -35944,7 +35953,6 @@ function( app, Controls ) {
                 if ( this.visual.destroy ) {
                     this.visual.destroy();
                 }
-
             }
         }
 
@@ -36295,26 +36303,48 @@ function( app, Layer, Visual ){
         ],
 
         serialize: function() {
-            return this.model.toJSON();
+            return _.extend({ css: this.getAnimationCss() }, this.model.toJSON());
+        },
+
+        isAnimated: function(){
+
+            if(!_.isNull(this.model.getAttr("zga_uri")) && !_.isUndefined(this.model.getAttr("zga_uri"))){
+                return true;
+            } else {
+                return false;
+            }
         },
 
         init: function() {
+            var attr = this.model.get("attr");
+            
+            if( this.isAnimated() ){
+                this.template = "image/zga";
+                attr.uri = attr.zga_uri;
+                this.model.set( { attr: attr } );
+            }
+
             if ( this.model.getAttr("page_background")) {
                 this.model.setAttr( this.model.pageBackgroundPositioning );
                 this.visualProperties = ["opacity"];
             }
         },
 
-        afterEditorRender: function() {
-            // add height attribute if not already there
-            // this may break if the aspect ratio changes
-            this.aspectRatio = this.getAttr("aspectRatio");
+        visualAfterRender: function(){
+            if( this.isAnimated() ) {
+                this.initAnimation();
+            }
+        },
 
-            if ( _.isNull( this.aspectRatio ) ) {
-                this.determineAspectRatio();
+        afterEditorRender: function() {
+
+            if( !this.isAnimated() ){
+                this.aspectRatio = this.getAttr("aspectRatio");
             }
 
-            if ( this.model.getAttr("page_background")) {
+            if ( _.isNull( this.getAttr("aspectRatio") ) ) {
+                this.determineAspectRatio();
+            } else if ( this.model.getAttr("page_background")) {
                 this.makePageBackground();
                 this.disableDrag();
             }
@@ -36342,16 +36372,32 @@ function( app, Layer, Visual ){
                 });
 
             $img.imagesLoaded();
-            $img.done(function() {
-                var width, height, top, left, imgRatio, workspaceRatio;
 
+            if( this.isAnimated() ){
+
+                console.log("SAVE AR", this.aspectRatio)
                 this.model.saveAttr({
-                    aspectRatio: $img.width()/ $img.height()
+                    aspectRatio: this.aspectRatio
                 });
-                this.aspectRatio = $img.width()/ $img.height();
 
-                $img.remove();
-            }.bind( this ));
+            } else {
+
+                $img.done(function() {
+                    var width, height, top, left, imgRatio, workspaceRatio;
+
+                    this.model.saveAttr({
+                        aspectRatio: $img.width()/ $img.height()
+                    });
+                    this.aspectRatio = $img.width()/ $img.height();
+
+                    $img.remove();
+
+                    if ( this.model.getAttr("page_background")) {
+                        this.makePageBackground();
+                        this.disableDrag();
+                    }
+                }.bind( this ));
+            }
             $("body").append( $img );
         },
 
@@ -36378,15 +36424,50 @@ function( app, Layer, Visual ){
         },
 
         makePageBackground: function() {
-            var vals = _.extend({}, this.model.pageBackgroundPositioning );
-            
-            _.each( vals, function( val, key ) {
-                this.$el.css( key, val +"%" );
-            }, this );
+            var vals;
+
+            if ( !this.isAnimated() ) {
+                vals = _.extend({}, this.model.pageBackgroundPositioning );
+                
+                _.each( vals, function( val, key ) {
+                    this.$el.css( key, val +"%" );
+                }, this );
+
+                
+            } else {
+                var fullscreenRatio = this.model.pageBackgroundPositioning.width / this.model.pageBackgroundPositioning.height;
+
+                if ( this.aspectRatio >= fullscreenRatio ) {
+                    // wider
+                    newBGPos = {
+                        height: this.model.pageBackgroundPositioning.height,
+                        width: this.aspectRatio * this.model.pageBackgroundPositioning.height,
+                        top: this.model.pageBackgroundPositioning.top,
+                        left: -((this.aspectRatio * this.model.pageBackgroundPositioning.height) - this.model.pageBackgroundPositioning.width ) / 2
+                    };
+                } else {
+                    // taller
+                    newBGPos = {
+                        height: this.model.pageBackgroundPositioning.width * Math.pow( this.aspectRatio, -1 ),
+                        width: this.model.pageBackgroundPositioning.width,
+                        top: -(this.model.pageBackgroundPositioning.width * Math.pow( this.aspectRatio, -1 ) - this.model.pageBackgroundPositioning.height ) / 2,
+                        left: this.model.pageBackgroundPositioning.left
+                    };
+                }
+
+                vals = _.extend({}, newBGPos );
+                
+                _.each( vals, function( val, key ) {
+                    this.$el.css( key, val +"%" );
+                }, this );
+
+                // this.model.saveAttr(_.extend({ page_background: true }, vals ));
+            }
 
             if ( !this.getAttr("page_background") ) {
                 this.model.saveAttr(_.extend({ page_background: true }, vals ));
             }
+
         },
 
         fitToWorkspace: function() {
@@ -36429,7 +36510,7 @@ function( app, Layer, Visual ){
 
         verifyReady: function() {
             var $img = $("<img>")
-                .attr("src", this.getAttr("uri"))
+                .attr("src", this.isAnimated() ? this.getAttr("zga_uri") : this.getAttr("uri"))
                 .css({
                     height: "1px",
                     width: "1px",
@@ -36450,6 +36531,48 @@ function( app, Layer, Visual ){
                 this.model.trigger("layer layer:visual_error", this.model );
                 this.model.trigger("layer layer:visual_ready", this.model );
             }.bind(this));
+
+        },
+
+        getAnimationCss: function() {
+
+            if ( !this.isAnimated() ) return false;
+
+            var animationMeta, css, width, height, frames, delay, percentDuration;
+
+            animationMeta = this.model.getAttr("zga_uri").match(/\d+\d*_/g);
+            width  = animationMeta[ 0 ].split("_")[0];
+            height = animationMeta[ 1 ].split("_")[0];
+            frames = animationMeta[ 2 ].split("_")[0];
+            delay  = animationMeta[ 3 ].split("_")[0] == 0 ? 10 : animationMeta[ 3 ].split("_")[0];
+            percentDuration = 100.0 / frames;
+
+
+            this.aspectRatio = parseInt(width, 10 )/parseInt(height, 10);
+            this.backgroundSize = frames * 100;
+            this.duration = frames * delay / 100.0;
+
+            css = "@-webkit-keyframes zga-layer-" + this.model.id + "{";
+
+            for (var i = 0; i < frames ; i++ ) {
+                css += ( i * percentDuration ) + "%{" +
+                    "background-position:0 -" + ( i * 100 ) + "%;" +
+                    "-webkit-animation-timing-function:steps(1);}";
+            }
+            
+            css += "}"
+
+            return css;
+        },
+
+        initAnimation: function(){
+            this.$(".visual-target").css({
+                "background-size": "100% " + this.backgroundSize + "%",
+                "-webkit-animation-name": "zga-layer-" + this.model.id,
+                "-webkit-animation-duration": this.duration + "s",
+                "-webkit-animation-iteration-count": "infinite",
+                "-webkit-backface-visibility": "hidden"
+            });
         }
     });
 
@@ -36811,7 +36934,7 @@ function( app, _Layer, Visual ){
             editor_onLayerEnter: function() {},
 
             editor_onLayerExit: function() {
-                this.destroy();
+                this.finish();
             },
 
             playPause: function() {
@@ -38079,12 +38202,21 @@ function( app, Layer, Visual ){
         ],
 
         onPlay: function() {
-            this.model.zeega.emit("endpage_enter", this.model );
+            this.endEnterEmit();
         },
 
         onExit: function() {
+            this.endExitEmit();
+        },
+
+        endEnterEmit: _.debounce(function() {
+            this.model.zeega.emit("endpage_enter", this.model );
+        }, 250, { leading: true }),
+
+        endExitEmit: _.debounce(function() {
             this.model.zeega.emit("endpage_exit", this.model );
-        }
+        }, 250, { leading: true })
+
     });
 
     return L;
@@ -38181,7 +38313,8 @@ function( app, Backbone, LayerCollection, Layers ) {
         initEditorListeners: function() {
             this.stopListening( this.layers );
             this.layers.on("sort", this.onLayerSort, this );
-            this.layers.on("add remove", this.onLayerAddRemove, this );
+            this.layers.on("add", this.onLayerAdd, this );
+            this.layers.on("remove", this.onLayerRemove, this );
         },
 
         loadLayers: function( layers ) {
@@ -38274,10 +38407,16 @@ function( app, Backbone, LayerCollection, Layers ) {
             return this.zeega.getPreviousPage( this );
         },
 
-
         // editor
+        onLayerAdd: function() {
+            this.onLayerSort();
+            this.updateThumbUrl();
+        },
 
-        onLayerAddRemove: function() {
+        onLayerRemove: function( layer ) {
+            this.once("sync", function() {
+                layer.destroy();
+            });
             this.onLayerSort();
             this.updateThumbUrl();
         },
@@ -38381,9 +38520,9 @@ function( app, Backbone, LayerCollection, Layers ) {
             this.lazySave();
         },
 
-        destroy: function() {
+        finish: function() {
             this.layers.each(function( layer ) {
-                layer.destroy();
+                layer.finish();
             });
             this.state = "destroyed";
         }
@@ -38402,9 +38541,7 @@ function( app, PageModel, LayerCollection ) {
     return app.Backbone.Collection.extend({
 
         model: PageModel,
-
         zeega: null,
-        remixPageMax: 5,
 
         initialize: function() {
             if ( this.zeega.get("mode") == "editor" ) {
@@ -38519,6 +38656,7 @@ function( app, PageModel, LayerCollection ) {
             }
 
             app.trigger("frame_remove", pageModel );
+            pageModel.finish();
             pageModel.destroy();
         },
 
@@ -38612,6 +38750,7 @@ function( app, Layers ) {
             var attr = this.get("attr");
             
             app.emit("soundtrack_delete", layer);
+            layer.finish();
             layer.destroy();
             attr.soundtrack = false;
             this.set("attr", attr );
@@ -38623,6 +38762,12 @@ function( app, Layers ) {
             if ( currentIndex != -1 && this.frames.length > currentIndex + 1 ) {
                 this.frames.at( currentIndex + 1 ).layers.push( layer );
             }
+        },
+
+        clearVirtualPages: function() {
+            var pages = _.without( this.get("frames"), -1 );
+
+            this.set("frames", pages );
         }
 
     });
@@ -38778,6 +38923,7 @@ function( app, PageCollection, Layers, SequenceModel ) {
                         attr: _.extend({}, this.sequence.get("attr"), { soundtrack: false })
                     });
                 app.emit("soundtrack_delete", this.soundtrack);
+                this.soundtrack.finish();
                 this.soundtrack.destroy();
             }
             
@@ -38853,10 +38999,10 @@ function( app, PageCollection, Layers, SequenceModel ) {
             this.set({ publish_update: 0 });
         },
 
-        destroy: function() {
-            if ( this.soundtrack ) this.soundtrack.destroy();
+        finish: function() {
+            if ( this.soundtrack ) this.soundtrack.finish();
             this.pages.each(function( page ) {
-                page.destroy();
+                page.finish();
             });
         }
 
@@ -38932,6 +39078,9 @@ function() {
     Parser[type].parse = function( response, opts ) {
         removeDupeSoundtrack( response.project );
         response.project._soundtrack = getSoundtrackLayer( response.project );
+
+        // remove erroneous -1 pages
+        response.project.sequences[0].frames = _.without(response.project.sequences[0].frames, -1);
 
         if ( opts.endPage ) {
             var endId, lastPageId, lastPage, endPage, endLayers;
@@ -39448,20 +39597,20 @@ function( app, Parser, ProjectCollection, ProjectModel, PageCollection, PageMode
         },
 
         setCurrentPage: function( page ) {
-            // var oldPage = this.get("currentPage");
+            var oldPage = this.get("currentPage");
 
-            // this.setCurrentLayer( null );
+            this.setCurrentLayer( null );
 
-            // if ( oldPage && page ) {
-            //     oldPage.trigger("blur");
-            // }
+            if ( oldPage && page ) {
+                oldPage.trigger("blur");
+            }
 
-            // if ( page ) {
-            //     this.set("currentPage", page );
-            //     page.trigger("focus");
-            // } else if ( page === null ) { // should this be allowed?
-            //     this.set("currentPage", null);
-            // }
+            if ( page ) {
+                this.set("currentPage", page );
+                page.trigger("focus");
+            } else if ( page === null ) { // should this be allowed?
+                this.set("currentPage", null);
+            }
         },
 
         getPages: function() {
@@ -39595,6 +39744,8 @@ function( app, Parser, ProjectCollection, ProjectModel, PageCollection, PageMode
 
             layers.push( soundtrack );
 
+            currentProject.sequence.clearVirtualPages();
+
             _.extend( pData, currentProject.toJSON(), {
                 sequences: [ currentProject.sequence.toJSON() ],
                 frames: currentProject.pages.toJSON(),
@@ -39634,9 +39785,8 @@ function( app, Parser, ProjectCollection, ProjectModel, PageCollection, PageMode
         },
 
         destroy: function() {
-
             this.projects.each(function( project ) {
-                project.destroy();
+                project.finish();
             });
         }
     });
@@ -40058,6 +40208,7 @@ function( app, ArrowView, CloseView, PlayPauseView, SizeToggle ) {
 
         cleanup: function() {
             $(".tipsy").remove();
+            this.undelegateEvents();
         }
 
     });
@@ -40682,7 +40833,6 @@ function( app, Engine, Relay, Status, PlayerLayout ) {
         },
 
         playAndWaitForPageLoad: function( page ) {
-            console.log("play & wait", page);
             this.state = "playing";
             this.zeega.focusPage( page );
         },
@@ -40756,43 +40906,55 @@ function( app, Engine, Relay, Status, PlayerLayout ) {
         cueNext: function() {
             var nextPage = this.zeega.getNextPage();
 
-            if ( nextPage ) this.cuePage( this.zeega.getNextPage() );
+            if ( nextPage ) {
+                this.cuePage( this.zeega.getNextPage() );
+            }
         },
 
         // goes to the prev frame after n ms
         cuePrev: function( ms ) {
             var prevPage = this.zeega.getPreviousPage();
 
-            if ( prevPage ) this.cuePage( this.zeega.getPreviousPage() );
+            if ( prevPage ) {
+                this.cuePage( this.zeega.getPreviousPage() );
+            }
         },
 
         // move this to layout
         _initEvents: function() {
-            var _this = this;
 
             if ( this.get("keyboard") ) {
-                app.$(window).keyup(function( event ) {
+
+                app.$(window).bind("keyup.preview",function( event ) {
                     switch( event.which ) {
                         case 37: // left arrow
-                            _this.cuePrev();
+                            this.cuePrev();
                             break;
                         case 39: // right arrow
-                            _this.cueNext();
+                            this.cueNext();
                             break;
                         case 32: // spacebar
-                            _this.playPause();
+                            this.playPause();
                             break;
                     }
                 }.bind( this ));
+
             }
         },
 
+        _removeListeners: function() {
+            if ( this.get("keyboard") ) {
+                app.$(window).unbind("keyup.preview");
+            }
 
+            this.zeega.off("all");
+
+            this.off("cue_frame");
+            this.off("size_toggle");
+        },
 
 
 /////
-
-
 
 
 
@@ -40800,8 +40962,6 @@ function( app, Engine, Relay, Status, PlayerLayout ) {
         _listen: function() {
             this.on("cue_frame", this.cueFrame, this );
             this.on("size_toggle", this.toggleSize, this );
-            // relays
-            this.relay.on("change:current_frame", this._remote_cueFrame, this );
         },
 
         toggleSize: function() {
@@ -40854,11 +41014,12 @@ function( app, Engine, Relay, Status, PlayerLayout ) {
 
         // completely obliterate the player. triggers event
         destroy: function() {
-
+            this._removeListeners();
             this.layout.$el.fadeOut( this.get("fadeOut"), function() {
                 this.zeega.destroy();
                 this.layout.remove();
                 this.emit("player_destroyed");
+                this.clear();
             }.bind( this ));
         },
 
