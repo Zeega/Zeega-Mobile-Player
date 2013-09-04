@@ -14,6 +14,7 @@ function( app ) {
         active: true,
         visible: false,
         timer: null,
+        spinAnimationTimer: null,
         hasPlayed: false,
 
         serialize: function() {
@@ -39,31 +40,40 @@ function( app ) {
 
             this.model.on("endpage_enter", this.onEndpageEnter, this );
             this.model.on("endpage_exit", this.onEndpageExit, this );
+
+            this.model.on("soundtrack:loading", this.showLoadingSoundtrack, this );
+
         }),
 
-        showLoadingSoundtrack: function() {
-            var soundtrack = app.player.zeega.getSoundtrack();
+        showLoadingSoundtrack: function( soundtrack ) {
+            var soundtrack = soundtrack || app.player.zeega.getSoundtrack();
 
             if ( soundtrack && soundtrack.state != "ready" ) {
-                var timer, counter = 0;
-
-                this.$(".ZEEGA-sound-state").show().addClass("loading-0");
-
-                timer = setInterval(function() {
-                    this.$(".ZEEGA-sound-state")
-                        .show()
-                        .removeClass("loading-0 loading-1 loading-2")
-                        .addClass("loading-" + (counter % 3) );
-                    counter++;
-                }.bind( this ), 150 );
-
-                this.model.on("soundtrack:ready", function( model ) {
-                    clearInterval( timer );
-                    this.$(".ZEEGA-sound-state")
-                        .removeClass("loading-0 loading-1 loading-2")
-                        .fadeOut();
-                }.bind( this ));
+                this.spinSoundtrack();
+                this.model.once("soundtrack:ready", this.stopSpinSoundtrack, this );
             }
+        },
+
+        spinSoundtrack: function() {
+            var counter = 0;
+
+            this.$(".ZEEGA-sound-state").show().addClass("loading-0");
+
+            this.spinAnimationTimer = setInterval(function() {
+                this.$(".ZEEGA-sound-state")
+                    .show()
+                    .removeClass("loading-0 loading-1 loading-2")
+                    .addClass("loading-" + (counter % 3) );
+                counter++;
+            }.bind( this ), 150 );
+        },
+
+        stopSpinSoundtrack: function() {
+            clearInterval( this.spinAnimationTimer );
+            this.spinAnimationTimer = null;
+            this.$(".ZEEGA-sound-state")
+                .removeClass("loading-0 loading-1 loading-2")
+                .fadeOut();
         },
 
         onEndpageEnter: function() {
