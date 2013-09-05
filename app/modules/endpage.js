@@ -54,7 +54,7 @@ function( app, Backbone ) {
                 this.model.project.set({ "favorite": true });
                 app.emit("favorite");
             }
-            $.ajax({ url: url, type: 'POST', success: function(){  }  });
+            $.ajax({ url: url, type: 'POST', xhrFields: {withCredentials: true}, success: function(){  }  });
 
             return false;
         },
