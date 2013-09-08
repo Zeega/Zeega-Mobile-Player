@@ -36223,6 +36223,9 @@ function( app, Layer, Visual ){
         },
 
         pageBackgroundPositioning: {
+
+
+            baseRatio: 0.75,
             height: 112.67,
             width: 236.72,
             top: -6.57277,
@@ -36287,8 +36290,6 @@ function( app, Layer, Visual ){
             
             if( this.isAnimated() ){
                 this.template = "image/zga";
-                attr.uri = attr.zga_uri;
-                this.model.set( { attr: attr } );
             }
 
             if ( this.model.getAttr("page_background")) {
@@ -36355,12 +36356,11 @@ function( app, Layer, Visual ){
                     this.aspectRatio = $img.width()/ $img.height();
 
                     $img.remove();
-
-                    if ( this.model.getAttr("page_background")) {
-                        this.makePageBackground();
-                        this.disableDrag();
-                    }
                 }.bind( this ));
+            }
+            if ( this.model.getAttr("page_background")) {
+                this.makePageBackground();
+                this.disableDrag();
             }
             $("body").append( $img );
         },
@@ -36399,22 +36399,23 @@ function( app, Layer, Visual ){
 
                 
             } else {
-                var fullscreenRatio = this.model.pageBackgroundPositioning.width / this.model.pageBackgroundPositioning.height;
+                var fullscreenRatio = ( this.model.pageBackgroundPositioning.width / this.model.pageBackgroundPositioning.height ) * this.model.pageBackgroundPositioning.baseRatio ;
 
                 if ( this.aspectRatio >= fullscreenRatio ) {
                     // wider
+
                     newBGPos = {
                         height: this.model.pageBackgroundPositioning.height,
-                        width: this.aspectRatio * this.model.pageBackgroundPositioning.height,
+                        width: this.aspectRatio * this.model.pageBackgroundPositioning.height / this.model.pageBackgroundPositioning.baseRatio,
                         top: this.model.pageBackgroundPositioning.top,
-                        left: -((this.aspectRatio * this.model.pageBackgroundPositioning.height) - this.model.pageBackgroundPositioning.width ) / 2
+                        left: (100 - this.aspectRatio * this.model.pageBackgroundPositioning.height / this.model.pageBackgroundPositioning.baseRatio)/2
                     };
                 } else {
                     // taller
                     newBGPos = {
-                        height: this.model.pageBackgroundPositioning.width * Math.pow( this.aspectRatio, -1 ),
+                        height: this.model.pageBackgroundPositioning.width * Math.pow( this.aspectRatio, -1 ) * this.model.pageBackgroundPositioning.baseRatio,
                         width: this.model.pageBackgroundPositioning.width,
-                        top: -(this.model.pageBackgroundPositioning.width * Math.pow( this.aspectRatio, -1 ) - this.model.pageBackgroundPositioning.height ) / 2,
+                        top: ( 100 - this.model.pageBackgroundPositioning.width * Math.pow( this.aspectRatio, -1 ) * this.model.pageBackgroundPositioning.baseRatio ) / 2,
                         left: this.model.pageBackgroundPositioning.left
                     };
                 }
@@ -38515,7 +38516,7 @@ function( app, Backbone, LayerCollection, Layers ) {
         //update the frame thumbnail
         updateThumbUrl: function() {
             var url;
-
+            this.set("thumbnail_url", "");
             this.layers.each(function( layer ) {
                 if ( layer.get("type") == "Image" ) {
                     this.set("thumbnail_url", layer.getAttr("thumbnail_url"));
