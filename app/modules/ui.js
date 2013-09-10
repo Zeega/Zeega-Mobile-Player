@@ -121,6 +121,9 @@ function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage ) {
             this.hammer.onswipe = function( e ) {
                 this.onSwipe( e );
             }.bind( this );
+            this.hammer.ontap = function( e ) {
+                this.onTap( e );
+            }.bind( this );
         },
 
         onSwipe: function( e ) {
@@ -141,9 +144,9 @@ function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage ) {
             }
         },
 
-        events: {
-            "click": "onTap"
-        },
+        // events: {
+        //     "click": "onTap"
+        // },
 
         onTap: function() {
             this.chrome.toggle();

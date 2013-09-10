@@ -35,7 +35,8 @@ function(app, Backbone, UI, Player, Analytics) {
         initPlayer: function() {
             app.player = new Player({
                 // debugEvents: true,
-                endPage: true,
+                // endPage: true,
+                loop: true,
                 mobile: true,
                 controls: false,
                 autoplay: false,

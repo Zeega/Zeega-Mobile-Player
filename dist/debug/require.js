@@ -19500,6 +19500,9 @@ function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage ) {
             this.hammer.onswipe = function( e ) {
                 this.onSwipe( e );
             }.bind( this );
+            this.hammer.ontap = function( e ) {
+                this.onTap( e );
+            }.bind( this );
         },
 
         onSwipe: function( e ) {
@@ -19520,9 +19523,9 @@ function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage ) {
             }
         },
 
-        events: {
-            "click": "onTap"
-        },
+        // events: {
+        //     "click": "onTap"
+        // },
 
         onTap: function() {
             this.chrome.toggle();
@@ -39576,6 +39579,8 @@ function( app, Parser, ProjectCollection, ProjectModel, PageCollection, PageMode
                 nextPage = this.getCurrentProject().pages.at( p.get("_order") + 1 );
             } else if ( this.getNextProject() ) {
                 nextPage = this.getNextProject().pages.at(0);
+            } else if ( this.get("loop")) {
+                nextPage = this.projects.at(0).pages.at(0);
             }
 
             return nextPage;
@@ -39589,6 +39594,10 @@ function( app, Parser, ProjectCollection, ProjectModel, PageCollection, PageMode
                 previousPage = this.getCurrentProject().pages.at( p.get("_order") - 1 );
             } else if ( this.getPreviousProject() ) {
                 previousPage = this.getPreviousProject().pages.at( this.getPreviousProject().pages.length - 1 );
+            } else if ( this.get("loop")) {
+                var project = this.projects.at( this.projects.length - 1 );
+
+                previousPage = project.pages.at( project.pages.length - 1 );
             }
 
             return previousPage;
@@ -40541,6 +40550,8 @@ function( app, Engine, Relay, Status, PlayerLayout ) {
 
             layerOptions: {},
 
+            loop: false,
+
             /**
             Sets the player to operate in a mobile browser environment
 
@@ -41235,7 +41246,8 @@ function(app, Backbone, UI, Player, Analytics) {
         initPlayer: function() {
             app.player = new Player({
                 // debugEvents: true,
-                endPage: true,
+                // endPage: true,
+                loop: true,
                 mobile: true,
                 controls: false,
                 autoplay: false,
