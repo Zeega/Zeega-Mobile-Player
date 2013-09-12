@@ -43,6 +43,8 @@ function( app ) {
 
             this.model.on("soundtrack:loading", this.showLoadingSoundtrack, this );
 
+            this.model.on("project:project_switch", this.show, this );
+
         }),
 
         showLoadingSoundtrack: function( soundtrack ) {

@@ -18208,6 +18208,8 @@ function( app ) {
 
             this.model.on("soundtrack:loading", this.showLoadingSoundtrack, this );
 
+            this.model.on("project:project_switch", this.show, this );
+
         }),
 
         showLoadingSoundtrack: function( soundtrack ) {
@@ -39579,8 +39581,6 @@ function( app, Parser, ProjectCollection, ProjectModel, PageCollection, PageMode
                 nextPage = this.getCurrentProject().pages.at( p.get("_order") + 1 );
             } else if ( this.getNextProject() ) {
                 nextPage = this.getNextProject().pages.at(0);
-            } else if ( this.get("loop")) {
-                nextPage = this.projects.at(0).pages.at(0);
             }
 
             return nextPage;
@@ -39594,10 +39594,6 @@ function( app, Parser, ProjectCollection, ProjectModel, PageCollection, PageMode
                 previousPage = this.getCurrentProject().pages.at( p.get("_order") - 1 );
             } else if ( this.getPreviousProject() ) {
                 previousPage = this.getPreviousProject().pages.at( this.getPreviousProject().pages.length - 1 );
-            } else if ( this.get("loop")) {
-                var project = this.projects.at( this.projects.length - 1 );
-
-                previousPage = project.pages.at( project.pages.length - 1 );
             }
 
             return previousPage;
@@ -39709,39 +39705,38 @@ function( app, Parser, ProjectCollection, ProjectModel, PageCollection, PageMode
         preloadNextZeega: function() {
             var remixData = this.getCurrentProject().getRemixData();
 
-            if ( remixData.remix && !this.projects.get( remixData.parent.id ) && !this.waiting ) {
-                var projectUrl = app.getApi() + "projects/" + remixData.parent.id;
+            if ( remixData.descendants.length && !this.waiting ) {
+                var existingProjectIDs, projectUrl;
 
-                this.waiting = true;
-                this.emit("project:fetching");
+                existingProjectIDs = _.difference( _.pluck( remixData.descendants, "id"), this.projects.pluck("id") );
+                
+                if ( existingProjectIDs.length ) {
+                    var projectUrl = app.getApi() + "projects/" + existingProjectIDs[0];
 
-                $.getJSON( projectUrl, function( data ) {
-                    this._onDataLoaded( data );
-                    this.waiting = false;
-                    this.emit("project:fetch_success");
-                }.bind(this));
+                    this.waiting = true;
+                    this.emit("project:fetching", existingProjectIDs[0] );
+
+                    $.getJSON( projectUrl, function( data ) {
+                        this._onDataLoaded( data );
+                        this.waiting = false;
+                        this.emit("project:fetch_success");
+                    }.bind(this));
+                }
             }
         },
 
-        getRemixPath: function() {
-            var isComplete, path, temp;
+        getRemixData: function() {
+            var remix = _.extend({}, this.projects.at(0).get("remix"));
 
-            path = [ this.projects.at(0).getSimpleJSON() ];
+            if ( remix.descendants ) {
+                var desc = remix.descendants;
 
-            path = this.projects.map(function( project ) {
-                var remixObj = project.get("remix");
+                remix.descendants = [ this.projects.at(0).getSimpleJSON() ].concat( desc );
+            }
+            
+            console.log("rmxdata", remix)
 
-                //isComplete = temp.parent.id == temp.root.id;
-                project.getSimpleJSON();
-                // temp = project.get("remix");
-
-                return project.get("remix");
-            });
-
-            return {
-                complete: isComplete,
-                path: path
-            };
+            return remix;
         },
 
         _onDataLoaded: function( data ) {
@@ -39749,6 +39744,7 @@ function( app, Parser, ProjectCollection, ProjectModel, PageCollection, PageMode
                 _.extend({},
                     this.toJSON(),
                     {
+                        endPage: data.project.remix.descendants.length === 0,
                         mode: "player"
                     })
                 );
@@ -40549,8 +40545,6 @@ function( app, Engine, Relay, Status, PlayerLayout ) {
             **/
 
             layerOptions: {},
-
-            loop: false,
 
             /**
             Sets the player to operate in a mobile browser environment
