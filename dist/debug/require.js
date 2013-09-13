@@ -18572,11 +18572,11 @@ function(app, Backbone) {
 
         show: function(){
 
-            if ( _.contains( this.seen, this.model.zeega.getCurrentProject().id ) ) {
-                this.$(".banner").addClass("seen");
-            } else {
-                this.$(".banner").removeClass("seen");
-            }
+            // if ( _.contains( this.seen, this.model.zeega.getCurrentProject().id ) ) {
+            //     this.$(".banner").addClass("seen");
+            // } else {
+            //     this.$(".banner").removeClass("seen");
+            // }
 
             this.clearTimer();
             this.model.off("page:focus");
@@ -39676,6 +39676,8 @@ function( app, Parser, ProjectCollection, ProjectModel, PageCollection, PageMode
                 nextPage = this.getCurrentProject().pages.at( p.get("_order") + 1 );
             } else if ( this.getNextProject() ) {
                 nextPage = this.getNextProject().pages.at(0);
+            } else if ( this.get("loop")) {
+                nextPage = this.projects.at(0).pages.at(0);
             }
 
             return nextPage;
@@ -39689,6 +39691,10 @@ function( app, Parser, ProjectCollection, ProjectModel, PageCollection, PageMode
                 previousPage = this.getCurrentProject().pages.at( p.get("_order") - 1 );
             } else if ( this.getPreviousProject() ) {
                 previousPage = this.getPreviousProject().pages.at( this.getPreviousProject().pages.length - 1 );
+            } else if ( this.get("loop")) {
+                var project = this.projects.at( this.projects.length - 1 );
+
+                previousPage = project.pages.at( project.pages.length - 1 );
             }
 
             return previousPage;
@@ -39839,7 +39845,7 @@ function( app, Parser, ProjectCollection, ProjectModel, PageCollection, PageMode
                 _.extend({},
                     this.toJSON(),
                     {
-                        endPage: data.project.remix.descendants.length === 0,
+                        endPage: false,
                         mode: "player"
                     })
                 );
@@ -40641,6 +40647,8 @@ function( app, Engine, Relay, Status, PlayerLayout ) {
 
             layerOptions: {},
 
+            loop: false,
+
             /**
             Sets the player to operate in a mobile browser environment
 
@@ -41335,7 +41343,7 @@ function(app, Backbone, UI, Player, Analytics) {
         initPlayer: function() {
             app.player = new Player({
                 // debugEvents: true,
-                // endPage: true,
+                endPage: false,
                 loop: true,
                 mobile: true,
                 controls: false,
