@@ -167,7 +167,13 @@ var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
 __p+='<div class="banner" style="\n    background-image: url('+
 ( currentProject.cover_image )+
-');\n    background-position: center;\n    background-size: cover;\n">\n    <div class="text-overlay">Now Watching</div>\n    <div class="text-overlay">A Remix by '+
+');\n    background-position: center;\n    background-size: cover;\n">\n    <div class="text-overlay">Now Watching</div>\n    <div class="text-overlay">';
+ if ( currentProject.remix.ancestors.length ) { 
+;__p+='A Remix by';
+ } else { 
+;__p+='The Original by';
+ } 
+;__p+=' '+
 ( currentProject.user.display_name )+
 '</div>\n</div>';
 }

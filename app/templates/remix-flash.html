@@ -4,5 +4,5 @@
     background-size: cover;
 ">
     <div class="text-overlay">Now Watching</div>
-    <div class="text-overlay">A Remix by <%= currentProject.user.display_name %></div>
+    <div class="text-overlay"><% if ( currentProject.remix.ancestors.length ) { %>A Remix by<% } else { %>The Original by<% } %> <%= currentProject.user.display_name %></div>
 </div>
