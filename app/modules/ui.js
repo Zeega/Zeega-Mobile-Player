@@ -29,6 +29,7 @@ function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage, RemixFlas
         coffin: false,
         pauseView: null,
         el: "#main",
+        navigate: true,
 
         initialize: function() {
             this.loader = new Loader({ model: this.model });
@@ -130,6 +131,11 @@ function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage, RemixFlas
         },
 
         onSwipe: function( e ) {
+            if ( this.navigate ) this.onProjectNavigation( e )
+            app.emit("swipe", e );
+        },
+
+        onProjectNavigation: function( e ) {
             if ( this.model.state == "playing" ) {
                 if ( e.direction == "left") {
                     this.model.cueNext();
@@ -146,10 +152,6 @@ function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage, RemixFlas
                 this.pauseView.play();
             }
         },
-
-        // events: {
-        //     "click": "onTap"
-        // },
 
         onTap: function() {
             this.chrome.toggle();

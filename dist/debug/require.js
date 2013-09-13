@@ -503,13 +503,23 @@ return __p;
 this["JST"]["app/templates/remix-flash.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<div class="banner" style="\n    background-image: url('+
+__p+='<div class="banner">\n\n';
+ if ( currentProject.remix.ancestors.length ) { 
+;__p+='\n    <div class="remix-bg remix-bg-half remix-bg-root" style="\n        background-image: url('+
+( rootProject.cover_image )+
+');\n        background-position: center;\n        background-size: cover;\n    "></div>\n    <div class="remix-bg remix-bg-half remix-bg-current" style="\n        background-image: url('+
 ( currentProject.cover_image )+
-');\n    background-position: center;\n    background-size: cover;\n">\n    <div class="text-overlay">Now Watching</div>\n    <div class="text-overlay">';
+');\n        background-position: center;\n        background-size: cover;\n    "></div>\n';
+ } else { 
+;__p+='\n    <div class="remix-bg remix-bg-whole remix-bg-root" style="\n        background-image: url('+
+( currentProject.cover_image )+
+');\n        background-position: center;\n        background-size: cover;\n    "></div>\n';
+ } 
+;__p+='\n\n    <div class="text-overlay">Now Watching</div>\n    <div class="text-overlay">';
  if ( currentProject.remix.ancestors.length ) { 
 ;__p+='A Remix by';
  } else { 
-;__p+='The Original by';
+;__p+='A Zeega by';
  } 
 ;__p+=' '+
 ( currentProject.user.display_name )+
@@ -18535,80 +18545,6 @@ function(app, Backbone) {
 
 
 
-define('modules/remix-flash',[
-    "app",
-    // Libs
-    "backbone"
-],
-
-function(app, Backbone) {
-
-    return Backbone.View.extend({
-
-        visible: false,
-        timer: null,
-        seen: [],
-
-        template: "app/templates/remix-flash",
-        className: "ZEEGA-remix-flash",
-
-        initialize: function() {
-            this.model.on("project:project_switch", this.onProjectSwitch, this );
-            // this.model.on("all", function(e, o){console.log("E",e, o)} );
-        },
-
-        serialize: function() {
-            console.log("SER:", this.model.zeega.getRemixData(), this.model.zeega.getCurrentProject() )
-            return _.extend({
-                currentProject: this.model.zeega.getCurrentProject().toJSON(),
-                remixData: this.model.zeega.getRemixData()
-            });
-        },
-
-        onProjectSwitch: function() {
-            this.render();
-            this.show();
-        },
-
-        show: function(){
-
-            // if ( _.contains( this.seen, this.model.zeega.getCurrentProject().id ) ) {
-            //     this.$(".banner").addClass("seen");
-            // } else {
-            //     this.$(".banner").removeClass("seen");
-            // }
-
-            this.clearTimer();
-            this.model.off("page:focus");
-
-            this.model.once("page:focus", this.waitForNext, this );
-
-            this.timer = setTimeout(function() { this.hide(); }.bind(this), 3000 );
-            this.visible = true;
-            this.$(".banner").addClass("show");
-            this.seen.push( this.model.zeega.getCurrentProject().id );
-        },
-
-        waitForNext: function( mod, e, o ) {
-            this.model.once("page:focus", this.hide, this );
-        },
-
-        clearTimer: function() {
-            if ( this.timer ) clearTimeout( this.timer );
-            this.timer = null;
-        },
-
-        hide: function(){
-            this.visible = false;
-            this.clearTimer();
-            this.$(".banner").removeClass("show");
-        }
-
-    });
-});
-
-
-
 /*
  * Hammer.JS
  * version 0.6.4
@@ -19471,6 +19407,73 @@ function Hammer(element, options, undefined)
 ;
 define("vendor/hammer/hammer", function(){});
 
+define('modules/remix-flash',[
+    "app",
+    // Libs
+    "backbone",
+    "vendor/hammer/hammer"
+],
+
+function(app, Backbone) {
+
+    return Backbone.View.extend({
+
+        timer: null,
+
+        template: "app/templates/remix-flash",
+        className: "ZEEGA-remix-flash",
+
+        initialize: function() {
+            this.model.on("project:project_switch", this.onProjectSwitch, this );
+        },
+
+        serialize: function() {
+            return _.extend({
+                rootProject: this.model.zeega.projects.at(0).toJSON(),
+                currentProject: this.model.zeega.getCurrentProject().toJSON(),
+                remixData: this.model.zeega.getRemixData()
+            });
+        },
+
+        onProjectSwitch: function() {
+            this.render();
+            this.show();
+        },
+
+        show: function(){
+            this.clearTimer();
+            this.model.off("page:focus");
+            this.model.once("page:focus", this.waitForNext, this );
+            app.once("swipe", this.waitForSwipe, this );
+
+            this.timer = setTimeout(function() { this.hide(); }.bind(this), 3000 );
+            this.$(".banner").addClass("show");
+            app.layout.navigate = false;
+        },
+
+        waitForNext: function( mod, e, o ) {
+            this.model.once("page:focus", this.hide, this );
+        },
+        waitForSwipe: function( e ) {
+            app.once("swipe", this.hide, this );
+        },
+
+        clearTimer: function() {
+            if ( this.timer ) clearTimeout( this.timer );
+            this.timer = null;
+        },
+
+        hide: function() {
+            app.layout.navigate = true;
+            this.clearTimer();
+            this.$(".banner").removeClass("show");
+        }
+
+    });
+});
+
+
+
 /*
 
   ui.js
@@ -19502,6 +19505,7 @@ function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage, RemixFlas
         coffin: false,
         pauseView: null,
         el: "#main",
+        navigate: true,
 
         initialize: function() {
             this.loader = new Loader({ model: this.model });
@@ -19603,6 +19607,11 @@ function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage, RemixFlas
         },
 
         onSwipe: function( e ) {
+            if ( this.navigate ) this.onProjectNavigation( e )
+            app.emit("swipe", e );
+        },
+
+        onProjectNavigation: function( e ) {
             if ( this.model.state == "playing" ) {
                 if ( e.direction == "left") {
                     this.model.cueNext();
@@ -19619,10 +19628,6 @@ function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage, RemixFlas
                 this.pauseView.play();
             }
         },
-
-        // events: {
-        //     "click": "onTap"
-        // },
 
         onTap: function() {
             this.chrome.toggle();
@@ -39835,8 +39840,6 @@ function( app, Parser, ProjectCollection, ProjectModel, PageCollection, PageMode
                 remix.descendants = [ this.projects.at(0).getSimpleJSON() ].concat( desc );
             }
             
-            console.log("rmxdata", remix)
-
             return remix;
         },
 
@@ -39845,7 +39848,7 @@ function( app, Parser, ProjectCollection, ProjectModel, PageCollection, PageMode
                 _.extend({},
                     this.toJSON(),
                     {
-                        endPage: false,
+                        endPage: this.get("loop") ? false : data.project.remix.descendants.length === 0,
                         mode: "player"
                     })
                 );

@@ -1,14 +1,14 @@
 define([
     "app",
     // Libs
-    "backbone"
+    "backbone",
+    "vendor/hammer/hammer"
 ],
 
 function(app, Backbone) {
 
     return Backbone.View.extend({
 
-        visible: false,
         timer: null,
 
         template: "app/templates/remix-flash",
@@ -20,6 +20,7 @@ function(app, Backbone) {
 
         serialize: function() {
             return _.extend({
+                rootProject: this.model.zeega.projects.at(0).toJSON(),
                 currentProject: this.model.zeega.getCurrentProject().toJSON(),
                 remixData: this.model.zeega.getRemixData()
             });
@@ -33,16 +34,19 @@ function(app, Backbone) {
         show: function(){
             this.clearTimer();
             this.model.off("page:focus");
-
             this.model.once("page:focus", this.waitForNext, this );
+            app.once("swipe", this.waitForSwipe, this );
 
             this.timer = setTimeout(function() { this.hide(); }.bind(this), 3000 );
-            this.visible = true;
             this.$(".banner").addClass("show");
+            app.layout.navigate = false;
         },
 
         waitForNext: function( mod, e, o ) {
             this.model.once("page:focus", this.hide, this );
+        },
+        waitForSwipe: function( e ) {
+            app.once("swipe", this.hide, this );
         },
 
         clearTimer: function() {
@@ -50,8 +54,8 @@ function(app, Backbone) {
             this.timer = null;
         },
 
-        hide: function(){
-            this.visible = false;
+        hide: function() {
+            app.layout.navigate = true;
             this.clearTimer();
             this.$(".banner").removeClass("show");
         }

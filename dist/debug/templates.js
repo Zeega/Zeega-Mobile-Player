@@ -165,13 +165,23 @@ return __p;
 this["JST"]["app/templates/remix-flash.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
-__p+='<div class="banner" style="\n    background-image: url('+
+__p+='<div class="banner">\n\n';
+ if ( currentProject.remix.ancestors.length ) { 
+;__p+='\n    <div class="remix-bg remix-bg-half remix-bg-root" style="\n        background-image: url('+
+( rootProject.cover_image )+
+');\n        background-position: center;\n        background-size: cover;\n    "></div>\n    <div class="remix-bg remix-bg-half remix-bg-current" style="\n        background-image: url('+
 ( currentProject.cover_image )+
-');\n    background-position: center;\n    background-size: cover;\n">\n    <div class="text-overlay">Now Watching</div>\n    <div class="text-overlay">';
+');\n        background-position: center;\n        background-size: cover;\n    "></div>\n';
+ } else { 
+;__p+='\n    <div class="remix-bg remix-bg-whole remix-bg-root" style="\n        background-image: url('+
+( currentProject.cover_image )+
+');\n        background-position: center;\n        background-size: cover;\n    "></div>\n';
+ } 
+;__p+='\n\n    <div class="text-overlay">Now Watching</div>\n    <div class="text-overlay">';
  if ( currentProject.remix.ancestors.length ) { 
 ;__p+='A Remix by';
  } else { 
-;__p+='The Original by';
+;__p+='A Zeega by';
  } 
 ;__p+=' '+
 ( currentProject.user.display_name )+

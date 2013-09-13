@@ -3305,15 +3305,14 @@ a:active {
 .ZEEGA-remix-flash .banner {
   background: rgba(255, 255, 255, 0.75);
   font-size: 13px;
-  padding: 10px;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   margin: auto;
   position: absolute;
-  height: 200px;
-  width: 200px;
+  height: 220px;
+  width: 220px;
   border: 4px solid white;
   opacity: 0;
   transition: opacity 0.5s;
@@ -3329,17 +3328,20 @@ a:active {
   background: white;
   display: inline-block;
   padding: 2px;
-  margin-bottom: 5px;
+  margin: 10px 10px 5px 10px;
   font-family: "futura", sans-serif;
   font-size: 13px;
+  position: relative;
 }
-.ZEEGA-remix-flash .banner.seen {
-  height: 100px;
-  width: 100px;
-  left: 80px;
-  top: 0px;
-  margin: 0;
+.ZEEGA-remix-flash .banner .remix-bg {
+  position: absolute;
+  float: left;
+  height: 100%;
+  width: 100%;
 }
-.ZEEGA-remix-flash .banner.seen .text-overlay {
-  font-size: 10px;
+.ZEEGA-remix-flash .banner .remix-bg.remix-bg-half {
+  width: 50%;
+}
+.ZEEGA-remix-flash .banner .remix-bg.remix-bg-half:nth-child(2) {
+  left: 50%;
 }
