@@ -35,11 +35,11 @@ function(app, Backbone) {
 
         show: function(){
 
-            if ( _.contains( this.seen, this.model.zeega.getCurrentProject().id ) ) {
-                this.$(".banner").addClass("seen");
-            } else {
-                this.$(".banner").removeClass("seen");
-            }
+            // if ( _.contains( this.seen, this.model.zeega.getCurrentProject().id ) ) {
+            //     this.$(".banner").addClass("seen");
+            // } else {
+            //     this.$(".banner").removeClass("seen");
+            // }
 
             this.clearTimer();
             this.model.off("page:focus");
