@@ -500,6 +500,18 @@ __p+='<div class="end-page-wrapper" >\n\n    <h1>Remix</h1>\n    <div class="pro
 return __p;
 };
 
+this["JST"]["app/templates/remix-flash.html"] = function(obj){
+var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+with(obj||{}){
+__p+='<div class="banner" style="\n    background-image: url('+
+( currentProject.cover_image )+
+');\n    background-position: center;\n    background-size: cover;\n">\n    <div class="text-overlay">Now Watching</div>\n    <div class="text-overlay">A Remix by '+
+( currentProject.user.display_name )+
+'</div>\n</div>';
+}
+return __p;
+};
+
 this["JST"]["app/templates/underlay.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){
@@ -18517,6 +18529,52 @@ function(app, Backbone) {
 
 
 
+define('modules/remix-flash',[
+    "app",
+    // Libs
+    "backbone"
+],
+
+function(app, Backbone) {
+
+    return Backbone.View.extend({
+
+        template: "app/templates/remix-flash",
+        className: "ZEEGA-remix-flash",
+
+        initialize: function() {
+            this.model.on("project:project_switch", this.onProjectSwitch, this );
+        },
+
+        serialize: function() {
+            console.log("SER:", this.model.zeega.getRemixData(), this.model.zeega.getCurrentProject().toJSON() )
+            return _.extend({
+                currentProject: this.model.zeega.getCurrentProject().toJSON(),
+                remixData: this.model.zeega.getRemixData()
+            });
+        },
+
+        onProjectSwitch: function() {
+            this.render();
+            this.show();
+        },
+
+        show: function(){
+            this.$(".banner").show("fast");
+            _.delay(function() {
+                this.hide();
+            }.bind(this), 3000 );
+        },
+
+        hide: function(){
+            this.$(".banner").hide("fast");
+        }
+
+    });
+});
+
+
+
 /*
  * Hammer.JS
  * version 0.6.4
@@ -19395,11 +19453,12 @@ define('modules/ui',[
     "modules/chrome",
     "modules/endpage",
     "modules/remix-endpage",
+    "modules/remix-flash",
 
     "vendor/hammer/hammer"
 ],
 
-function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage ) {
+function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage, RemixFlash ) {
 
     return Backbone.Layout.extend({
         
@@ -19416,11 +19475,13 @@ function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage ) {
             this.endpage = new EndPage({ model: this.model });
             this.underlay = new Underlay({ model: this.model });
             this.remixEndpage = new RemixEndpage({ model: this.model });
+            this.remixFlash = new RemixFlash({ model: this.model });
 
             this.insertView("#overlays", this.loader );
             this.insertView("#chrome", this.chrome );
             this.insertView("#endpage", this.endpage );
             this.insertView("#endpage", this.remixEndpage );
+            this.insertView("#endpage", this.remixFlash );
             this.insertView("#underlay", this.underlay );
             this.render();
 

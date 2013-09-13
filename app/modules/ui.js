@@ -14,11 +14,12 @@ define([
     "modules/chrome",
     "modules/endpage",
     "modules/remix-endpage",
+    "modules/remix-flash",
 
     "vendor/hammer/hammer"
 ],
 
-function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage ) {
+function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage, RemixFlash ) {
 
     return Backbone.Layout.extend({
         
@@ -35,11 +36,13 @@ function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage ) {
             this.endpage = new EndPage({ model: this.model });
             this.underlay = new Underlay({ model: this.model });
             this.remixEndpage = new RemixEndpage({ model: this.model });
+            this.remixFlash = new RemixFlash({ model: this.model });
 
             this.insertView("#overlays", this.loader );
             this.insertView("#chrome", this.chrome );
             this.insertView("#endpage", this.endpage );
             this.insertView("#endpage", this.remixEndpage );
+            this.insertView("#endpage", this.remixFlash );
             this.insertView("#underlay", this.underlay );
             this.render();
 

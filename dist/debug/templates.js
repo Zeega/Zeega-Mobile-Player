@@ -162,6 +162,18 @@ __p+='<div class="end-page-wrapper" >\n\n    <h1>Remix</h1>\n    <div class="pro
 return __p;
 };
 
+this["JST"]["app/templates/remix-flash.html"] = function(obj){
+var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
+with(obj||{}){
+__p+='<div class="banner" style="\n    background-image: url('+
+( currentProject.cover_image )+
+');\n    background-position: center;\n    background-size: cover;\n">\n    <div class="text-overlay">Now Watching</div>\n    <div class="text-overlay">A Remix by '+
+( currentProject.user.display_name )+
+'</div>\n</div>';
+}
+return __p;
+};
+
 this["JST"]["app/templates/underlay.html"] = function(obj){
 var __p='';var print=function(){__p+=Array.prototype.join.call(arguments, '')};
 with(obj||{}){

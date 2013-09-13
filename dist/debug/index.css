@@ -3296,3 +3296,36 @@ a:active {
   border-radius: 37px;
   border: 3px solid white;
 }
+.ZEEGA-remix-flash {
+  z-index: 100;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.ZEEGA-remix-flash .banner {
+  background: rgba(255, 255, 255, 0.75);
+  font-size: 13px;
+  padding: 10px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  position: absolute;
+  height: 200px;
+  width: 200px;
+  border: 4px solid white;
+  display: none;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.75);
+}
+.ZEEGA-remix-flash .banner.show {
+  display: block;
+}
+.ZEEGA-remix-flash .banner .text-overlay {
+  background: white;
+  display: inline-block;
+  padding: 2px;
+  margin-bottom: 5px;
+  font-family: "futura", sans-serif;
+  font-size: 13px;
+}
