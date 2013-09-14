@@ -2318,10 +2318,12 @@ table {
 }
 html {
   background: black;
-  font-family: 'Helvetica', sans-serif;
+  font-family: "Helvetica", sans-serif;
+  height: 100%;
 }
 #main {
   height: 100%;
+  background: black;
 }
 @media screen and (orientation: portrait) {
   #main.iphone-safari {
@@ -3301,6 +3303,7 @@ a:active {
   position: absolute;
   width: 100%;
   height: 100%;
+  pointer-events: none;
 }
 .ZEEGA-remix-flash .banner {
   background: rgba(255, 255, 255, 0.75);

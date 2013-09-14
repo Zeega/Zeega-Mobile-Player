@@ -53,16 +53,30 @@ function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage, RemixFlas
         },
 
         detectUserAgent: function() {
-            var userAgent = navigator.userAgent;
+            var platform = app.getPlatformInfo();
 
-            if ( /CriOS/i.test( userAgent ) ) {
-                $("#main").addClass("iphone-chrome");
-            } else if ( /iPad/i.test( userAgent ) ) {
-                $("#main").addClass("ipad-safari");
-            } else if ( !/(iPhone|iPod|iPad).*AppleWebKit(?!.*Safari)/i.test( userAgent ) ) {
-                $("#main").addClass("iphone-safari");
-                window.scrollTo(0, 1);
+            $("#main").addClass( platform.platformName.toLowerCase() +"-"+ platform.browserName.toLowerCase() + ( platform.embed ? "-embed" : ""));
+            window.scrollTo(0, 1);
+
+            /*
+            switch ( app.getDeviceType ) {
+                case "iphone_chrome":
+                    
+                    break;
+                case "ipad_safari":
+                    
+                    break;
+                case "iphone_safari_embed":
+
+                    break;
+                case "iphone_safari":
+
+                    break;
+                default:
+                    console.log("unknown device")
             }
+            */
+
         },
 
         listenForOrientationChange: function() {
@@ -91,16 +105,17 @@ function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage, RemixFlas
 
         afterRender: function() {
             this.startTouchEvents();
-            window.scrollTo(0, 1);
 
             $('#main').bind("touchmove", {}, function(event){
                 event.preventDefault();
             });
 
             this.model.once("player:play", this.onPlay, this );
+            window.scrollTo(0, 1);
         },
 
         onPlay: function() {
+
             this.firstFrameTimer = setTimeout(function() {
                 $("body").append("<img class='swipe-reminder' src='assets/img/swipe-left.png'/>");
                 $(".swipe-reminder").animate({
@@ -131,7 +146,7 @@ function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage, RemixFlas
         },
 
         onSwipe: function( e ) {
-            if ( this.navigate ) this.onProjectNavigation( e )
+            if ( this.navigate ) this.onProjectNavigation( e );
             app.emit("swipe", e );
         },
 

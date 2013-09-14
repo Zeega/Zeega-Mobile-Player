@@ -16299,7 +16299,11 @@ function( Spinner ) {
         },
 
         getWebRoot: function() {
-            return this.getHostname() + ( this.metadata.root || this.metadata.directory );
+            if( this.metadata.root || this.metadata.directory ){
+                return this.getHostname() + ( this.metadata.root || this.metadata.directory );
+            } else {
+                return this.getHostname();
+            } 
         },
 
         getApi: function() {
@@ -16313,6 +16317,58 @@ function( Spinner ) {
         getMediaServerUrl: function() {
             return "http:" + this.metadata.hostname + this.metadata.mediaRoot;
         },
+
+        isEmbed: _.memoize(function() {
+            return window != window.top;
+        }),
+
+        getPlatformInfo: _.memoize(function() {
+            var info, userAgent;
+
+            userAgent = navigator.userAgent;
+            info = {
+                    platformName: "unknown",
+                    platformVersion: "unknown",
+                    browserName: "unknown",
+                    browserVersion: "unknown",
+                    device: "desktop",
+                    embed: this.isEmbed()
+                }
+
+            if ( /CriOS/i.test( userAgent ) ) {
+
+                _.extend( info, {
+                    platformName: /\((.*);/.exec( userAgent )[1].split(";")[0],
+                    platformVersion: /\s([0-9_\.]*)\s/.exec( userAgent )[1],
+                    browserName: "chrome",
+                    browserVersion: /CriOS\/([0-9_\.]*)\s/.exec( userAgent )[0].split("/")[0],
+                    device: "mobile"
+                });
+
+            } else if ( /(iPhone|iPod|iPad)/i.test( userAgent ) ) {
+
+                _.extend( info, {
+                    platformName: /\((.*)\;?/.exec( userAgent )[1].split(";")[0],
+                    platformVersion: /\s([0-9_\.]*)\s/.exec( userAgent )[1],
+                    browserName: "safari",
+                    browserVersion: /Version\/([a-zA-Z\d\.\s\S]*)\//.exec( userAgent )[1].split("/")[0],
+                    device: "mobile"
+                });
+
+            } else if ( /(Linux).*Chrome/i.test( userAgent ) ) {
+
+                _.extend( info, {
+                    platformName: "android",
+                    platformVersion: /\s([0-9_\.]*);\s/.exec( userAgent )[1],
+                    browserName: "chrome",
+                    browserVersion: /Chrome\/([a-zA-Z\d\.\s\S]*)\//.exec( userAgent )[1].split("/")[0],
+                    device: "mobile"
+                });
+
+            }
+
+            return info;
+        }),
 
         emit: function( event, args ) {
             // other things can be done here as well
@@ -18241,9 +18297,9 @@ function( app ) {
         }),
 
         showLoadingSoundtrack: function( soundtrack ) {
-            var soundtrack = soundtrack || app.player.zeega.getSoundtrack();
+            var st = soundtrack || app.player.zeega.getSoundtrack();
 
-            if ( soundtrack && soundtrack.state != "ready" ) {
+            if ( st && st.state != "ready" ) {
                 this.spinSoundtrack();
                 this.model.once("soundtrack:ready", this.stopSpinSoundtrack, this );
             }
@@ -18295,13 +18351,13 @@ function( app ) {
             "click .ZEEGA-sound-state": "toggleMute"
         },
 
-        toggleMute: function(){
-            if( app.player.zeega.getSoundtrack() ){
+        toggleMute: function() {
+            if( app.player.zeega.getSoundtrack() ) {
                 if( this.$(".ZEEGA-sound-state").hasClass("muted") ){
                     this.$(".ZEEGA-sound-state").removeClass("muted");
                     app.player.zeega.getSoundtrack().visual.onPlay();
                 } else {
-                    this.$(".ZEEGA-sound-state").addClass("muted");
+                     this.$(".ZEEGA-sound-state").addClass("muted");
                     app.player.zeega.getSoundtrack().visual.onPause();
                 }
             }
@@ -19529,16 +19585,30 @@ function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage, RemixFlas
         },
 
         detectUserAgent: function() {
-            var userAgent = navigator.userAgent;
+            var platform = app.getPlatformInfo();
 
-            if ( /CriOS/i.test( userAgent ) ) {
-                $("#main").addClass("iphone-chrome");
-            } else if ( /iPad/i.test( userAgent ) ) {
-                $("#main").addClass("ipad-safari");
-            } else if ( !/(iPhone|iPod|iPad).*AppleWebKit(?!.*Safari)/i.test( userAgent ) ) {
-                $("#main").addClass("iphone-safari");
-                window.scrollTo(0, 1);
+            $("#main").addClass( platform.platformName.toLowerCase() +"-"+ platform.browserName.toLowerCase() + ( platform.embed ? "-embed" : ""));
+            window.scrollTo(0, 1);
+
+            /*
+            switch ( app.getDeviceType ) {
+                case "iphone_chrome":
+                    
+                    break;
+                case "ipad_safari":
+                    
+                    break;
+                case "iphone_safari_embed":
+
+                    break;
+                case "iphone_safari":
+
+                    break;
+                default:
+                    console.log("unknown device")
             }
+            */
+
         },
 
         listenForOrientationChange: function() {
@@ -19567,16 +19637,17 @@ function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage, RemixFlas
 
         afterRender: function() {
             this.startTouchEvents();
-            window.scrollTo(0, 1);
 
             $('#main').bind("touchmove", {}, function(event){
                 event.preventDefault();
             });
 
             this.model.once("player:play", this.onPlay, this );
+            window.scrollTo(0, 1);
         },
 
         onPlay: function() {
+
             this.firstFrameTimer = setTimeout(function() {
                 $("body").append("<img class='swipe-reminder' src='assets/img/swipe-left.png'/>");
                 $(".swipe-reminder").animate({
@@ -19607,7 +19678,7 @@ function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage, RemixFlas
         },
 
         onSwipe: function( e ) {
-            if ( this.navigate ) this.onProjectNavigation( e )
+            if ( this.navigate ) this.onProjectNavigation( e );
             app.emit("swipe", e );
         },
 
@@ -39812,9 +39883,7 @@ function( app, Parser, ProjectCollection, ProjectModel, PageCollection, PageMode
             var remixData = this.getCurrentProject().getRemixData();
 
             if ( remixData.descendants.length && !this.waiting ) {
-                var existingProjectIDs, projectUrl;
-
-                existingProjectIDs = _.difference( _.pluck( remixData.descendants, "id"), this.projects.pluck("id") );
+                var existingProjectIDs = _.difference( _.pluck( remixData.descendants, "id"), this.projects.pluck("id") );
                 
                 if ( existingProjectIDs.length ) {
                     var projectUrl = app.getApi() + "projects/" + existingProjectIDs[0];
