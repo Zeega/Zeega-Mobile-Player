@@ -506,7 +506,7 @@ with(obj||{}){
 __p+='<div class="banner">\n\n';
  if ( currentProject.remix.ancestors.length ) { 
 ;__p+='\n    <div class="remix-bg remix-bg-half remix-bg-root" style="\n        background-image: url('+
-( rootProject.cover_image )+
+( previousProject.cover_image )+
 ');\n        background-position: center;\n        background-size: cover;\n    "></div>\n    <div class="remix-bg remix-bg-half remix-bg-current" style="\n        background-image: url('+
 ( currentProject.cover_image )+
 ');\n        background-position: center;\n        background-size: cover;\n    "></div>\n';
@@ -19486,6 +19486,7 @@ function(app, Backbone) {
         serialize: function() {
             return _.extend({
                 rootProject: this.model.zeega.projects.at(0).toJSON(),
+                previousProject: this.model.zeega.getPreviousProject() ? this.model.zeega.getPreviousProject().toJSON() : false,
                 currentProject: this.model.zeega.getCurrentProject().toJSON(),
                 remixData: this.model.zeega.getRemixData()
             });

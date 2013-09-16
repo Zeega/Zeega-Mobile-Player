@@ -21,6 +21,7 @@ function(app, Backbone) {
         serialize: function() {
             return _.extend({
                 rootProject: this.model.zeega.projects.at(0).toJSON(),
+                previousProject: this.model.zeega.getPreviousProject() ? this.model.zeega.getPreviousProject().toJSON() : false,
                 currentProject: this.model.zeega.getCurrentProject().toJSON(),
                 remixData: this.model.zeega.getRemixData()
             });
