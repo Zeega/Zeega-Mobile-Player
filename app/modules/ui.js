@@ -53,30 +53,16 @@ function( app, Loader, Pause, Underlay, Chrome, EndPage, RemixEndpage, RemixFlas
         },
 
         detectUserAgent: function() {
-            var platform = app.getPlatformInfo();
+            var wrapperClass, platform = app.getPlatformInfo();
 
-            $("#main").addClass( platform.platformName.toLowerCase() +"-"+ platform.browserName.toLowerCase() + ( platform.embed ? "-embed" : ""));
-            window.scrollTo(0, 1);
-
-            /*
-            switch ( app.getDeviceType ) {
-                case "iphone_chrome":
-                    
-                    break;
-                case "ipad_safari":
-                    
-                    break;
-                case "iphone_safari_embed":
-
-                    break;
-                case "iphone_safari":
-
-                    break;
-                default:
-                    console.log("unknown device")
+            if ( platform.platformName == "iPhone" && parseInt( platform.browserVersion.split(".")[0], 10) >= 7 ) {
+                wrapperClass = "iphone-safari-ios7"
+            } else {
+                wrapperClass = platform.platformName.toLowerCase() +"-"+ platform.browserName.toLowerCase();
             }
-            */
 
+            $("#main").addClass( wrapperClass + ( platform.embed ? "-embed" : ""));
+            window.scrollTo(0, 1);
         },
 
         listenForOrientationChange: function() {
