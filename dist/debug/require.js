@@ -517,7 +517,7 @@ __p+='<div class="banner">\n\n';
  } 
 ;__p+='\n\n    <div class="text-overlay">Now Watching</div>\n    <div class="text-overlay">';
  if ( currentProject.remix.ancestors.length ) { 
-;__p+='A Remix by';
+;__p+='A reply by';
  } else { 
 ;__p+='A Zeega by';
  } 
